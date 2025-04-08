@@ -1,11 +1,10 @@
 # CaiNiao-Server
 
-[菜鸟 App](https://gitee.com/SeagullOddy/cai-niao) 的后端。
+[菜鸟 App](../cai-niao) 的后端。
 
 ## 使用
 
-1. 填入本仓库下载地址 `https://gitee.com/SeagullOddy/cai-niao-server.git`
-   后点击克隆/clone
+1. 克隆/clone本仓库
 
    ![输入图片说明](docs/images/image.png)
 
