@@ -2,4 +2,4 @@
 
 算法设计与分析课的作业存档。
 
-- `/algorithm-endtask` [算法课程设计](https://github.com/Lyana-nullptr/learning-backup/tree/main/university/algorithm-design/algorithm-endtask)
+- `/algorithm-endtask` [算法课程设计](university/algorithm-design/algorithm-endtask)
