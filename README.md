@@ -1,5 +1,8 @@
 <!-- Title -->
 
+> [!CAUTION]
+> 和青春说再见吧！
+
 <a name="readme-top"></a>
 
 <div align="center">
