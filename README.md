@@ -39,16 +39,16 @@
 
 ## 包括
 
-- `/college-corse` 大学课程
-  - `/algorithm-design` [算法设计与分析（Java）](college-corse/algorithm-design)
-  - `/android-development` [安卓开发（Java）](college-corse/android-development)
-  - `/data-structure` [数据结构（Java）](college-corse/data-structure)
-  - `/digital-image-process` [数字图像处理（Matlab）](college-corse/digital-image-process)
-  - `/graduation-project` [毕业设计](college-corse/graduation-project)
-  - `/java-advanced` [高级 Java](college-corse/java-advanced)
-  - `/java-enterprise` [企业 Java](college-corse/java-enterprise)
-  - `/operator-system` [操作系统基础（Java）](college-corse/operator-system)
-  - `/web-front-end` [Web 开发（前端）](college-corse/web-front-end)
+- `/college-course` 大学课程
+  - `/algorithm-design` [算法设计与分析（Java）](college-course/algorithm-design)
+  - `/android-development` [安卓开发（Java）](college-course/android-development)
+  - `/data-structure` [数据结构（Java）](college-course/data-structure)
+  - `/digital-image-process` [数字图像处理（Matlab）](college-course/digital-image-process)
+  - `/graduation-project` [毕业设计](college-course/graduation-project)
+  - `/java-advanced` [高级 Java](college-course/java-advanced)
+  - `/java-enterprise` [企业 Java](college-course/java-enterprise)
+  - `/operator-system` [操作系统基础（Java）](college-course/operator-system)
+  - `/web-front-end` [Web 开发（前端）](college-course/web-front-end)
 - `/self-study` 自学
   - `/spring-family-bucket` [Spring 全家桶](self-study/spring-family-bucket)
 
