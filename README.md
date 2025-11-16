@@ -54,6 +54,10 @@
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 
+## 其他资源
+
+- [lumirelle 的个人主页](https://lumirelle.me)
+
 <!-- 许可 -->
 
 ## 许可
