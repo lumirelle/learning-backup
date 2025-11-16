@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>60d46010-c9b2-4977-b18f-d8dacb761a82.SCHEMA:database</OriginalElement>
+  <nodes>
+    <node x="-1667.627867298579" y="-1117.5924170616113">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.user_wx</node>
+    <node x="-469.7489573459716" y="813.6213838862559">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.plugin_info</node>
+    <node x="-561.0118483412325" y="-552.2822748815165">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.accompany_schedule</node>
+    <node x="-2690.34682464455" y="2090.0208530805685">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_CALENDARS</node>
+    <node x="-3712.109004739336" y="1747.8749383886257">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_SIMPROP_TRIGGERS</node>
+    <node x="-2663.3468246445495" y="2332.0500473933653">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_LOCKS</node>
+    <node x="-3383.6452754739335" y="-751.2202843601896">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.recycle_data</node>
+    <node x="-1077.0698578199058" y="-404.5738388625591">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.medical_record</node>
+    <node x="-3019.2874881516586" y="2332.0500473933653">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_PAUSED_TRIGGER_GRPS</node>
+    <node x="-3019.2874881516586" y="2090.0208530805685">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_SCHEDULER_STATE</node>
+    <node x="-3390.6452754739335" y="-1361.9903317535545">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_user</node>
+    <node x="-4265.119336492891" y="-1060.097061611374">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_menu</node>
+    <node x="-3405.6452754739335" y="-1750.8511848341232">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_department</node>
+    <node x="-2979.418159063981" y="-714.2176303317535">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_log</node>
+    <node x="-3360.5085308056873" y="2090.0208530805685">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_FIRED_TRIGGERS</node>
+    <node x="-4265.119336492891" y="-310.07554502369635">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_role_menu</node>
+    <node x="-1679.2721327014224" y="-1606.5924170616113">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.user_address</node>
+    <node x="157.95364928909976" y="1148.6488151658768">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.space_type</node>
+    <node x="-1188.4146919431278" y="1550.7442654028437">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_param</node>
+    <node x="-18.953838862559223" y="-1160.357156398104">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.hospital_info</node>
+    <node x="144.95364928909976" y="704.5337061611372">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.space_info</node>
+    <node x="-2558.010029620854" y="1236.39336492891">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.task_log</node>
+    <node x="-3827.872391883886" y="-751.2202843601896">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_role</node>
+    <node x="-3379.7464454976302" y="1755.6162085308056">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_SIMPLE_TRIGGERS</node>
+    <node x="-2665.010029620854" y="-139.54843601895755">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_role_department</node>
+    <node x="148.04616113744078" y="-825.3571563981039">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.hospital_department</node>
+    <node x="136.95364928909976" y="1550.7442654028437">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.leaf_alloc</node>
+    <node x="-3060.03672985782" y="1783.6162085308056">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_BLOB_TRIGGERS</node>
+    <node x="-1112.5698578199058" y="-1606.5924170616113">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.user_info</node>
+    <node x="-3245.9964454976302" y="621.8780853080569">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_JOB_DETAILS</node>
+    <node x="-2745.3270142180095" y="1769.6162085308056">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_CRON_TRIGGERS</node>
+    <node x="-454.2489573459716" y="1550.7442654028437">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_conf</node>
+    <node x="-3235.9964454976302" y="1073.6049289099524">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_TRIGGERS</node>
+    <node x="103.54616113744078" y="-476.3571563981038">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.hospital_schedule</node>
+    <node x="-1129.914691943128" y="780.811374407583">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.dict_type</node>
+    <node x="-2665.010029620854" y="663.3933649289099">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.task_info</node>
+    <node x="-1131.0698578199058" y="-1117.5924170616113">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.patient_info</node>
+    <node x="323.0461611374408" y="-1174.357156398104">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.hospital_doctor</node>
+    <node x="-1278.914691943128" y="1017.811374407583">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.dict_info</node>
+    <node x="-517.5118483412325" y="-1108.2100473933647">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.accompany_staff</node>
+    <node x="-2829.7719853376775" y="-398.88303317535554">60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_user_role</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.hospital_department" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.hospital_info" relationship="REFERENCES">
+      <point x="-91.5" y="-149.5" />
+      <point x="239.54616113744078" y="-850.3571563981039" />
+      <point x="142.04616113744078" y="-850.3571563981039" />
+      <point x="0.0" y="135.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.accompany_schedule" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.accompany_staff" relationship="REFERENCES">
+      <point x="0.0" y="-177.5" />
+      <point x="0.0" y="191.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.accompany_staff" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.user_info" relationship="REFERENCES">
+      <point x="0.0" y="-191.5" />
+      <point x="-339.5118483412325" y="-1170.5924170616113" />
+      <point x="-901.7970468009482" y="-1170.5924170616113" />
+      <point x="-6.2271889810424454" y="198.6239810426539" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_TRIGGERS" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_JOB_DETAILS" relationship="REFERENCES">
+      <point x="0.0" y="-247.5" />
+      <point x="0.0" y="163.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_user_role" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_user" relationship="REFERENCES">
+      <point x="99.25" y="-93.5" />
+      <point x="-2532.0219853376775" y="-1149.7199999999998" />
+      <point x="-3222.6452754739335" y="-1149.7199999999998" />
+      <point x="0.0" y="247.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_BLOB_TRIGGERS" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_TRIGGERS" relationship="REFERENCES">
+      <point x="0.0" y="-79.5" />
+      <point x="-2930.03672985782" y="1618.6162085308056" />
+      <point x="-3105.9964454976302" y="1618.6162085308056" />
+      <point x="0.0" y="247.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.hospital_department" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.hospital_doctor" relationship="REFERENCES">
+      <point x="91.5" y="-149.5" />
+      <point x="422.5461611374408" y="-850.3571563981039" />
+      <point x="520.0461611374408" y="-850.3571563981039" />
+      <point x="0.0" y="149.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.recycle_data" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_user" relationship="REFERENCES">
+      <point x="0.0" y="-149.5" />
+      <point x="0.0" y="247.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_role_department" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_role" relationship="REFERENCES">
+      <point x="-2.459620853079741" y="-91.93924170616128" />
+      <point x="-2442.9696504739336" y="-60.573981042654" />
+      <point x="-3646.872391883886" y="-60.573981042654" />
+      <point x="-3646.872391883886" y="-587.8602843601896" />
+      <point x="-172.6231531398098" y="-0.13999999999998636" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_role_menu" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_menu" relationship="REFERENCES">
+      <point x="-99.25" y="-93.5" />
+      <point x="-4165.869336492891" y="-478.14511848341226" />
+      <point x="-4165.376208530804" y="-478.14511848341226" />
+      <point x="-79.75687203791358" y="197.67194312796164" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_user_role" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_role" relationship="REFERENCES">
+      <point x="-99.25" y="-93.5" />
+      <point x="-2730.5219853376775" y="-315.5381042654027" />
+      <point x="-3646.872391883886" y="-315.5381042654027" />
+      <point x="0.0" y="163.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_SIMPROP_TRIGGERS" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_TRIGGERS" relationship="REFERENCES">
+      <point x="0.0" y="-219.5" />
+      <point x="-3574.109004739336" y="1618.6162085308056" />
+      <point x="-3105.9964454976302" y="1618.6162085308056" />
+      <point x="0.0" y="247.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_CRON_TRIGGERS" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_TRIGGERS" relationship="REFERENCES">
+      <point x="0.0" y="-93.5" />
+      <point x="-2606.3270142180095" y="1618.6162085308056" />
+      <point x="-3105.9964454976302" y="1618.6162085308056" />
+      <point x="0.0" y="247.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_user" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_department" relationship="REFERENCES">
+      <point x="0.0" y="-247.5" />
+      <point x="0.0" y="107.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.dict_info" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.dict_type" relationship="REFERENCES">
+      <point x="0.0" y="-163.5" />
+      <point x="0.0" y="93.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.task_log" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.task_info" relationship="REFERENCES">
+      <point x="0.0" y="-107.5" />
+      <point x="0.0" y="261.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.user_wx" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.user_info" relationship="REFERENCES">
+      <point x="0.0" y="-219.5" />
+      <point x="-1470.627867298579" y="-1193.5924170616113" />
+      <point x="-1004.0698578199058" y="-1193.5924170616113" />
+      <point x="-108.5" y="191.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.medical_record" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.patient_info" relationship="REFERENCES">
+      <point x="0.0" y="-163.5" />
+      <point x="0.0" y="275.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_SIMPLE_TRIGGERS" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.QRTZ_TRIGGERS" relationship="REFERENCES">
+      <point x="0.0" y="-107.5" />
+      <point x="-3247.2464454976302" y="1618.6162085308056" />
+      <point x="-3105.9964454976302" y="1618.6162085308056" />
+      <point x="0.0" y="247.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_role_department" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_department" relationship="REFERENCES">
+      <point x="83.60160248815282" y="-92.72578199052168" />
+      <point x="-2356.908427132701" y="-1437.0731753554503" />
+      <point x="-3222.6452754739335" y="-1437.0731753554503" />
+      <point x="0.0" y="107.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.patient_info" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.user_info" relationship="REFERENCES">
+      <point x="0.0" y="-275.5" />
+      <point x="-895.5698578199058" y="-1170.5924170616113" />
+      <point x="-896.7195112559245" y="-1170.5924170616113" />
+      <point x="-1.1496534360187525" y="191.85393364928905" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.hospital_schedule" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.hospital_department" relationship="REFERENCES">
+      <point x="0.0" y="-163.5" />
+      <point x="0.0" y="149.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_log" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_user" relationship="REFERENCES">
+      <point x="0.0" y="-121.5" />
+      <point x="-2818.418159063981" y="-826.4502369668246" />
+      <point x="-3222.6452754739335" y="-826.4502369668246" />
+      <point x="0.0" y="247.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.user_address" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.user_info" relationship="REFERENCES">
+      <point x="0.0" y="-177.5" />
+      <point x="-1503.2721327014224" y="-1415.0924170616113" />
+      <point x="-787.0698578199058" y="-1415.0924170616113" />
+      <point x="108.5" y="191.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_role_menu" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_role" relationship="REFERENCES">
+      <point x="99.25" y="-93.5" />
+      <point x="-3967.3693364928913" y="-486.1695734597157" />
+      <point x="-3646.872391883886" y="-486.1695734597157" />
+      <point x="0.0" y="163.5" />
+    </edge>
+    <edge source="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_role" target="60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_user" relationship="REFERENCES">
+      <point x="0.0" y="-163.5" />
+      <point x="-3646.872391883886" y="-826.4502369668246" />
+      <point x="-3222.6452754739335" y="-826.4502369668246" />
+      <point x="0.0" y="247.5" />
+    </edge>
+  </edges>
+  <settings layout="分层" zoom="0.4726702508960574" showDependencies="false" x="-995.9705876777266" y="1491.2004620853088" />
+  <SelectedNodes>
+    <node>60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_conf</node>
+    <node>60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.space_info</node>
+    <node>60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.leaf_alloc</node>
+    <node>60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.space_type</node>
+    <node>60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.base_sys_param</node>
+    <node>60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.dict_info</node>
+    <node>60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.dict_type</node>
+    <node>60d46010-c9b2-4977-b18f-d8dacb761a82.TABLE:database.plugin_info</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>列</Category>
+    <Category>注释</Category>
+    <Category>虚拟外键</Category>
+    <Category>键列</Category>
+  </Categories>
+</Diagram>
+

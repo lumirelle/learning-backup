@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql  # 使用官方 MySQL 镜像，你可以根据需要选择版本
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"  # 设置 root 用户密码
+      MYSQL_DATABASE: "database"         # 创建一个初始数据库
+      TZ: Asia/Shanghai # 指定时区
+    networks:
+      - backend
+    ports:
+      - "6033:3306"                       # 将主机的 6033 端口映射到容器的 3306 端口
+    volumes:
+      - ./data/mysql/:/var/lib/mysql         # 挂载数据卷以持久化数据
+
+  redis:
+    image: redis:latest
+    # command: --requirepass "12345678"  # Uncomment if you need a password
+    restart: always
+    environment:
+      TZ: Asia/Shanghai # 指定时区
+    volumes:
+      - ./data/redis/:/data/
+    networks:
+      - backend
+    ports:
+      - 6379:6379
+
+networks:
+  backend:
+    driver: bridge

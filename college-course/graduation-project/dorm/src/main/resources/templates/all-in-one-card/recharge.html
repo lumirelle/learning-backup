@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+  <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="format-detection" content="telephone=no" />
+      <!-- 页面标题 -->
+      <title>一卡通充值 - 校区学生管理与服务系统</title>
+      <!-- 小图标 -->
+      <link rel="shortcut icon" type="image/png" href="/images/favicon.png" />
+      <!-- 样式 -->
+      <link th:href="@{/vendor/chartist/css/chartist.min.css}" rel="stylesheet" />
+      <link th:href="@{/vendor/wow-master/css/libs/animate.css}" rel="stylesheet" />
+      <link th:href="@{/vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet" />
+      <link th:href="@{/vendor/jquery-nice-select/css/nice-select.css}" rel="stylesheet" />
+      <link th:href="@{/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" />
+      <link th:href="@{/vendor/swiper/css/swiper-bundle.min.css}" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+      <link th:href="@{/css/style.css}" rel="stylesheet" />
+    </head>
+    <body>
+      <!--** Preloader start ****-->
+      <div id="preloader">
+        <div class="loader"></div>
+      </div>
+      <!--** Preloader end ****-->
+
+      <!--** Main wrapper start **-->
+      <div id="main-wrapper">
+        <!--** Nav header start **-->
+        <div class="nav-header">
+          <a href="./home" class="brand-logo">
+            <div class="brand-title">
+              <h1 style="width: 200px" class="mb-0">校区学生管理与服务系统</h1>
+            </div>
+          </a>
+          <div class="nav-control">
+            <div class="hamburger">
+              <span class="line"></span><span class="line"></span><span class="line"></span>
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="22" y="11" width="4" height="4" rx="2" fill="#2A353A" />
+                <rect x="11" width="4" height="4" rx="2" fill="#2A353A" />
+                <rect x="22" width="4" height="4" rx="2" fill="#2A353A" />
+                <rect x="11" y="11" width="4" height="4" rx="2" fill="#2A353A" />
+                <rect x="11" y="22" width="4" height="4" rx="2" fill="#2A353A" />
+                <rect width="4" height="4" rx="2" fill="#2A353A" />
+                <rect y="11" width="4" height="4" rx="2" fill="#2A353A" />
+                <rect x="22" y="22" width="4" height="4" rx="2" fill="#2A353A" />
+                <rect y="22" width="4" height="4" rx="2" fill="#2A353A" />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!--** Nav header end **-->
+
+        <!--** Header start **-->
+        <div class="header">
+          <div class="header-content">
+            <nav class="navbar navbar-expand">
+              <div class="collapse navbar-collapse justify-content-between">
+                <div class="header-left">
+                  <div class="header-title"></div>
+                </div>
+                <ul class="navbar-nav header-right">
+
+                  <li class="nav-item dropdown notification_dropdown">
+                    <a class="nav-link" href="javascript:void(0);" data-bs-toggle="dropdown">
+                      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M11 14.4375C9.1025 14.4375 7.5625 12.8975 7.5625 11C7.5625 9.1025 9.1025 7.5625 11 7.5625C12.8975 7.5625 14.4375 9.1025 14.4375 11C14.4375 12.8975 12.8975 14.4375 11 14.4375ZM11 8.9375C9.86333 8.9375 8.9375 9.86333 8.9375 11C8.9375 12.1367 9.86333 13.0625 11 13.0625C12.1367 13.0625 13.0625 12.1367 13.0625 11C13.0625 9.86333 12.1367 8.9375 11 8.9375Z"
+                          fill="var(--primary)"
+                        />
+                        <path
+                          d="M13.9424 20.3408C13.7499 20.3408 13.5574 20.3133 13.3649 20.2674C12.7966 20.1116 12.3199 19.7541 12.0174 19.2499L11.9074 19.0666C11.3666 18.1316 10.6241 18.1316 10.0833 19.0666L9.98242 19.2408C9.67992 19.7541 9.20325 20.1208 8.63492 20.2674C8.05742 20.4233 7.46158 20.3408 6.95742 20.0383L5.38075 19.1308C4.82158 18.8099 4.41825 18.2874 4.24409 17.6549C4.07909 17.0224 4.16158 16.3716 4.48242 15.8124C4.74825 15.3449 4.82159 14.9233 4.66575 14.6574C4.50992 14.3916 4.11575 14.2358 3.57492 14.2358C2.23659 14.2358 1.14575 13.1449 1.14575 11.8066V10.1933C1.14575 8.85494 2.23659 7.7641 3.57492 7.7641C4.11575 7.7641 4.50992 7.60827 4.66575 7.34244C4.82159 7.0766 4.75742 6.65494 4.48242 6.18744C4.16158 5.62827 4.07909 4.96827 4.24409 4.34494C4.40909 3.71244 4.81242 3.18994 5.38075 2.8691L6.96658 1.9616C8.00242 1.34744 9.36825 1.70494 9.99158 2.7591L10.1016 2.94244C10.6424 3.87744 11.3849 3.87744 11.9258 2.94244L12.0266 2.76827C12.6499 1.70494 14.0158 1.34744 15.0608 1.97077L16.6374 2.87827C17.1966 3.1991 17.5999 3.7216 17.7741 4.3541C17.9391 4.9866 17.8566 5.63744 17.5357 6.1966C17.2699 6.6641 17.1966 7.08577 17.3524 7.3516C17.5083 7.61744 17.9024 7.77327 18.4433 7.77327C19.7816 7.77327 20.8724 8.8641 20.8724 10.2024V11.8158C20.8724 13.1541 19.7816 14.2449 18.4433 14.2449C17.9024 14.2449 17.5083 14.4008 17.3524 14.6666C17.1966 14.9324 17.2607 15.3541 17.5357 15.8216C17.8566 16.3808 17.9482 17.0408 17.7741 17.6641C17.6091 18.2966 17.2057 18.8191 16.6374 19.1399L15.0516 20.0474C14.7033 20.2399 14.3274 20.3408 13.9424 20.3408ZM10.9999 16.9491C11.8158 16.9491 12.5766 17.4624 13.0991 18.3699L13.1999 18.5441C13.3099 18.7366 13.4933 18.8741 13.7133 18.9291C13.9333 18.9841 14.1533 18.9566 14.3366 18.8466L15.9224 17.9299C16.1608 17.7924 16.3441 17.5633 16.4174 17.2883C16.4908 17.0133 16.4541 16.7291 16.3166 16.4908C15.7941 15.5924 15.7299 14.6666 16.1333 13.9608C16.5366 13.2549 17.3708 12.8516 18.4158 12.8516C19.0024 12.8516 19.4699 12.3841 19.4699 11.7974V10.1841C19.4699 9.6066 19.0024 9.12994 18.4158 9.12994C17.3708 9.12994 16.5366 8.7266 16.1333 8.02077C15.7299 7.31494 15.7941 6.3891 16.3166 5.49077C16.4541 5.25244 16.4908 4.96827 16.4174 4.69327C16.3441 4.41827 16.1699 4.19827 15.9316 4.0516L14.3458 3.1441C13.9516 2.90577 13.4291 3.04327 13.1908 3.4466L13.0899 3.62077C12.5674 4.52827 11.8066 5.0416 10.9908 5.0416C10.1749 5.0416 9.41408 4.52827 8.89158 3.62077L8.79075 3.43744C8.56158 3.05244 8.04825 2.91494 7.65408 3.1441L6.06825 4.06077C5.82992 4.19827 5.64658 4.42744 5.57325 4.70244C5.49992 4.97744 5.53658 5.2616 5.67408 5.49994C6.19658 6.39827 6.26075 7.3241 5.85742 8.02994C5.45408 8.73577 4.61992 9.1391 3.57492 9.1391C2.98825 9.1391 2.52075 9.6066 2.52075 10.1933V11.8066C2.52075 12.3841 2.98825 12.8608 3.57492 12.8608C4.61992 12.8608 5.45408 13.2641 5.85742 13.9699C6.26075 14.6758 6.19658 15.6016 5.67408 16.4999C5.53658 16.7383 5.49992 17.0224 5.57325 17.2974C5.64658 17.5724 5.82075 17.7924 6.05908 17.9391L7.64492 18.8466C7.83742 18.9658 8.06658 18.9933 8.27742 18.9383C8.49742 18.8833 8.68075 18.7366 8.79992 18.5441L8.90075 18.3699C9.42325 17.4716 10.1841 16.9491 10.9999 16.9491Z"
+                          fill="var(--primary)"
+                        />
+                      </svg>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end"></div>
+                  </li>
+                  <li class="nav-item dropdown notification_dropdown">
+                    <a class="nav-link bell-icon" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                      <svg
+                        class="bell-animi"
+                        width="22"
+                        height="22"
+                        viewBox="0 0 22 22"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M11.0183 18.8193C8.88246 18.8193 6.74663 18.4801 4.72079 17.8018C3.95079 17.5359 3.36413 16.9951 3.10746 16.2893C2.84163 15.5834 2.93329 14.8043 3.35496 14.1076L4.40913 12.3568C4.62913 11.9901 4.83079 11.2568 4.83079 10.8259V8.17676C4.83079 4.76676 7.6083 1.98926 11.0183 1.98926C14.4283 1.98926 17.2058 4.76676 17.2058 8.17676V10.8259C17.2058 11.2476 17.4075 11.9901 17.6275 12.3659L18.6725 14.1076C19.0666 14.7676 19.14 15.5651 18.8741 16.2893C18.6083 17.0134 18.0308 17.5634 17.3066 17.8018C15.29 18.4801 13.1541 18.8193 11.0183 18.8193ZM11.0183 3.36426C8.36913 3.36426 6.20579 5.51842 6.20579 8.17676V10.8259C6.20579 11.4951 5.93079 12.4851 5.59163 13.0626L4.53746 14.8134C4.33579 15.1526 4.28079 15.5101 4.39996 15.8126C4.50996 16.1243 4.78496 16.3626 5.16079 16.4909C8.99246 17.7743 13.0533 17.7743 16.885 16.4909C17.215 16.3809 17.4716 16.1334 17.5908 15.8034C17.71 15.4734 17.6825 15.1159 17.4991 14.8134L16.445 13.0626C16.0966 12.4668 15.8308 11.4859 15.8308 10.8168V8.17676C15.8308 5.51842 13.6766 3.36426 11.0183 3.36426Z"
+                          fill="var(--primary)"
+                        />
+                        <path
+                          d="M12.7232 3.61203C12.6591 3.61203 12.5949 3.60286 12.5307 3.58453C12.2649 3.5112 12.0082 3.4562 11.7607 3.41953C10.9816 3.3187 10.2299 3.3737 9.52407 3.58453C9.2674 3.66703 8.9924 3.58453 8.81823 3.39203C8.64407 3.19953 8.58907 2.92453 8.6899 2.67703C9.06573 1.71453 9.9824 1.08203 11.0274 1.08203C12.0724 1.08203 12.9891 1.70536 13.3649 2.67703C13.4566 2.92453 13.4107 3.19953 13.2366 3.39203C13.0991 3.5387 12.9066 3.61203 12.7232 3.61203Z"
+                          fill="var(--primary)"
+                        />
+                        <path
+                          d="M11.0183 20.9092C10.1108 20.9092 9.23081 20.5425 8.58914 19.9008C7.94748 19.2592 7.58081 18.3792 7.58081 17.4717H8.95581C8.95581 18.0125 9.17581 18.5442 9.56081 18.9292C9.94581 19.3142 10.4775 19.5342 11.0183 19.5342C12.155 19.5342 13.0808 18.6083 13.0808 17.4717H14.4558C14.4558 19.3692 12.9158 20.9092 11.0183 20.9092Z"
+                          fill="var(--primary)"
+                        />
+                      </svg>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end of-visible"></div>
+                  </li>
+                  <li class="nav-item dropdown notification_dropdown">
+                    <a class="nav-link bell-link" href="javascript:void(0);">
+                      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M15.5833 19.4788H6.41659C3.07075 19.4788 1.14575 17.5538 1.14575 14.208V7.79134C1.14575 4.44551 3.07075 2.52051 6.41659 2.52051H15.5833C18.9291 2.52051 20.8541 4.44551 20.8541 7.79134V14.208C20.8541 17.5538 18.9291 19.4788 15.5833 19.4788ZM6.41659 3.89551C3.79492 3.89551 2.52075 5.16967 2.52075 7.79134V14.208C2.52075 16.8297 3.79492 18.1038 6.41659 18.1038H15.5833C18.2049 18.1038 19.4791 16.8297 19.4791 14.208V7.79134C19.4791 5.16967 18.2049 3.89551 15.5833 3.89551H6.41659Z"
+                          fill="var(--primary)"
+                        />
+                        <path
+                          d="M10.9999 11.797C10.2299 11.797 9.45071 11.5587 8.85488 11.0728L5.98571 8.78115C5.69238 8.54282 5.63738 8.11198 5.87571 7.81865C6.11405 7.52532 6.54488 7.47032 6.83822 7.70865L9.70737 10.0003C10.404 10.5595 11.5865 10.5595 12.2832 10.0003L15.1524 7.70865C15.4457 7.47032 15.8857 7.51615 16.1149 7.81865C16.3532 8.11198 16.3074 8.55199 16.0049 8.78115L13.1357 11.0728C12.549 11.5587 11.7699 11.797 10.9999 11.797Z"
+                          fill="var(--primary)"
+                        />
+                      </svg>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <div class="dropdown header-profile2">
+                      <a
+                        class="nav-link"
+                        href="javascript:void(0);"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <div class="header-info2 d-flex align-items-center">
+                          <div class="d-flex align-items-center sidebar-info">
+                            <div>
+                              <h4 class="mb-0">[[${session.user.username}]]</h4>
+                              <span class="d-block text-end">[[${session.user.email}]]</span>
+                            </div>
+                          </div>
+                          <img th:src="${session.baseUrl} + '/' + ${session.user.avatar}" alt="" />
+                        </div>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-end">
+                        <a th:href="@{/profile}" class="dropdown-item ai-icon">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            width="24px"
+                            height="24px"
+                            viewBox="0 0 24 24"
+                            version="1.1"
+                            class="svg-main-icon"
+                          >
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                              <polygon points="0 0 24 0 24 24 0 24" />
+                              <path
+                                d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+                                fill="#000000"
+                                fill-rule="nonzero"
+                                opacity="0.3"
+                              />
+                              <path
+                                d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+                                fill="var(--primary)"
+                                fill-rule="nonzero"
+                              />
+                            </g>
+                          </svg>
+                          <span class="ms-2">个人信息 </span>
+                        </a>
+
+                        <a href="#" class="dropdown-item ai-icon">
+                          <form action="/api/logout" method="POST">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                            <button type="submit" class="btn btn-link p-0">
+                              <svg
+                                class="ms-2"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="var(--primary)"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              >
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                <polyline points="16 17 21 12 16 7"></polyline>
+                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                              </svg>
+                              <span class="ms-2">退出登录 </span>
+                            </button>
+                          </form>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <!--** Header end **-->
+
+        <!--** Sidebar start **-->
+        <div class="deznav" th:replace="~{home::sidebar}"></div>
+        <!--** Sidebar end **-->
+
+        <!--** Content body start **-->
+        <div class="content-body">
+          <div class="container-fluid">
+            <!-- row -->
+            <div class="row">
+              <div class="col-xl-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">一卡通充值</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="basic-form">
+                      <form enctype="multipart/form-data" method="post" th:action="@{/api/all-in-one-card/recharge}">
+                        <fieldset>
+                          <input type="hidden" th:value="${allInOneCard.id}" name="id" />
+                          <div class="mb-3">
+                            <label class="form-label">一卡通号</label>
+                            <input type="text" class="form-control" th:value="${allInOneCard.no}" readonly />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">当前余额</label>
+                            <input type="text" class="form-control" th:value="${allInOneCard.amount}" readonly />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">充值金额</label>
+                            <input type="text" class="form-control" name="amount" id="amount" required />
+                          </div>
+                          <p style="color: red" th:if="${not #strings.isEmpty(msg)}" th:text="${msg}">
+                            <!--这个msg既可以是model里的，也可以是session里的-->
+                          </p>
+                          <button type="submit" class="btn btn-primary mt-3">保存</button>
+                        </fieldset>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--** Content body end **-->
+      </div>
+      <!--** Main wrapper end **-->
+
+      <!--** Scripts **-->
+      <!-- Required vendors -->
+      <script th:src="@{/vendor/global/global.min.js}"></script>
+      <script th:src="@{/vendor/chart.js/Chart.bundle.min.js}"></script>
+      <script th:src="@{/vendor/bootstrap-select/dist/js/bootstrap-select.min.js}"></script>
+      <!-- datatables -->
+      <script th:src="@{/vendor/datatables/js/jquery.dataTables.min.js}"></script>
+      <script th:src="@{/js/plugins-init/datatables.init.js}"></script>
+      <!-- Apex Chart -->
+      <script th:src="@{/vendor/apexchart/apexchart.js}"></script>
+      <script th:src="@{/vendor/chart.js/Chart.bundle.min.js}"></script>
+      <!-- Chart piety plugin files -->
+      <script th:src="@{/vendor/peity/jquery.peity.min.js}"></script>
+      <script th:src="@{/vendor/jquery-nice-select/js/jquery.nice-select.min.js}"></script>
+      <!-- swiper-slider -->
+      <script th:src="@{/vendor/swiper/js/swiper-bundle.min.js}"></script>
+      <script th:src="@{/vendor/wow-master/dist/wow.min.js}"></script>
+      <script th:src="@{/js/deznav-2-init.js}"></script>
+      <script th:src="@{/js/invoice.js}"></script>
+      <script th:src="@{/js/custom.min.js}"></script>
+      <script th:src="@{/js/demo-2.js}"></script>
+      <script th:src="@{/js/styleSwitcher.js}"></script>
+      <script>
+        $(function () {
+          // 限制金额只能输入数字和小数点
+          $('#amount').on('input', function () {
+            let amount = $(this).val()
+            // 去除非数字和小数点
+            amount = amount.replace(/[^0-9.]/g, '')
+            // 如果有多个小数点，去除第二个小数点及之后的数
+            // 如果小数点后超过两位，只保留两位
+            const parts = amount.split('.')
+            if (parts.length < 2) {
+              amount = parts[0]
+            } else {
+              parts[1] = parts[1].substring(0, 2)
+              amount = parts[0] + '.' + parts[1]
+            }
+            $(this).val(amount)
+          })
+        })
+      </script>
+    </body>
+  </html>
+</html>

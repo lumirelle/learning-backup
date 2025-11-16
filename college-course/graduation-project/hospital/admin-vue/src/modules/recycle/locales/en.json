@@ -1,0 +1,14 @@
+{
+  "批量恢复": "Batch Recovery",
+  "操作人": "Operator",
+  "被删除的数据": "Deleted Data",
+  "请求的接口": "Requested Interface",
+  "请求参数": "Request Parameters",
+  "删除条数": "Number of Deletions",
+  "创建时间": "Creation Time",
+  "恢复": "Restore",
+  "此操作将恢复被删除的数据，是否继续？": "This operation will restore the deleted data. Do you want to continue?",
+  "提示": "Tip",
+  "数据恢复成功": "Data Recovery Successful",
+  "姓名": "Name"
+}

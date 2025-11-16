@@ -1,0 +1,20 @@
+{
+  "取消": "Cancel",
+  "选择 {count}/{limit} 个": "Select {count}/{limit}",
+  "选择文件": "Select File",
+  "文件空间": "File Space",
+  "点击上传": "Click to Upload",
+  "刷新": "Refresh",
+  "删除选中文件": "Delete Selected Files",
+  "将文件拖到此处，或点击按钮上传": "Drag files here or click the button to upload",
+  "共 {total} 条": "Total {total} items",
+  "分类": "Category",
+  "文件列表": "File List",
+  "名称": "Name",
+  "最多只能选择{limit}个文件": "You can select up to {limit} files",
+  "此操作将删除文件, 是否继续?": "This operation will delete the file. Do you want to continue?",
+  "提示": "Tip",
+  "删除成功": "Delete Successful",
+  "类型": "Type",
+  "分类ID": "Category ID"
+}

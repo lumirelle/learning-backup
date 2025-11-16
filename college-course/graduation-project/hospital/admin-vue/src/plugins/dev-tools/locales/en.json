@@ -1,0 +1,14 @@
+{
+  "代理请求": "Proxy Request",
+  "字典": "Dictionary",
+  "账号": "Account",
+  "文档": "Document",
+  "刷新": "Refresh",
+  "搜索关键字": "Search Keyword",
+  "Eps 错误，请在后端代码中设置：": "Eps error, please set in backend code:",
+  "没有可用的字典": "No available dictionary",
+  "请添加新的字典条目": "Please add new dictionary entry",
+  "去添加": "Go to add",
+  "是否删除该账号？": "Delete this account?",
+  "提示": "Tip"
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dorm.mapper.dorm.DormMapper">
+  <select id="listSettingPerBuilding" resultType="com.dorm.entity.dorm.BuildingSettingVO">
+    select dorm.building, sum(dorm.setting) as setting
+    from dorm
+    group by building
+    order by setting desc
+  </select>
+</mapper>
+
+<!--order by：排序-->

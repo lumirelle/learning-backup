@@ -1,0 +1,86 @@
+.cl-form {
+	.cl-form-item {
+		display: flex;
+		margin-bottom: 32rpx;
+		position: relative;
+		font-size: 28rpx;
+
+		&.is-required {
+			.cl-form-item__label::after {
+				content: "*";
+				color: $cl-color-error;
+				margin-left: 6rpx;
+			}
+		}
+
+		&__container {
+			display: flex;
+			align-items: center;
+			flex: 1;
+		}
+
+		&__label {
+			height: $cl-height;
+			line-height: $cl-height;
+			flex-shrink: 0;
+			margin-right: 20rpx;
+		}
+
+		&__content {
+			flex: 1;
+
+			&.is-justify--left {
+				text-align: left;
+			}
+
+			&.is-justify--center {
+				text-align: center;
+			}
+
+			&.is-justify--end {
+				text-align: right;
+			}
+		}
+
+		&__message {
+			display: block;
+			color: $cl-color-error;
+			font-size: 24rpx;
+			text-align: right;
+			margin-top: 6rpx;
+		}
+
+		&__append {
+			display: flex;
+			align-items: center;
+			margin-left: 20rpx;
+		}
+
+		&.is-top {
+			flex-direction: column;
+
+			.cl-form-item__label {
+				margin-right: 0;
+				margin-bottom: 10rpx;
+			}
+		}
+
+		&.is-left {
+			.cl-form-item__label {
+				text-align: left;
+			}
+		}
+
+		&.is-right {
+			.cl-form-item__label {
+				text-align: right;
+			}
+		}
+	}
+
+	&--border {
+		.cl-form-item {
+			border-bottom: $cl-border-width solid #eeeeee;
+		}
+	}
+}

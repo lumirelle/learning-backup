@@ -1,0 +1,89 @@
+cl-text {
+	line-height: 1;
+}
+
+.cl-text {
+	display: inline-flex;
+	align-items: center;
+	white-space: normal;
+	word-break: break-all;
+	word-wrap: break-word;
+	font-size: $cl-font-size;
+
+	&.is-bold {
+		font-weight: 500;
+	}
+
+	&.is-block {
+		display: flex;
+	}
+
+	&.is-line-through {
+		text-decoration: line-through;
+	}
+
+	&.is-underline {
+		.cl-text__value {
+			text-decoration: underline;
+		}
+	}
+
+	&.is-ellipsis {
+		.cl-text__value {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+		}
+	}
+
+	&.is-copy {
+		user-select: text;
+	}
+
+	&.is-price {
+		align-items: baseline;
+	}
+
+	&.is-color-primary {
+		color: $cl-color-primary !important;
+	}
+
+	&.is-color-success {
+		color: $cl-color-success !important;
+	}
+
+	&.is-color-error {
+		color: $cl-color-error !important;
+	}
+
+	&.is-color-warning {
+		color: $cl-color-warning !important;
+	}
+
+	&.is-color-info {
+		color: $cl-color-info !important;
+	}
+
+	&__value {
+		display: inline;
+	}
+
+	&__symbol--price,
+	&__precision {
+		font-size: 24rpx;
+	}
+
+	&__prefix-icon {
+		margin-right: 10rpx;
+	}
+
+	&__suffix-icon {
+		margin-left: 10rpx;
+	}
+
+	&__prefix-icon,
+	&__suffix-icon {
+		font-size: inherit;
+	}
+}

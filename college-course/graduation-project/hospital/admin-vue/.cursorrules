@@ -1,0 +1,74 @@
+# 项目背景
+
+- 库：typescript、javaScript、scss、vue、tailwind
+- 框架：cool-admin-vue
+- 项目版本：8.x
+
+# 项目目录
+
+├── .vscode(代码片段，根据关键字可以快速地生成代码)
+├── public(静态资源文件)
+├── packages(源码包：@cool-vue/crud、@cool-vue/vite-plugin)
+├── build
+│ └── cool()
+│ │ └── eps.json(Eps 配置文件)
+│ │ └── eps.d.ts(Eps 描述文件)
+├── src
+│ └── cool(核心文件)
+│ └── modules(项目模块)
+│ │ └── base(基础模块)
+│ │ └── demo(示例模块)
+│ │ └── dict(字典模块)
+│ │ └── helper(辅助模块)
+│ │ └── recycle(回收站模块)
+│ │ └── space(cl-upload-space 文件空间模块)
+│ │ └── task(任务模块)
+│ │ └── user(用户模块)
+│ └── plugins(项目插件)
+│ │ └── crud(cl-crud、@cool-vue/crud)
+│ │ └── distpicker(cl-distpicker、省市区选择器)
+│ │ └── echarts(图标)
+│ │ └── editor-preview(编辑器预览组件)
+│ │ └── editor-wange(wang富文本编辑器)
+│ │ └── element-ui(element-plus 组件)
+│ │ └── excel(excel导入、导出组件)
+│ │ └── i18n(多语言)
+│ │ └── iconfont(iconfont 图标)
+│ │ └── theme(cl-theme 主题组件)
+│ │ └── upload(cl-upload 文件上传组件)
+│ │ └── view(cl-view-group、cl-view-head 视图组件)
+│ └── config
+│ │ └── index.ts(默认配置)
+│ │ └── dev.ts(开发环境)
+│ │ └── prod.ts(生产环境)
+│ │ └── proxy.ts(代理配置)
+│ └── App.vue(入口文件)
+│ └── main.ts(入口文件)
+├── package.json(依赖管理，项目信息)
+└── ...
+
+模块、插件目录
+├── modules/plugins
+│ └── base(模块名)
+│ │ └── components(全局组件)
+│ │ └── directives(全局指令)
+│ │ └── locales(国际化)
+│ │ └── router(路由)
+│ │ └── store(状态管理)
+│ │ └── utils(工具函数)
+│ │ └── views(视图)
+│ │ └── config.ts(必须，模块的配置)
+│ │ └── index.ts(模块导出)
+
+# 其它
+
+- 文件、组件命名用 - 连接，如：student-info.vue
+- service 的描述类型，查看 build/cool/eps.d.ts 描述文件
+- 创建模块、插件代码需要读取.cursor/rules的module.mdc，其它的rules根据需要进行参考
+
+# import 引用别名
+
+- "/@" 对应 "./src"
+- "/$" 对应 "./src/modules"
+- "/#" 对应 "./src/plugins"
+- "/~" 对应 "./packages"

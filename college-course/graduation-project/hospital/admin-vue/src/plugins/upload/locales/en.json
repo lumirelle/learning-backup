@@ -1,0 +1,22 @@
+{
+  "文件上传失败": "File upload failed",
+  "单选": "Single choice",
+  "多选": "Multiple choice",
+  "自定义": "Customize",
+  "选择头像": "Select avatar",
+  "选择图片": "Select picture",
+  "文件上传": "File upload",
+  "拖拽排序": "Drag and sort",
+  "拖拽上传": "Drag and upload",
+  "上传": "Upload",
+  "文件不能大于100k": "File cannot be larger than 100k",
+  "点击上传或将文件拖动到此处，文件大小限制{n}M": "Click to upload or drag the file here, file size limit {n}M",
+  "选择文件": "Select file",
+  "最多只能上传{n}个文件": "Up to {n} files can be uploaded at most",
+  "上传文件大小不能超过 {n}MB!": "The uploaded file size cannot exceed {n}MB!",
+  "文档预览": "Document preview",
+  "加载失败": "Load failed",
+  "预览": "Preview",
+  "复制链接": "Copy link",
+  "删除": "Delete"
+}

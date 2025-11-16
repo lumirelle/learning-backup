@@ -1,0 +1,26 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "experimentalDecorators": true,
+    "module": "ESNext",
+
+    "paths": {
+      "/@/*": ["./src/*"],
+      "/$/*": ["./src/modules/*"],
+      "/#/*": ["./src/plugins/*"],
+      "/~/*": ["./packages/*"]
+    },
+    "types": [
+      "./build/cool/eps",
+      "./env",
+      "@cool-vue/crud/index",
+      "@cool-vue/vite-plugin/client",
+      "element-plus/global"
+    ],
+    "noImplicitAny": false,
+    "verbatimModuleSyntax": false
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["node_modules", "dist"]
+}

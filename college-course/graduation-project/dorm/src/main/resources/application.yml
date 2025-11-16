@@ -1,0 +1,46 @@
+server:
+  port: 8088
+
+location: C:/DORM/Uploads
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/system-dorm?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      min-idle: 5
+      max-active: 10
+      max-wait: 3000
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+#     cache false for hmr
+#    cache: false
+  web:
+    resources:
+      static-locations: classpath:/static/,classpath:/static/assets/,classpath:/public/,classpath:/resources/,classpath:/META-INF/resource/,file:${location}
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  # devtools for hmr
+#  devtools:
+#    restart:
+#      enabled: true
+#    livereload:
+#      enabled: true
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+pagehelper:
+  helper-dialect: mysql
+

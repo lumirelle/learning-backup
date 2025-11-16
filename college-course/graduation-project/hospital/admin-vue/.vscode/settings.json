@@ -1,0 +1,48 @@
+{
+  // -- format & lint --
+  "prettier.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml",
+    "toml",
+    "xml",
+    "css",
+    "postcss",
+    "scss"
+  ],
+  "i18n-ally.displayLanguage": "zh-cn",
+  "i18n-ally.sourceLanguage": "zh-cn",
+  "i18n-ally.localesPaths": [
+    "src/plugins/i18n",
+    "packages/crud/src/locale",
+    "packages/crud/types/locale",
+    "src/modules/base/locales",
+    "src/modules/demo/locales",
+    "src/modules/dict/locales",
+    "src/modules/helper/locales",
+    "src/modules/recycle/locales",
+    "src/modules/space/locales",
+    "src/modules/task/locales",
+    "src/modules/user/locales",
+    "src/plugins/crud/locales",
+    "src/plugins/dev-tools/locales",
+    "src/plugins/editor-preview/locales",
+    "src/plugins/editor-wang/locales",
+    "src/plugins/excel/locales",
+    "src/plugins/theme/locales",
+    "src/plugins/upload/locales",
+    "src/plugins/view/locales"
+  ]
+}

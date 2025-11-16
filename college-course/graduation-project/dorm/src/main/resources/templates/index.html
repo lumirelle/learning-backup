@@ -1,0 +1,117 @@
+<!doctype html>
+<!-- 登录页 -->
+<html lang="zh-CN" class="h-100" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <!-- 页面标题 -->
+    <title>登录 - 校区学生管理与服务系统</title>
+    <!-- 小图标 -->
+    <link rel="shortcut icon" type="image/png" href="/images/favicon.png" />
+    <!-- 样式 -->
+    <link th:href="@{/vendor/wow-master/css/libs/animate.css}" rel="stylesheet" />
+    <link th:href="@{/vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet" />
+    <link th:href="@{/vendor/bootstrap-select-country/css/bootstrap-select-country.min.css}" rel="stylesheet" />
+    <link th:href="@{/vendor/jquery-nice-select/css/nice-select.css}" rel="stylesheet" />
+    <link th:href="@{/vendor/swiper/css/swiper-bundle.min.css}" rel="stylesheet" />
+    <link th:href="@{/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+  </head>
+
+  <body class="body h-100">
+    <div class="container-fluid h-100">
+      <div class="row h-100 align-items-center justify-contain-center">
+        <div class="col-xl-12">
+          <!-- 卡片 -->
+          <div class="card main-width">
+            <div class="card-body p-0">
+              <div class="row m-0">
+                <!-- 表单列 -->
+                <div class="col-xl-4 col-lg-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center justify-content-between mb-4">
+                        <a href="/login">
+                          <img style="width: 100%" src="images/logo/logo.png" alt="" />
+                        </a>
+                      </div>
+                      <h2 style="text-align: center">欢迎使用本系统</h2>
+                      <form th:action="@{/api/login}" method="post" class="mt-4">
+                        <!-- 输入框：用户名 -->
+                        <div class="form-group mb-4">
+                          <label for="usernameInput">用户名</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="username"
+                            id="usernameInput"
+                            placeholder="用户名"
+                          />
+                        </div>
+                        <!-- 输入框：密码 -->
+                        <div class="form-group mb-4">
+                          <label for="passwordInput">密码</label>
+                          <input
+                            type="password"
+                            class="form-control"
+                            name="password"
+                            id="passwordInput"
+                            placeholder="密码"
+                          />
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mb-4"></div>
+                        <button type="submit" class="btn btn-primary btn-block mb-4">
+                          <i class="fa-solid fa-lock text-white me-2"></i>登录
+                        </button>
+                        <div class="position-relative social-log text-center mb-4"></div>
+                      </form>
+                      <p style="color: red" th:if="${not #strings.isEmpty(msg)}" th:text="${msg}">
+                        <!--这个msg既可以是model里的，也可以是session里的-->
+                      </p>
+                      <div class="text-center">
+                        <span>还没有账户?<a th:href="@{/register}" class="text-primary font-w500">去注册!</a></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 欢迎图片列 -->
+                <div class="col-xl-8 col-lg-8 position-relative bg-secondary login-border">
+                  <div class="d-flex flex-column justify-content-between h-100">
+                    <div class="content text-center py-4">
+                      <h2 class="text-white mb-0">欢迎</h2>
+                      <p class="text-white"><br /></p>
+                    </div>
+                    <div class="login-media-1">
+                      <img src="images/logo/auth.png" alt="" />
+                      <svg
+                        class="t-svg"
+                        width="50"
+                        height="50"
+                        viewBox="0 0 192 169"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M61.5393 0.840397L191.627 0.840258L101.714 168.846L-4.87743e-05 113.076L61.5393 0.840397Z"
+                          fill="#2696FD"
+                          fill-opacity="0.22"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Required vendors -->
+    <script th:src="@{/vendor/global/global.min.js}"></script>
+  </body>
+</html>

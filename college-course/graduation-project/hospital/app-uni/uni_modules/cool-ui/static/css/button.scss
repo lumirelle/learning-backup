@@ -1,0 +1,141 @@
+// Mixins
+@mixin button-color($type, $color) {
+	&.cl-button--#{$type} {
+		background-color: $color;
+		border-color: $color;
+
+		.cl-button__text,
+		.cl-button__icon,
+		.cl-loading {
+			color: #fff;
+		}
+
+		&[disabled],
+		&.is-disabled {
+			background-color: $color;
+		}
+
+		&.is-plain {
+			background-color: #fff;
+
+			.cl-button__text,
+			.cl-button__icon {
+				color: rgba($color, 0.8);
+			}
+			&.is-border {
+				border-color: rgba($color, 0.8);
+			}
+		}
+
+		&.button-hover {
+			&:not(.is-loading) {
+				background-color: rgba($color, 0.8);
+				&.is-plain {
+					.cl-button__text,
+					.cl-button__icon {
+						color: #fff;
+					}
+				}
+			}
+		}
+	}
+}
+
+// Styles
+.cl-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	white-space: nowrap;
+	margin: 0;
+	background-color: #fff;
+	overflow: visible;
+	vertical-align: middle;
+	font-size: $cl-font-size;
+	border-radius: $cl-button-radius;
+	height: $cl-height;
+	padding: $cl-button-padding;
+	position: relative;
+
+	&__text {
+		line-height: 1;
+		letter-spacing: 1rpx;
+	}
+
+	&__icon {
+		display: flex;
+		align-items: center;
+		height: 100%;
+		line-height: 1;
+		margin-right: 10rpx;
+
+		image {
+			height: 50rpx;
+			width: 50rpx;
+		}
+	}
+
+	&::after {
+		display: none;
+		border-width: 0;
+	}
+
+	&.button-hover {
+		background-color: #f6f7fa;
+	}
+
+	&--large {
+		height: 80rpx;
+		padding: 0rpx 38rpx;
+		font-size: 30rpx;
+	}
+
+	&--small {
+		font-size: 24rpx;
+		height: 48rpx;
+		padding: 0rpx 22rpx;
+		border-radius: 8rpx;
+	}
+
+	&.is-border {
+		border: $cl-border-width solid $cl-border-color;
+	}
+
+	&.is-round {
+		border-radius: $cl-height !important;
+	}
+
+	&.is-loading {
+		opacity: 0.5;
+
+		.cl-loading {
+			margin-right: 12rpx;
+		}
+	}
+
+	&.is-fill {
+		width: 100%;
+	}
+
+	&.is-disabled {
+		opacity: 0.5;
+	}
+
+	&.is-bold {
+		font-weight: bold;
+	}
+
+	// Colors
+	@include button-color(primary, $cl-color-primary);
+	@include button-color(success, $cl-color-success);
+	@include button-color(error, $cl-color-error);
+	@include button-color(warning, $cl-color-warning);
+	@include button-color(info, $cl-color-info);
+}
+
+// Adjacent selectors
+.cl-button + .cl-button,
+cl-button + cl-button {
+	margin-left: 20rpx;
+}

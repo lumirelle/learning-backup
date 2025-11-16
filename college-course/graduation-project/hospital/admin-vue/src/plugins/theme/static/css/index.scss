@@ -1,0 +1,32 @@
+::view-transition-new(root),
+::view-transition-old(root) {
+  animation: none !important;
+}
+
+html.dark {
+  &::view-transition-old(root) {
+    z-index: 100;
+  }
+
+  .app-slider {
+    --slider-bg-color: var(--el-bg-color);
+    --slider-text-color: var(--el-text-color-primary);
+  }
+
+  .cl-crud {
+    background-color: var(--el-bg-color);
+
+    .el-table {
+      &__header {
+        .el-table__cell {
+          background-color: var(--el-bg-color) !important;
+        }
+      }
+    }
+  }
+
+  .el-overlay {
+    background-size: 4px 4px;
+    backdrop-filter: saturate(50%) blur(4px);
+  }
+}

@@ -1,0 +1,35 @@
+.cl-select-button {
+  padding: 5px;
+  border-radius: var(--cl-select-button-radius);
+  user-select: none;
+
+  --cl-select-button-radius: 6px;
+  --cl-select-button-padding: 5px 15px;
+
+  .el-segmented {
+    &__item-selected {
+      border-radius: var(--cl-select-button-radius) !important;
+    }
+
+    &__item {
+      padding: var(--cl-select-button-padding) !important;
+      border-radius: var(--cl-select-button-radius) !important;
+
+      &-label {
+        line-height: unset;
+      }
+    }
+  }
+
+  &.is-small {
+    --cl-select-button-radius: 4px;
+    --cl-select-button-padding: 3px 10px;
+
+    .el-segmented {
+      &__item {
+        padding: var(--cl-select-button-padding) !important;
+        font-size: 12px;
+      }
+    }
+  }
+}

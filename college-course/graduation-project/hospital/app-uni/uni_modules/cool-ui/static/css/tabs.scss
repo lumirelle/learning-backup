@@ -1,0 +1,139 @@
+.cl-tabs {
+	width: 100%;
+
+	&__inner {
+		display: flex;
+		position: relative;
+	}
+
+	&__bar {
+		white-space: nowrap;
+		box-sizing: border-box;
+		flex: 1;
+
+		.uni-scroll-view::-webkit-scrollbar {
+			display: none;
+		}
+
+		&-box {
+			display: inline-flex;
+			position: relative;
+			height: 100%;
+			width: 100%;
+		}
+
+		&-item {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+			font-size: 28rpx;
+			box-sizing: border-box;
+			position: relative;
+			z-index: 1;
+			transition: color 0.3s;
+
+			.cl-tabs__icon {
+				font-size: 30rpx;
+
+				&.is-prefix {
+					margin-right: 10rpx;
+				}
+
+				&.is--suffix {
+					margin-left: 10rpx;
+				}
+			}
+
+			.cl-tabs__label {
+				white-space: nowrap;
+			}
+
+			&.is-active {
+				color: $cl-color-primary;
+			}
+		}
+	}
+
+	&__dropdown {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 100rpx;
+		background-color: transparent;
+
+		&-box {
+			position: absolute;
+			top: 80rpx;
+			left: 0;
+			width: 100%;
+			box-sizing: border-box;
+			background-color: #fff;
+			transition: all 0.3s;
+			z-index: 99;
+		}
+	}
+
+	&__line {
+		height: 4rpx;
+		width: 16px;
+		position: absolute;
+		bottom: 2rpx;
+		border-radius: 20rpx;
+		transition: all 0.5s;
+		background-color: $cl-color-primary;
+	}
+
+	&__slider {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		transition: all 0.3s;
+		background-color: $cl-color-primary;
+		border-radius: $cl-tabs-slider-radius;
+	}
+
+	&.is-content {
+		height: 100%;
+	}
+
+	&.is-fill {
+		.cl-tabs__bar-item {
+			flex: 1;
+		}
+	}
+
+	&.is-border {
+		.cl-tabs__header {
+			border-bottom: $cl-border-width solid #eee;
+		}
+	}
+
+	&.is-dropdown {
+		.cl-tabs__bar {
+			width: calc(100% - 100rpx);
+		}
+	}
+
+	&.is-checkable {
+		.cl-tabs__label {
+			background-color: rgba($cl-color-primary, 0.05);
+			color: $cl-color-primary;
+			padding: 8rpx 20rpx;
+			border-radius: 8rpx;
+		}
+
+		.cl-tabs__bar-item {
+			padding: 0 !important;
+			margin-right: 20rpx;
+
+			&.is-active {
+				.cl-tabs__label {
+					background-color: $cl-color-primary;
+					color: #fff;
+				}
+			}
+		}
+	}
+}

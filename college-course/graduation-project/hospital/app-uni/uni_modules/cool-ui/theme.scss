@@ -1,0 +1,46 @@
+// 颜色
+$cl-color-primary: #4165d7;
+$cl-color-default: #dcdfe6;
+$cl-color-success: #67c23a;
+$cl-color-warning: #e6a23c;
+$cl-color-error: #f56c6c;
+$cl-color-info: #909399;
+$cl-color-disabled: #c0c4cc;
+$cl-color-disabled-bg: #f5f7fa;
+$cl-color-active: #f7f7f7;
+$cl-color-bg: #f6f7fa;
+$cl-color-placeholder: #a8abb2;
+
+// 通用
+$cl-topbar-height: 44px;
+$cl-border-color: #dcdfe6;
+$cl-border-width: 1px;
+$cl-border-radius: 12rpx;
+$cl-font-size: 26rpx;
+$cl-height: 64rpx;
+$cl-zIndex: 500;
+$cl-padding: 20rpx;
+
+// 按钮
+$cl-button-padding: 0rpx 30rpx;
+$cl-button-radius: $cl-border-radius;
+
+// 多选框
+$cl-checkbox-size: 34rpx;
+$cl-checkbox-radius: 10rpx;
+
+// 单选框
+$cl-radio-size: 34rpx;
+
+// 计数器
+$cl-input-number-size: 42rpx;
+$cl-input-number-radius: $cl-border-radius;
+
+// 上传
+$cl-upload-radius: $cl-border-radius;
+
+// 轮播图
+$cl-banner-radius: 20rpx;
+
+// 选项卡
+$cl-tabs-slider-radius: 20rpx;

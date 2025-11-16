@@ -1,0 +1,66 @@
+.cl-tree {
+	&-item {
+		&__content {
+			display: flex;
+			align-items: center;
+			height: 100%;
+			position: relative;
+			border-radius: $cl-border-radius;
+			padding: 0 10rpx;
+			box-sizing: border-box;
+
+			&:active {
+				background-color: $cl-color-active;
+			}
+		}
+
+		&__expand {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+
+			.icon-caret {
+				display: inline-block;
+				transform: rotate(-90deg);
+				transition: transform 0.3s;
+			}
+		}
+
+		&__label {
+			font-size: $cl-font-size;
+			flex: 1;
+			position: relative;
+			padding: 0 50rpx 0 4rpx;
+		}
+
+		&__check {
+			display: none;
+		}
+
+		&__children {
+			overflow: hidden;
+			transition: all 0.3s;
+		}
+
+		&.is-expand {
+			& > .cl-tree-item__content .icon-caret {
+				transform: rotate(0deg);
+			}
+		}
+
+		&.is-checked {
+			& > .cl-tree-item__content {
+				color: $cl-color-primary;
+
+				.cl-tree-item__check {
+					display: block;
+				}
+			}
+		}
+	}
+}
+
+.cl-tree-select {
+	padding: 10rpx;
+}

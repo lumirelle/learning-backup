@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "uniapp-run",
+      "request": "launch",
+      "name": "mp-weixin",
+      "platform": "mp-weixin",
+      "vueVersion": "v3"
+    }
+  ]
+}

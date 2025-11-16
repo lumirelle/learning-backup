@@ -1,0 +1,49 @@
+.cl-select-city {
+	&__wrap {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
+
+	&__tabs {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 0 30rpx;
+	}
+
+	&__list {
+		border-top: 1rpx solid $cl-color-bg;
+		border-bottom: 1rpx solid $cl-color-bg;
+		box-sizing: border-box;
+		flex: 1;
+
+		swiper {
+			height: 100%;
+
+			swiper-item {
+				height: 100%;
+			}
+		}
+	}
+
+	&__item {
+		display: flex;
+		align-items: center;
+		padding: 0 30rpx;
+		height: 80rpx;
+		font-size: 26rpx;
+
+		.cl-icon-toast-success {
+			display: none;
+		}
+
+		&.is-active {
+			color: $cl-color-primary;
+
+			.cl-icon-toast-success {
+				display: inline-block;
+				margin-right: 16rpx;
+			}
+		}
+	}
+}

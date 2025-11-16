@@ -1,0 +1,93 @@
+.cl-input-number {
+	display: inline-flex;
+	align-items: center;
+	height: $cl-input-number-size;
+	line-height: 1;
+
+	&__plus,
+	&__minus {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		height: $cl-input-number-size;
+		width: $cl-input-number-size;
+		border-radius: $cl-input-number-radius;
+		background-color: #f1f7ff;
+
+		text {
+			font-size: 28rpx;
+			font-weight: bold;
+		}
+
+		&:active {
+			opacity: 0.8;
+		}
+	}
+
+	&__plus {
+		background-color: $cl-color-primary;
+		color: #fff;
+	}
+
+	&__value {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		font-size: 28rpx;
+		text-align: center;
+		color: $cl-color-primary;
+		position: relative;
+		margin: 0 20rpx;
+
+		input {
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			font-size: inherit;
+			background-color: #fff;
+		}
+
+		.unit {
+			font-size: 20rpx;
+			position: relative;
+			z-index: 9;
+
+			&:nth-child(1) {
+				opacity: 0;
+			}
+		}
+
+		.num {
+			margin: 0 20rpx;
+			visibility: hidden;
+		}
+	}
+
+	&.is-disabled {
+		.cl-input-number__plus,
+		.cl-input-number__minus {
+			background-color: $cl-color-disabled-bg;
+			color: $cl-color-disabled;
+		}
+		.cl-input-number__value {
+			color: $cl-color-disabled;
+		}
+	}
+
+	&.disabled-plus {
+		.cl-input-number__plus {
+			background-color: $cl-color-disabled-bg;
+			color: $cl-color-disabled;
+		}
+	}
+
+	&.disabled-minus {
+		.cl-input-number__minus {
+			background-color: $cl-color-disabled-bg;
+			color: $cl-color-disabled;
+		}
+	}
+}

@@ -1,0 +1,128 @@
+.cl-checkbox {
+	display: inline-flex;
+	align-items: center;
+	height: $cl-height;
+	margin-right: 60rpx;
+	position: relative;
+
+	&__input {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: #fff;
+		position: relative;
+		box-sizing: border-box;
+		border: $cl-border-width solid $cl-border-color;
+		border-radius: $cl-checkbox-radius;
+		height: $cl-checkbox-size;
+		width: $cl-checkbox-size;
+
+		text {
+			font-size: 22rpx;
+			position: absolute;
+		}
+	}
+
+	&__label {
+		line-height: 1;
+		font-size: 28rpx;
+		margin-left: 16rpx;
+		flex: 1;
+		display: -webkit-box;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 1;
+	}
+
+	&.is-checked {
+		.cl-checkbox__input {
+			background-color: $cl-color-primary;
+			border-color: $cl-color-primary;
+			color: #fff;
+		}
+
+		&.is-text {
+			.cl-checkbox__label {
+				color: $cl-color-primary;
+			}
+		}
+	}
+
+	&.is-disabled {
+		.cl-checkbox__input {
+			background-color: $cl-color-disabled-bg;
+			border-color: transparent;
+			color: $cl-color-disabled;
+		}
+
+		.cl-checkbox__label {
+			color: $cl-color-disabled;
+		}
+	}
+
+	&.is-text {
+		.cl-checkbox__input {
+			display: none;
+		}
+
+		.cl-checkbox__label {
+			margin-left: 0;
+		}
+	}
+
+	&.is-border {
+		border-radius: $cl-border-radius;
+		padding: 0 20rpx;
+		margin: 0 20rpx 20rpx 0;
+		border: $cl-border-width solid $cl-border-color;
+		box-sizing: border-box;
+		line-height: normal;
+
+		&.is-checked {
+			color: $cl-color-primary;
+			border-color: $cl-color-primary;
+
+			.cl-checkbox__label {
+				color: $cl-color-primary;
+			}
+		}
+	}
+
+	&.is-bg {
+		&.is-checked {
+			background-color: $cl-color-primary;
+
+			.cl-checkbox__label {
+				color: #fff;
+			}
+		}
+	}
+
+	&.is-fill {
+		margin-right: 0;
+		width: 100%;
+	}
+
+	&.is-round {
+		border-radius: $cl-checkbox-size;
+
+		.cl-checkbox__input {
+			border-radius: 100%;
+		}
+	}
+}
+
+/* #ifdef MP */
+cl-checkbox {
+	display: inline-flex;
+}
+
+.cl-checkbox-group {
+	&.is-fill {
+		cl-checkbox {
+			display: inline;
+		}
+	}
+}
+/* #endif */

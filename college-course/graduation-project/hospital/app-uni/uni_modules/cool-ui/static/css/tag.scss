@@ -1,0 +1,72 @@
+@mixin color($color) {
+	background-color: $color;
+
+	&.is-plain {
+		color: $color;
+		border-collapse: $color;
+		background-color: #fff;
+	}
+}
+
+.cl-tag {
+	border-radius: $cl-border-radius;
+	color: #fff;
+	display: inline-flex;
+	align-items: center;
+	line-height: 1;
+
+	&__close {
+		margin-left: 10rpx;
+		position: relative;
+		top: 1rpx;
+	}
+
+	&--default {
+		padding: 12rpx 20rpx;
+		font-size: 24rpx;
+	}
+
+	&--small {
+		padding: 8rpx 14rpx;
+		font-size: 22rpx;
+	}
+
+	&--large {
+		padding: 16rpx 24rpx;
+		font-size: 26rpx;
+	}
+
+	&.is-round {
+		border-radius: 50rpx;
+	}
+
+	&.is-plain {
+		border-width: $cl-border-width;
+		border-style: solid;
+	}
+
+	&--primary {
+		@include color($cl-color-primary);
+	}
+
+	&--success {
+		@include color($cl-color-success);
+	}
+
+	&--warning {
+		@include color($cl-color-warning);
+	}
+
+	&--error {
+		@include color($cl-color-error);
+	}
+
+  // Compatible with admin-vue
+  &--danger {
+		@include color($cl-color-error);
+	}
+
+	&--info {
+		@include color($cl-color-info);
+	}
+}

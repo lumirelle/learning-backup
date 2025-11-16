@@ -1,0 +1,38 @@
+.cl-footer {
+	width: 100%;
+	position: relative;
+
+	&__placeholder {
+		transition: height 0.3s;
+	}
+
+	&__inner {
+		& > :deep(cl-button) {
+			width: 100%;
+		}
+
+		&.is-flex {
+			display: flex;
+		}
+	}
+
+	&.is-border {
+		&::before {
+			content: "";
+			display: block;
+			height: $cl-border-width;
+			width: 100%;
+			background-color: $cl-color-bg;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	}
+
+	&.is-fixed {
+		padding-bottom: env(safe-area-inset-bottom);
+		position: fixed;
+		left: 0;
+		bottom: 0;
+	}
+}

@@ -1,0 +1,134 @@
+.cl-radio {
+	display: inline-flex;
+	align-items: center;
+	height: $cl-height;
+	margin-right: 60rpx;
+	position: relative;
+
+	&__input {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: #fff;
+		box-sizing: border-box;
+		position: relative;
+		background-color: #fff;
+		border: $cl-border-width solid $cl-border-color;
+		height: $cl-radio-size;
+		width: $cl-radio-size;
+		border-radius: $cl-radio-size;
+
+		text {
+			display: inline-block;
+			position: absolute;
+			border-radius: 20rpx;
+			height: 14rpx;
+			width: 14rpx;
+		}
+	}
+
+	&__label {
+		line-height: 1;
+		font-size: 28rpx;
+		margin-left: 16rpx;
+		flex: 1;
+		display: -webkit-box;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 1;
+	}
+
+	&.is-checked {
+		.cl-radio__input {
+			background-color: $cl-color-primary;
+			border: $cl-color-primary;
+
+			text {
+				background-color: #fff;
+			}
+		}
+
+		&.is-text {
+			.cl-radio__label {
+				color: $cl-color-primary;
+			}
+		}
+	}
+
+	&.is-disabled {
+		.cl-radio__input {
+			background-color: $cl-color-disabled-bg;
+			color: $cl-color-disabled;
+
+			text {
+				background-color: $cl-color-disabled;
+			}
+		}
+
+		.cl-radio__label {
+			color: $cl-color-disabled;
+		}
+	}
+
+	&.is-text {
+		.cl-radio__input {
+			display: none;
+		}
+
+		.cl-radio__label {
+			margin-left: 0;
+		}
+	}
+
+	&.is-border {
+		border-radius: 10rpx;
+		padding: 0 20rpx;
+		margin: 0 20rpx 20rpx 0;
+		border: $cl-border-width solid $cl-border-color;
+		box-sizing: border-box;
+		line-height: normal;
+
+		&.is-checked {
+			border-color: $cl-color-primary;
+			color: $cl-color-primary;
+
+			.cl-radio__label {
+				color: $cl-color-primary;
+			}
+		}
+	}
+
+	&.is-bg {
+		&.is-checked {
+			background-color: $cl-color-primary;
+
+			.cl-radio__label {
+				color: #fff;
+			}
+		}
+	}
+
+	&.is-round {
+		border-radius: $cl-radio-size;
+	}
+
+	&.is-fill {
+		margin-right: 0;
+		width: 100%;
+	}
+}
+
+/* #ifdef MP */
+cl-radio {
+	display: inline-flex;
+}
+
+.cl-radio-group {
+	&.is-fill {
+		cl-radio {
+			display: inline;
+		}
+	}
+}
+/* #endif */

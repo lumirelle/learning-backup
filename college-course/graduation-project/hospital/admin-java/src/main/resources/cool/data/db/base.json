@@ -1,0 +1,993 @@
+{
+  "base_sys_conf": [
+    {
+      "cKey": "logKeep",
+      "cValue": "31"
+    },
+    {
+      "cKey": "recycleKeep",
+      "cValue": "31"
+    }
+  ],
+  "base_sys_param": [
+    {
+      "id": 1,
+      "name": "隐私政策",
+      "keyName": "privacyPolicy",
+      "dataType": 0,
+      "data": "这是一段隐私协议：\n1.xxxx\n2.xxxx",
+      "remark": null
+    },
+    {
+      "id": 2,
+      "name": "用户协议",
+      "keyName": "userAgreement",
+      "dataType": 0,
+      "data": "这是一段用户协议：\n1.xxxx\n2.xxxx",
+      "remark": null
+    }
+  ],
+  "base_sys_department": [
+    {
+      "id": 1,
+      "name": "医疗陪诊系统",
+      "parentId": null,
+      "orderNum": 0
+    },
+    {
+      "id": 11,
+      "name": "技术部",
+      "parentId": 1,
+      "orderNum": 0
+    },
+    {
+      "id": 12,
+      "name": "开发",
+      "parentId": 11,
+      "orderNum": 0
+    },
+    {
+      "id": 13,
+      "name": "运营部",
+      "parentId": 1,
+      "orderNum": 1
+    },
+    {
+      "id": 14,
+      "name": "运营",
+      "parentId": 13,
+      "orderNum": 0
+    }
+  ],
+  "base_sys_role": [
+    {
+      "id": 1,
+      "userId": "1",
+      "name": "超管",
+      "label": "admin",
+      "remark": "最高权限的角色",
+      "relevance": 1,
+      "menuIdList": null,
+      "departmentIdList": null
+    },
+    {
+      "id": 2,
+      "userId": "2",
+      "name": "运营",
+      "label": "operator",
+      "remark": "运营人员角色",
+      "relevance": 0,
+      "menuIdList": null,
+      "departmentIdList": null
+    }
+  ],
+  "base_sys_user": [
+    {
+      "id": 1,
+      "departmentId": 1,
+      "name": "超级管理员",
+      "username": "admin",
+      "password": "e10adc3949ba59abbe56e057f20f883e",
+      "passwordV": 7,
+      "nickName": "管理员",
+      "headImg": "https://avatars.githubusercontent.com/u/51262009?v=4",
+      "phone": "19599559955",
+      "email": "admin@acc-consult.com",
+      "status": 1,
+      "remark": "拥有最高权限的用户",
+      "socketId": null
+    },
+    {
+      "id": 2,
+      "departmentId": 13,
+      "name": "运营1号",
+      "username": "operator1",
+      "password": "e10adc3949ba59abbe56e057f20f883e",
+      "passwordV": 7,
+      "nickName": "运营1号",
+      "headImg": "https://avatars.githubusercontent.com/u/51262009?v=4",
+      "phone": "18383833883",
+      "email": "operator1@acc-consult.com",
+      "status": 1,
+      "remark": "运营人员",
+      "socketId": null
+    }
+  ],
+  "base_sys_user_role": [
+    {
+      "userId": 1,
+      "roleId": 1
+    },
+    {
+      "userId": 1,
+      "roleId": 2
+    }
+  ],
+  "dict_type": [
+    {
+      "id": 1,
+      "name": "性别",
+      "key": "gender"
+    },
+    {
+      "id": 2,
+      "name": "基本状态",
+      "key": "base-status"
+    },
+    {
+      "id": 3,
+      "name": "用户角色",
+      "key": "user-role"
+    },
+    {
+      "id": 4,
+      "name": "用户状态",
+      "key": "user-status"
+    },
+    {
+      "id": 5,
+      "name": "患者类型",
+      "key": "patient-type"
+    },
+    {
+      "id": 6,
+      "name": "陪诊人员等级",
+      "key": "acc-staff-level"
+    },
+    {
+      "id": 7,
+      "name": "陪诊人员状态",
+      "key": "acc-staff-status"
+    },
+    {
+      "id": 8,
+      "name": "科室类型",
+      "key": "department-type"
+    },
+    {
+      "id": 9,
+      "name": "套餐服务范围",
+      "key": "meal-service-area"
+    },
+    {
+      "id": 10,
+      "name": "支付方式",
+      "key": "pay-type"
+    },
+    {
+      "id": 11,
+      "name": "订单状态",
+      "key": "order-status"
+    },
+    {
+      "id": 12,
+      "name": "订单售后状态",
+      "key": "order-after-sale-status"
+    },
+    {
+      "id": 13,
+      "name": "投诉类型",
+      "key": "complaint-type"
+    },
+    {
+      "id": 14,
+      "name": "投诉状态",
+      "key": "complaint-status"
+    }
+  ],
+  "dict_info": [
+    {
+      "id": 1,
+      "typeId": 1,
+      "parentId": null,
+      "name": "未知",
+      "value": "0",
+      "type": "info",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 2,
+      "typeId": 1,
+      "parentId": null,
+      "name": "男",
+      "value": "1",
+      "type": "primary",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 3,
+      "typeId": 1,
+      "parentId": null,
+      "name": "女",
+      "value": "2",
+      "type": "success",
+      "orderNum": 3,
+      "remark": null
+    },
+    {
+      "id": 4,
+      "typeId": 2,
+      "parentId": null,
+      "name": "禁用",
+      "value": "0",
+      "type": "danger",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 5,
+      "typeId": 2,
+      "parentId": null,
+      "name": "启用",
+      "value": "1",
+      "type": "success",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 6,
+      "typeId": 3,
+      "parentId": null,
+      "name": "未知",
+      "value": "0",
+      "type": "info",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 7,
+      "typeId": 3,
+      "parentId": null,
+      "name": "患者",
+      "value": "1",
+      "type": "warning",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 8,
+      "typeId": 3,
+      "parentId": null,
+      "name": "陪诊人员",
+      "value": "2",
+      "type": "success",
+      "orderNum": 3,
+      "remark": null
+    },
+    {
+      "id": 9,
+      "typeId": 4,
+      "parentId": null,
+      "name": "正常",
+      "value": "0",
+      "type": "success",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 10,
+      "typeId": 4,
+      "parentId": null,
+      "name": "禁用",
+      "value": "1",
+      "type": "danger",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 11,
+      "typeId": 4,
+      "parentId": null,
+      "name": "已注销",
+      "value": "2",
+      "type": "info",
+      "orderNum": 3,
+      "remark": null
+    },
+    {
+      "id": 12,
+      "typeId": 5,
+      "parentId": null,
+      "name": "正常",
+      "value": "0",
+      "type": "success",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 13,
+      "typeId": 5,
+      "parentId": null,
+      "name": "沟通不便",
+      "value": "1",
+      "type": "warning",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 14,
+      "typeId": 5,
+      "parentId": null,
+      "name": "行动不便",
+      "value": "2",
+      "type": "danger",
+      "orderNum": 3,
+      "remark": null
+    },
+    {
+      "id": 15,
+      "typeId": 5,
+      "parentId": null,
+      "name": "其他不便",
+      "value": "3",
+      "type": "info",
+      "orderNum": 4,
+      "remark": null
+    },
+    {
+      "id": 16,
+      "typeId": 6,
+      "parentId": null,
+      "name": "初级",
+      "value": "0",
+      "type": "success",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 17,
+      "typeId": 6,
+      "parentId": null,
+      "name": "中级",
+      "value": "1",
+      "type": "warning",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 18,
+      "typeId": 6,
+      "parentId": null,
+      "name": "高级",
+      "value": "2",
+      "type": "danger",
+      "orderNum": 3,
+      "remark": null
+    },
+    {
+      "id": 19,
+      "typeId": 7,
+      "parentId": null,
+      "name": "正常",
+      "value": "0",
+      "type": "success",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 20,
+      "typeId": 7,
+      "parentId": null,
+      "name": "请假",
+      "value": "1",
+      "type": "warning",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 21,
+      "typeId": 7,
+      "parentId": null,
+      "name": "离职",
+      "value": "2",
+      "type": "danger",
+      "orderNum": 3,
+      "remark": null
+    },
+    {
+      "id": 22,
+      "typeId": 7,
+      "parentId": null,
+      "name": "其他",
+      "value": "3",
+      "type": "info",
+      "orderNum": 4,
+      "remark": null
+    },
+    {
+      "id": 23,
+      "typeId": 8,
+      "parentId": null,
+      "name": "临床",
+      "value": "0",
+      "type": "success",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 24,
+      "typeId": 8,
+      "parentId": null,
+      "name": "医技",
+      "value": "1",
+      "type": "primary",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 25,
+      "typeId": 8,
+      "parentId": null,
+      "name": "辅助",
+      "value": "2",
+      "type": "info",
+      "orderNum": 3,
+      "remark": null
+    },
+    {
+      "id": 26,
+      "typeId": 9,
+      "parentId": null,
+      "name": "代预约",
+      "value": "0",
+      "type": "success",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 27,
+      "typeId": 9,
+      "parentId": null,
+      "name": "代走流程",
+      "value": "1",
+      "type": "success",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 28,
+      "typeId": 9,
+      "parentId": null,
+      "name": "医嘱分析",
+      "value": "2",
+      "type": "success",
+      "orderNum": 3,
+      "remark": null
+    },
+    {
+      "id": 29,
+      "typeId": 9,
+      "parentId": null,
+      "name": "健康跟踪",
+      "value": "3",
+      "type": "success",
+      "orderNum": 4,
+      "remark": null
+    },
+    {
+      "id": 30,
+      "typeId": 9,
+      "parentId": null,
+      "name": "其他定制服务",
+      "value": "4",
+      "type": "primary",
+      "orderNum": 5,
+      "remark": null
+    },
+    {
+      "id": 31,
+      "typeId": 10,
+      "parentId": null,
+      "name": "微信",
+      "value": "0",
+      "type": "success",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 32,
+      "typeId": 10,
+      "parentId": null,
+      "name": "支付宝",
+      "value": "1",
+      "type": "primary",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 33,
+      "typeId": 10,
+      "parentId": null,
+      "name": "线下银行卡",
+      "value": "2",
+      "type": "info",
+      "orderNum": 3,
+      "remark": null
+    },
+    {
+      "id": 34,
+      "typeId": 10,
+      "parentId": null,
+      "name": "线下现金",
+      "value": "3",
+      "type": "danger",
+      "orderNum": 4,
+      "remark": null
+    },
+    {
+      "id": 35,
+      "typeId": 11,
+      "parentId": null,
+      "name": "待支付",
+      "value": "0",
+      "type": "warning",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 36,
+      "typeId": 11,
+      "parentId": null,
+      "name": "已支付",
+      "value": "1",
+      "type": "success",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 37,
+      "typeId": 11,
+      "parentId": null,
+      "name": "待使用",
+      "value": "2",
+      "type": "primary",
+      "orderNum": 3,
+      "remark": null
+    },
+    {
+      "id": 38,
+      "typeId": 11,
+      "parentId": null,
+      "name": "已完成",
+      "value": "3",
+      "type": "info",
+      "orderNum": 4,
+      "remark": null
+    },
+    {
+      "id": 39,
+      "typeId": 11,
+      "parentId": null,
+      "name": "已取消",
+      "value": "4",
+      "type": "danger",
+      "orderNum": 5,
+      "remark": null
+    },
+    {
+      "id": 40,
+      "typeId": 11,
+      "parentId": null,
+      "name": "已退款",
+      "value": "5",
+      "type": "danger",
+      "orderNum": 6,
+      "remark": null
+    },
+    {
+      "id": 41,
+      "typeId": 12,
+      "parentId": null,
+      "name": "无售后",
+      "value": "0",
+      "type": "info",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 42,
+      "typeId": 12,
+      "parentId": null,
+      "name": "待处理",
+      "value": "1",
+      "type": "warning",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 43,
+      "typeId": 12,
+      "parentId": null,
+      "name": "处理完成",
+      "value": "2",
+      "type": "success",
+      "orderNum": 3,
+      "remark": null
+    },
+    {
+      "id": 44,
+      "typeId": 13,
+      "parentId": null,
+      "name": "服务态度",
+      "value": "0",
+      "type": "warning",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 45,
+      "typeId": 13,
+      "parentId": null,
+      "name": "价格问题",
+      "value": "1",
+      "type": "warning",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 46,
+      "typeId": 13,
+      "parentId": null,
+      "name": "服务质量",
+      "value": "2",
+      "type": "danger",
+      "orderNum": 3,
+      "remark": null
+    },
+    {
+      "id": 47,
+      "typeId": 13,
+      "parentId": null,
+      "name": "其他",
+      "value": "3",
+      "type": "info",
+      "orderNum": 4,
+      "remark": null
+    },
+    {
+      "id": 48,
+      "typeId": 14,
+      "parentId": null,
+      "name": "待处理",
+      "value": "0",
+      "type": "warning",
+      "orderNum": 1,
+      "remark": null
+    },
+    {
+      "id": 49,
+      "typeId": 14,
+      "parentId": null,
+      "name": "处理中",
+      "value": "1",
+      "type": "primary",
+      "orderNum": 2,
+      "remark": null
+    },
+    {
+      "id": 50,
+      "typeId": 14,
+      "parentId": null,
+      "name": "已解决",
+      "value": "2",
+      "type": "success",
+      "orderNum": 3,
+      "remark": null
+    },
+    {
+      "id": 51,
+      "typeId": 14,
+      "parentId": null,
+      "name": "未解决",
+      "value": "3",
+      "type": "danger",
+      "orderNum": 4,
+      "remark": null
+    },
+    {
+      "id": 52,
+      "typeId": 14,
+      "parentId": null,
+      "name": "已关闭",
+      "value": "4",
+      "type": "info",
+      "orderNum": 5,
+      "remark": null
+    }
+  ],
+  "hospital_info": [
+    {
+      "id": 1,
+      "name": "重庆医科大学附属第一医院",
+      "code": "H0-001",
+      "address": "中国重庆市渝中区",
+      "phone": "23 6881 1360",
+      "status": 1,
+      "introduction": "重庆医科大学附属第一医院集医疗、教学、科研、预防、保健及涉外医疗于一体的三级甲等综合性教学医院。",
+      "coverImage": "http://127.0.0.1:8001/upload/base/重庆医科大学附属第一医院.jpg",
+      "detailImage": "http://127.0.0.1:8001/upload/base/重庆医科大学附属第一医院-d.webp"
+    },
+    {
+      "id": 2,
+      "name": "重庆市中医院",
+      "code": "H0-002",
+      "address": "中国重庆市江北区",
+      "phone": "23 6766 6120",
+      "status": 1,
+      "introduction": "系中国基层心衰中心、国家呼吸与危重症医学科（PCCM科）规范化建设二级达标单位、全国临床营养科建设试点单位、国家中医药管理局“中医药古籍文献与特色技术传承专项”推广基地",
+      "coverImage": "http://127.0.0.1:8001/upload/base/重庆市中医院.png",
+      "detailImage": "http://127.0.0.1:8001/upload/base/重庆市中医院-d.png"
+    },
+    {
+      "id": 3,
+      "name": "重庆市第四人民医院",
+      "code": "H0-003",
+      "address": "中国重庆市渝中区健康路1号",
+      "phone": "23 6370 1114",
+      "status": 1,
+      "introduction": "重庆市第四人民医院位于重庆市渝中区健康路1号，综合住院楼占地8万m2，是一所三级甲等综合医院，是重庆市医保定点医院",
+      "coverImage": "http://127.0.0.1:8001/upload/base/重庆市第四人民医院.png",
+      "detailImage": "http://127.0.0.1:8001/upload/base/重庆市第四人民医院.png"
+    }
+  ],
+  "hospital_department": [
+    {
+      "id": 1,
+      "name": "内分泌内科",
+      "code": "D0-001",
+      "type": 0,
+      "status": 1,
+      "hospitalId": 1,
+      "introduction": "重庆医科大学附属第一医院内分泌内科，已建成省部级重点实验室（代谢性血管疾病川渝共建重点实验室）、重庆市重大代谢病重点实验室。现为国家临床重点专科建设项目、国家药物临床试验认定专业、重庆市教委重点学科、重庆市糖尿病中心、重庆市糖尿病足中心、重庆市内分泌科医疗质量控制中心。",
+      "coverImage": "http://127.0.0.1:8001/upload/base/重庆医科大学附属第一医院内分泌内科.jpg"
+    },
+    {
+      "id": 2,
+      "name": "消化内科",
+      "code": "D0-002",
+      "type": 0,
+      "status": 1,
+      "hospitalId": 1,
+      "introduction": "重庆医科大学附属第一医院消化内科创建于1957年，由上海第一医学院来渝的李宗明教授担任科主任，经过几代人的不懈努力，现为博士、硕士学位授予点，国家临床药理基地，重庆市消化疾病诊疗中心，现已建成一个集临床、内镜诊疗技术、科研、教学和优质护理于一体的现代的消化内科，特别是近年来在内镜诊疗方面取得突飞猛进的发展，达到国内先进水平。",
+      "coverImage": "http://127.0.0.1:8001/upload/base/重庆医科大学附属第一医院消化内科.jpg"
+    },
+    {
+      "id": 3,
+      "name": "精神科",
+      "code": "D0-003",
+      "type": 0,
+      "status": 1,
+      "hospitalId": 1,
+      "introduction": "重庆医科大学附属第一医院精神科于1958年由原上海第一医学院（现复旦大学上海医学院）的张逢春、凌永和、张永芳、周惠章、田寿彰及袁廷干等著名专家西迁来渝创建，是集医疗、教学、科研、预防于一体的综合性学科。在“中国医院科技影响力排行榜-精神医学”中连续5年名列全国前10，在“复旦大学《中国医院最佳专科声誉排行榜》”中连续十年获得学科声誉提名奖，稳居国内精神医学学科“第一方阵”。",
+      "coverImage": "http://127.0.0.1:8001/upload/base/重庆医科大学附属第一医院精神科.jpg"
+    },
+    {
+      "id": 4,
+      "name": "神经外科(ICU)",
+      "code": "D0-004",
+      "type": 0,
+      "status": 1,
+      "hospitalId": 1,
+      "introduction": "重庆医科大学附属第一医院神经外科，是中国神经外科奠基人之一朱祯卿教授，于1958年由上海华山医院来渝创建。经过60余年间几代人的耕耘，科室医疗水平达到国际先进、国内一流。近6年连续获得《复旦专科排名榜》全国提名、西南地区第二名、重庆排名第一的好成绩，已然成为长江上游神经外科诊疗高地。在医院新一届领导班子的坚强领导下，神经外科全体同仁正朝着建设“中国特色世界一流的神经外科医学中心”的伟大宏图而努力奋斗。",
+      "coverImage": "http://127.0.0.1:8001/upload/base/重庆医科大学附属第一医院神经外科.jpg"
+    },
+    {
+      "id": 5,
+      "name": "口腔科",
+      "code": "D0-005",
+      "type": 0,
+      "status": 1,
+      "hospitalId": 1,
+      "introduction": "重庆医科大学附属第一医院口腔科始建于上世纪50年代初，是我市最早的口腔专科门诊。经过60多年来的不断发展，目前已成为重庆市集临床医疗、教学和科研于一体的口腔治疗中心。科室招收口腔专业博士、硕士，承担本科生、实习生、规培生、研究生、进修生以及基层医护人员等多层次的教学与培训工作，是国家口腔临床住院医师规范化培训基地。",
+      "coverImage": "http://127.0.0.1:8001/upload/base/重庆医科大学附属第一医院口腔科.jpg"
+    },
+    {
+      "id": 6,
+      "name": "超声科",
+      "code": "D0-006",
+      "type": 1,
+      "status": 1,
+      "hospitalId": 1,
+      "introduction": "重庆医科大学附属第一医院超声科组建于1982年，1983年1月正式成立，是重庆市最早成立的超声科之一。经过40余年的建设，科室已发展成为集医疗、教学、科研于一体的超声诊疗中心，是影像医学博士、硕士学位授权点，在西南地区具有重要的学术影响力。作为重庆市医学会超声专业委员会第六、第七届主任委员单位，科室在学科建设、人才培养和科研创新等方面均具有较强实力。",
+      "coverImage": "http://127.0.0.1:8001/upload/base/重庆医科大学附属第一医院超声科.jpg"
+    },
+    {
+      "id": 7,
+      "name": "皮肤科",
+      "code": "D0-007",
+      "type": 0,
+      "status": 1,
+      "hospitalId": 2,
+      "introduction": "重庆市中医院皮肤科成立于1934年，前身为重庆市第一人民医院皮肤科，2008年医院合并后更名为重庆市中医院(道门口院部）·重庆市第一人民医院皮肤科。 在王鲁直、毛家鑫、陈南琴、刁庆春等知名皮肤病专家带领下，经过几代人的努力，科室已发展成集医疗、科研、教学为一体，以中西医结合防治皮肤病的特色专科。皮肤科现为国家区域中医诊疗中心、国家临床重点专科、国家中医药管理局重点学科、“湿疹中医外治法”重点研究室，是重庆市中医院皮肤病研究所，重庆市皮肤科医疗质量控制中心，重庆市医学重点学科，重庆市皮肤病临床医学研究中心，重庆市中医重大疑难疾病防治中心，中西医结合诊治皮肤病重庆市重点实验室，国家药监总局化妆品注册与备案检验检测机构、重庆市药监局化妆品不良反应监测哨点。",
+      "coverImage": "http://127.0.0.1:8001/upload/base/重庆市中医院皮肤科.png"
+    },
+    {
+      "id": 8,
+      "name": "骨伤科",
+      "code": "D0-008",
+      "type": 0,
+      "status": 1,
+      "hospitalId": 2,
+      "introduction": "学科源于上世纪50年代末一号桥重庆市第一中医院骨科和小什字重庆市第二中医院骨科，一中医院骨伤科张培忠主任引领的中医理筋手法特色鲜明，对慢性颈肩腰腿痛疗效明显，使许多濒临手术的患者从手术刀下逃过一劫，免受手术带来的伤痛与风险，声誉和口碑良好，居重庆市领先水平。二中医院骨伤科袁国和主任和梁益建主任引领的中医正骨与手术治疗水平先进，在重庆市内较早成熟开展了髋膝关节置换和椎间盘镜技术，1994年骨伤科被评为重庆市中医重点专科。",
+      "coverImage": "http://127.0.0.1:8001/upload/base/重庆市中医院骨伤科.png"
+    },
+    {
+      "id": 9,
+      "name": "肿瘤科",
+      "code": "D0-009",
+      "type": 0,
+      "status": 1,
+      "hospitalId": 2,
+      "introduction": "重庆市中医院肿瘤科是国家中医药管理局“十二五”重点专科、国家卫健委临床重点专科（中医专业）及“十三五”重点建设专科，同时也是重庆市中医名科。该科室是国家临床重点专科（肿瘤学，中医方向）、国家中医药管理局中医重点专科、国家药物临床试验机构（肿瘤专业）、重庆市中医药重点学科、重庆市中医药重点专科、重庆市公共卫生重点专科和重庆市中医名科。",
+      "coverImage": "http://127.0.0.1:8001/upload/base/重庆市中医院肿瘤科.png"
+    }
+  ],
+  "hospital_doctor": [
+    {
+      "id": 1,
+      "name": "李启富",
+      "jobCode": "D0-001",
+      "title": "主任医师 教授",
+      "status": 1,
+      "hospitalId": 1,
+      "departmentId": 1,
+      "specialty": "内分泌性高血压（如原醛症）、肾上腺肿瘤、糖尿病肾病的诊治",
+      "introduction": "李启富，博士，主任医师、教授，博士生导师，国务院特殊津贴获得者、重庆市首批医学领军人才、重庆市学术技术带头人、重庆市有突出贡献中青年专家。曾与法国、加拿大留学。担任中国医师协会内分泌代谢科医师分会常委、中华医学会糖尿病分会常委（6-8届）。承担国家自然科学基金项目10项（重点项目一项）、获重庆市自然科学二等奖1项、中华医学科技进步奖三等奖1项。主编《内科学》、《内分泌系统疾病》等，在《JACC》《JAMA Intern Med》等杂志发表50余篇学术论文。",
+      "avatar": "http://127.0.0.1:8001/upload/base/李启富.jpg"
+    },
+    {
+      "id": 2,
+      "name": "程庆丰",
+      "jobCode": "D0-002",
+      "title": "主任医师 研究员",
+      "status": 1,
+      "hospitalId": 1,
+      "departmentId": 1,
+      "specialty": "糖尿病足、糖尿病勃起功能异常的诊治，以及肾上腺静脉取血术、岩下窦静脉取血术，痛风、肥胖、肾上腺、垂体、甲状腺、骨质疏松等疾病诊治",
+      "introduction": "程庆丰，主任医师，副教授，硕士生导师。现任重庆医科大学附属第一医院内分泌科副主任，中华医学会糖尿病学分会糖尿病足与周围血管病学组委员、中华预防医学会组织感染与损伤预防与控制专业委员会常务委员。重庆市医院协会内分泌管理专委会主任委员。曾获第二届重庆医科大学附属第一医院“优秀教师”称号。",
+      "avatar": "http://127.0.0.1:8001/upload/base/程庆丰.jpg"
+    },
+    {
+      "id": 3,
+      "name": "张素华",
+      "jobCode": "D0-003",
+      "title": "主任医师 教授",
+      "status": 1,
+      "hospitalId": 1,
+      "departmentId": 1,
+      "specialty": "普内科疾病",
+      "introduction": "张素华，教授，主任医师，博士生导师。国家人事部、教育部“模范教师”、重庆市内分泌与代谢病学术带头人、享受国务院特殊津贴。曾任中华医学会重庆市糖尿病学专委会主任委员。获国家科技部863等科研课题，获重庆市科技进步二等奖一项、三等奖三项。发表医学论著150余篇，参编著作8部（其中参与内科学教材5、6、7版编写）。",
+      "avatar": "http://127.0.0.1:8001/upload/base/张素华.jpg"
+    },
+    {
+      "id": 4,
+      "name": "张霞",
+      "jobCode": "D0-004",
+      "title": "副主任医师",
+      "status": 1,
+      "hospitalId": 1,
+      "departmentId": 2,
+      "specialty": "消化性溃疡、胃食管反流病、功能性胃肠病的诊治",
+      "introduction": "张霞，女，42岁，汉族。重庆医科大学81级医学系毕业；重庆医科大学2001级硕士研究生。1986年7月留校分配到重庆医科大学附属第一医院消化内科工作至今。现为副主任医师职称，中华医学会重庆市消化分会委员。 从毕业至今，近二十年的临床工作，不仅具有扎实的医学基础知识，而且积累了丰富的临床经验，能熟练操作胃镜，进行内镜下常见消化道疾病的介入治疗。教学工作期间，工作严谨认真、负责，教学经验丰富。多次被评为受学生欢迎的老师。1998-2000年被评为校级优秀教师。2004年7月参加由教育部人事司和高等教育司联合举办的教育部全国医学教学方法青年骨干教师高级研修班，取得了培训合格证书。 多次参加全国性的消化学术研讨会。在国家级刊物上发表了数篇论文。承担国家自然科学基金课题《重组幽门螺杆菌尿素酶基因-BCG疫苗预防HP感染的实验研究》和重庆市科委课题《重组幽门螺杆菌外膜蛋白抗原基因-BCG疫苗预防HP感染的实验研究》的标本采集工作；负责抗溃疡药法莫替丁咀嚼片和IBS的Ⅱ期临床研究。",
+      "avatar": "http://127.0.0.1:8001/upload/base/张霞.jpg"
+    },
+    {
+      "id": 5,
+      "name": "陈受田",
+      "jobCode": "D0-005",
+      "title": "主任医师 教授",
+      "status": 1,
+      "hospitalId": 1,
+      "departmentId": 6,
+      "specialty": "腹部、小器官及血管疾病的超声诊断",
+      "introduction": "陈受田，主任医师，教授。从事超声诊断工作近40年，担任超声科主任20余年，积累了丰富的超声诊断经验，在超声界享有盛誉。 重庆超声医学工程学会副会长、常务理事，《临床超声医学杂志》副主编、常务编委，重庆市医学会超声专委会委员。主编医学专著1部，参编国家级教材5部，医学参考书8部，发表论文20篇。曾任“中国超声医学工程学会”理事，“中国超声医学工程学会腹部诊断委员会”常务理事，“重庆市医学会超声专委会”副主任委员。",
+      "avatar": "http://127.0.0.1:8001/upload/base/陈受田.jpg"
+    },
+    {
+      "id": 6,
+      "name": "尹珍",
+      "jobCode": "D0-006",
+      "title": "主治医师 医学硕士",
+      "status": 1,
+      "hospitalId": 2,
+      "departmentId": 9,
+      "specialty": "长期从事肿瘤学专业工作，掌握各种常见实体肿瘤的内科及放射治疗，主要擅长肺癌的综合诊治",
+      "introduction": "中共党员,毕业于重庆医科大学内科学专业。工作经历：2014年09月至2017年07月 重庆市肿瘤医院，2018年09月至今 重庆市中医院肿瘤科。2023年至2024年于中山大学附属肿瘤医院放疗专业进修学习1年。重庆生物技术协会肿瘤中西医整合专委会委员。参与多项科研课题，发表论文数篇，参编书目1部。",
+      "avatar": "http://127.0.0.1:8001/upload/base/尹珍.png"
+    },
+    {
+      "id": 7,
+      "name": "朱青",
+      "jobCode": "D0-007",
+      "title": "主治中医师 硕士研究生",
+      "status": 1,
+      "hospitalId": 2,
+      "departmentId": 9,
+      "specialty": "肺癌、乳腺癌、肠癌、食管癌等实体瘤及白血病、多发性骨髓瘤、淋巴瘤等血液恶性肿瘤的中西医结合治疗",
+      "introduction": "2017年毕业于广州中医药大学中西医结合临床专业，长期从事实体肿瘤和血液肿瘤的诊疗工作。",
+      "avatar": "http://127.0.0.1:8001/upload/base/朱青.png"
+    }
+  ],
+  "meal_category": [
+    {
+      "id": 1,
+      "name": "基本套餐",
+      "status": 1,
+      "sort": 0
+    },
+    {
+      "id": 2,
+      "name": "中级套餐",
+      "status": 1,
+      "sort": 1
+    },
+    {
+      "id": 3,
+      "name": "高级套餐",
+      "status": 1,
+      "sort": 2
+    },
+    {
+      "id": 4,
+      "name": "VIP 套餐",
+      "status": 1,
+      "sort": 3
+    }
+  ],
+  "task_info": [
+    {
+      "id": 1,
+      "name": "清理日志",
+      "job_id": "1",
+      "repeat_count": null,
+      "every": 5000,
+      "status": 1,
+      "service": "baseSysLogServiceImpl.clear(false)",
+      "task_type": 0,
+      "type": null,
+      "data": null,
+      "remark": null,
+      "cron": "0 0 1 * * ?",
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "id": 2,
+      "name": "订单统计",
+      "job_id": "2",
+      "repeat_count": null,
+      "every": 5000,
+      "status": 1,
+      "service": "orderInfoServiceImpl.statisticsThisWeek()",
+      "task_type": 0,
+      "type": null,
+      "data": null,
+      "remark": null,
+      "cron": "0 0 1 * * ?",
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}

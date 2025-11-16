@@ -1,0 +1,25 @@
+.cl-switch {
+	position: relative;
+
+	.uni-switch-input {
+		margin-right: 0;
+	}
+
+	.uni-switch-wrapper {
+		.uni-switch-input {
+			&.uni-switch-input-checked {
+				background-color: $cl-color-primary;
+				border-color: $cl-color-primary;
+			}
+		}
+	}
+}
+
+.wx-switch-input {
+	background-color: $cl-color-primary !important;
+	border-color: $cl-border-color !important;
+
+	&-checked {
+		border-color: $cl-color-primary !important;
+	}
+}

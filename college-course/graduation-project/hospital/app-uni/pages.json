@@ -1,0 +1,193 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/hospital",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/index/my",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/index/meal",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/index/order",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/index/feedback",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/index/feedback-my",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "pages/user",
+      "pages": [
+        {
+          "path": "doc",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "set",
+          "style": {
+            "navigationBarTitleText": "%page.设置%"
+          }
+        },
+        {
+          "path": "edit",
+          "style": {
+            "navigationBarTitleText": "%page.编辑%"
+          }
+        },
+        {
+          "path": "login",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "captcha",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "about",
+          "style": {
+            "navigationBarTitleText": "%page.关于我们%"
+          }
+        },
+        {
+          "path": "profile",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/meal",
+      "pages": [
+        {
+          "path": "detail",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/hospital",
+      "pages": [
+        {
+          "path": "detail",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "department",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "doctor",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/order",
+      "pages": [
+        {
+          "path": "detail",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "pay",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        }
+      ]
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "cool-uni",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#f6f7fa"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#333",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "height": "0",
+    "list": [
+      {
+        "pagePath": "pages/index/hospital",
+        "iconPath": "static/icon/tabbar/home.png",
+        "selectedIconPath": "static/icon/tabbar/home2.png",
+        "text": "%医院%"
+      },
+      {
+        "pagePath": "pages/index/meal",
+        "iconPath": "static/icon/tabbar/cool.png",
+        "selectedIconPath": "static/icon/tabbar/cool2.png",
+        "text": "%套餐%"
+      },
+      {
+        "pagePath": "pages/index/order",
+        "iconPath": "static/icon/tabbar/cool.png",
+        "selectedIconPath": "static/icon/tabbar/cool2.png",
+        "text": "%订单%"
+      },
+      {
+        "pagePath": "pages/index/feedback",
+        "iconPath": "static/icon/tabbar/cool.png",
+        "selectedIconPath": "static/icon/tabbar/cool2.png",
+        "text": "%反馈%",
+        "requiredRole": 1
+      },
+      {
+        "pagePath": "pages/index/feedback-my",
+        "iconPath": "static/icon/tabbar/cool.png",
+        "selectedIconPath": "static/icon/tabbar/cool2.png",
+        "text": "%反馈%",
+        "requiredRole": 2
+      },
+      {
+        "pagePath": "pages/index/my",
+        "iconPath": "static/icon/tabbar/my.png",
+        "selectedIconPath": "static/icon/tabbar/my2.png",
+        "text": "%我的%"
+      }
+    ]
+  }
+}

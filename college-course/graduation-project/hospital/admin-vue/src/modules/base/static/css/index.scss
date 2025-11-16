@@ -1,0 +1,89 @@
+#app {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+:root {
+  --bg-color: var(--el-fill-color-lighter);
+}
+
+a {
+  text-decoration: none;
+}
+
+input,
+button {
+  outline: none;
+}
+
+input {
+  &:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px white inset;
+  }
+}
+
+// scrollbar
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0003;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+  background-color: #0000004d;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #fff3;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #fff6;
+}
+
+// custom
+.cl-comm__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 26px;
+  width: 26px;
+  background-color: var(--el-bg-color);
+  border: 1px solid var(--el-fill-color-dark);
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  .cl-svg {
+    font-size: 16px;
+    color: var(--el-text-color-primary);
+  }
+
+  &:hover {
+    background-color: var(--el-fill-color-light);
+  }
+}
+
+// Prevent jitters of cl-search
+.cl-search {
+  .cl-form-item .el-input__suffix {
+    position: absolute;
+    right: 16px;
+  }
+}

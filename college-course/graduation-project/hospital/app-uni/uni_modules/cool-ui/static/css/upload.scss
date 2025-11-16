@@ -1,0 +1,88 @@
+.cl-upload-list {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: -20rpx;
+
+	.cl-upload {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: $cl-upload-radius;
+		border-width: $cl-border-width;
+		border-style: dashed;
+		border-color: $cl-border-color;
+		box-sizing: border-box;
+		position: relative;
+		margin-right: 20rpx;
+		margin-bottom: 20rpx;
+
+		&__add {
+			font-size: 50rpx;
+			color: #8c939d;
+		}
+
+		&__target {
+			height: 100%;
+			width: 100%;
+			border-radius: $cl-upload-radius;
+		}
+
+		&__remove {
+			position: absolute;
+			right: 0;
+			top: 0;
+			color: $cl-color-error;
+			z-index: 1;
+			line-height: normal;
+			font-size: 30rpx;
+			padding: 10rpx;
+		}
+
+		&__progress {
+			position: absolute;
+			left: 10rpx;
+			bottom: 6rpx;
+			width: calc(100% - 10rpx);
+			z-index: 2;
+		}
+
+		&__demo {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			color: $cl-color-placeholder;
+
+			.cl-icon-camera-fill {
+				font-size: 70rpx;
+			}
+
+			.text {
+				font-size: 24rpx;
+				line-height: normal;
+				margin-top: 10rpx;
+			}
+		}
+	}
+
+	&:not(.is-disabled) {
+		.cl-upload {
+			&:active {
+				border-color: $cl-color-primary;
+				&__add {
+					color: $cl-color-primary;
+				}
+			}
+		}
+	}
+
+	&.is-disabled {
+		.cl-upload {
+			background-color: $cl-color-disabled-bg;
+
+			&__add {
+				transform: rotate(45deg);
+			}
+		}
+	}
+}

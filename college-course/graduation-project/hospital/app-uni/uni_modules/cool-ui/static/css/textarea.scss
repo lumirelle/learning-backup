@@ -1,0 +1,33 @@
+.cl-textarea {
+	position: relative;
+	width: 100%;
+	background-color: #ffffff;
+	border-radius: $cl-border-radius;
+	padding: 10rpx $cl-padding;
+	box-sizing: border-box;
+
+	&__inner {
+		height: 100%;
+		width: 100%;
+		font-size: $cl-font-size;
+		line-height: 1.2;
+	}
+
+	&.is-disabled {
+		background-color: $cl-color-disabled-bg;
+		color: $cl-color-disabled;
+	}
+
+	&__count {
+		position: absolute;
+		right: 10rpx;
+		bottom: 10rpx;
+		font-size: 24rpx;
+		letter-spacing: 1rpx;
+		color: $cl-color-info;
+	}
+
+	&.is-border {
+		border: $cl-border-width solid $cl-border-color;
+	}
+}

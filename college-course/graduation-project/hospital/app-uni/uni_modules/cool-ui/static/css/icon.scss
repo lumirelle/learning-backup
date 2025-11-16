@@ -1,0 +1,25 @@
+cl-icon,
+.cl-icon {
+	display: inline-flex;
+	align-items: center;
+
+	&.is-primary {
+		color: $cl-color-primary;
+	}
+
+	&.is-success {
+		color: $cl-color-success;
+	}
+
+	&.is-warning {
+		color: $cl-color-warning;
+	}
+
+	&.is-error {
+		color: $cl-color-error;
+	}
+
+	&.is-info {
+		color: $cl-color-info;
+	}
+}

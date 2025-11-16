@@ -1,0 +1,60 @@
+.cl-toast {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border-radius: 26rpx;
+	padding: 40rpx;
+	max-width: 80%;
+	background-color: rgba(50, 50, 50, 0.9);
+	color: #ffffff;
+	line-height: 1;
+
+	&__icon {
+		margin-bottom: 20rpx;
+
+		text {
+			font-size: 60rpx;
+		}
+
+		image {
+			display: block;
+			height: 60rpx;
+			width: 60rpx;
+		}
+	}
+
+	&__content {
+		font-size: 28rpx;
+		text-align: center;
+	}
+
+	&.is-icon {
+		min-width: 110rpx;
+	}
+}
+
+.cl-toast__wrap {
+	.cl-popup {
+		width: 100% !important;
+
+		&__wrapper {
+			pointer-events: none !important;
+
+			&--top {
+				top: 100rpx;
+				top: calc(env(safe-area-inset-top) + 100rpx);
+			}
+
+			&--bottom {
+				bottom: 100rpx;
+				bottom: calc(env(safe-area-inset-bottom) + 100rpx);
+			}
+		}
+
+		&__container {
+			text-align: center;
+			width: 100%;
+		}
+	}
+}

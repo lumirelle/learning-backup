@@ -1,0 +1,58 @@
+.cl-badge {
+	position: relative;
+	vertical-align: middle;
+	display: inline-block;
+	z-index: 9;
+
+	&__content {
+		display: inline-flex;
+		height: 24rpx;
+		min-width: 12rpx;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		white-space: nowrap;
+		font-size: 16rpx;
+		font-weight: bold;
+		color: #fff;
+		position: absolute;
+		top: -12rpx;
+		right: -12rpx;
+		border: 2rpx solid rgba(255, 255, 255, 0.8);
+		border-radius: 32rpx;
+		padding: 0 6rpx;
+	}
+
+	&.is-dot {
+		.cl-badge__content {
+			height: 14rpx;
+			width: 14rpx;
+			padding: 0;
+			border-radius: 50%;
+			top: -7rpx;
+			right: -7rpx;
+		}
+	}
+
+	@mixin set-color($type, $color) {
+		&--#{$type} {
+			.cl-badge__content {
+				background-color: $color;
+			}
+
+			&.is-plain {
+				.cl-badge__content {
+					background-color: #fff;
+					color: $color;
+					border: $cl-border-width solid currentColor;
+				}
+			}
+		}
+	}
+
+	@include set-color(primary, $cl-color-primary);
+	@include set-color(success, $cl-color-success);
+	@include set-color(error, $cl-color-error);
+	@include set-color(warning, $cl-color-warning);
+	@include set-color(info, $cl-color-info);
+}

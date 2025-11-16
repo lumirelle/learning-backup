@@ -1,0 +1,54 @@
+.cl-noticebar {
+	display: flex;
+	align-items: center;
+
+	&__box {
+		flex: 1;
+		overflow: hidden;
+	}
+
+	.cl-icon {
+		/* #ifdef MP */
+		position: relative;
+		top: 2rpx;
+		/* #endif */
+	}
+
+	&__scroller {
+		position: relative;
+
+		&.is-vertical {
+			transition: top 0.3s;
+			flex-direction: column;
+
+			.cl-noticebar__text {
+				display: block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+
+		&.is-horizontal {
+			display: flex;
+			align-items: center;
+		}
+	}
+
+	&__item {
+		display: flex;
+		align-items: center;
+		height: 100%;
+	}
+
+	&__text {
+		font-size: 26rpx;
+		line-height: 1;
+	}
+
+	&.is-scrollable {
+		.cl-noticebar__text {
+			white-space: nowrap;
+		}
+	}
+}

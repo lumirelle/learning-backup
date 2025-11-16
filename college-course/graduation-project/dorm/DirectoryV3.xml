@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <trees>
+     <tree path="/src/main/java/com/dorm/controller/dorm" title="宿舍管理"/>
+   <tree path="/src/main/java/com/dorm/controller/files" title="文件管理"/>
+   <tree path="/src/main/java/com/dorm/controller/card" title="校园卡管理"/>
+   <tree path="/src/main/java/com/dorm/controller/notice" title="通知公告"/>
+   <tree path="/src/main/java/com/dorm/controller/board" title="留言板"/>
+   <tree path="/src/main/java/com/dorm/controller/statistics"
+         title="统计数据（首页）"/>
+   <tree path="/src/main/java/com/dorm/controller/dorm/access"
+         title="出入管理"/>
+     <tree path="/src/main/java/com/dorm/controller/dorm/ranking" title="评分"/>
+   <tree path="/src/main/resources/templates/ranking" title="评分"/>
+ </trees>
