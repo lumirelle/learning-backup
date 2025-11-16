@@ -39,19 +39,17 @@
 
 ## 包括
 
-- `/archive` 归档
-  - `/self-study` 自学
-    - `/spring-family-bucket` [Spring 全家桶](archive/self-study/spring-family-bucket)
-  - `/college-corse` 大学课程
-    - `/algorithm-design` [算法设计与分析（Java）](archive/college-corse/algorithm-design)
-    - `/android-development` [安卓开发（Java）](archive/college-corse/android-development)
-    - `/data-structure` [数据结构（Java）](archive/college-corse/data-structure)
-    - `/digital-image-process` [数字图像处理（Matlab）](archive/college-corse/digital-image-process)
-    - `/java-advanced` [高级 Java](archive/college-corse/java-advanced)
-    - `/java-enterprise` [企业 Java](archive/college-corse/java-enterprise)
-    - `/operator-system` [操作系统基础（Java）](archive/college-corse/operator-system)
-    - `/web-front-end` [Web 开发（前端）](archive/college-corse/web-front-end)
-- `/spring-family-bucket` [Spring 全家桶](spring-family-bucket)
+- `/self-study` 自学
+  - `/spring-family-bucket` [Spring 全家桶](archive/self-study/spring-family-bucket)
+- `/college-corse` 大学课程
+  - `/algorithm-design` [算法设计与分析（Java）](archive/college-corse/algorithm-design)
+  - `/android-development` [安卓开发（Java）](archive/college-corse/android-development)
+  - `/data-structure` [数据结构（Java）](archive/college-corse/data-structure)
+  - `/digital-image-process` [数字图像处理（Matlab）](archive/college-corse/digital-image-process)
+  - `/java-advanced` [高级 Java](archive/college-corse/java-advanced)
+  - `/java-enterprise` [企业 Java](archive/college-corse/java-enterprise)
+  - `/operator-system` [操作系统基础（Java）](archive/college-corse/operator-system)
+  - `/web-front-end` [Web 开发（前端）](archive/college-corse/web-front-end)
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 
