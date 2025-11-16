@@ -57,6 +57,6 @@
 
 ## 许可
 
-[MIT](LICENSE)。
+[MIT](./LICENSE.md)。
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
