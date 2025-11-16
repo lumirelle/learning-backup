@@ -40,17 +40,17 @@
 ## 包括
 
 - `/college-corse` 大学课程
-  - `/algorithm-design` [算法设计与分析（Java）](archive/college-corse/algorithm-design)
-  - `/android-development` [安卓开发（Java）](archive/college-corse/android-development)
-  - `/data-structure` [数据结构（Java）](archive/college-corse/data-structure)
-  - `/digital-image-process` [数字图像处理（Matlab）](archive/college-corse/digital-image-process)
-  - `/graduation-project` [毕业设计](archive/college-corse/graduation-project)
-  - `/java-advanced` [高级 Java](archive/college-corse/java-advanced)
-  - `/java-enterprise` [企业 Java](archive/college-corse/java-enterprise)
-  - `/operator-system` [操作系统基础（Java）](archive/college-corse/operator-system)
-  - `/web-front-end` [Web 开发（前端）](archive/college-corse/web-front-end)
+  - `/algorithm-design` [算法设计与分析（Java）](college-corse/algorithm-design)
+  - `/android-development` [安卓开发（Java）](college-corse/android-development)
+  - `/data-structure` [数据结构（Java）](college-corse/data-structure)
+  - `/digital-image-process` [数字图像处理（Matlab）](college-corse/digital-image-process)
+  - `/graduation-project` [毕业设计](college-corse/graduation-project)
+  - `/java-advanced` [高级 Java](college-corse/java-advanced)
+  - `/java-enterprise` [企业 Java](college-corse/java-enterprise)
+  - `/operator-system` [操作系统基础（Java）](college-corse/operator-system)
+  - `/web-front-end` [Web 开发（前端）](college-corse/web-front-end)
 - `/self-study` 自学
-  - `/spring-family-bucket` [Spring 全家桶](archive/self-study/spring-family-bucket)
+  - `/spring-family-bucket` [Spring 全家桶](self-study/spring-family-bucket)
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 
