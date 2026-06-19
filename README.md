@@ -51,6 +51,8 @@
   - `/web-front-end` [Web 开发（前端）](college-course/web-front-end)
 - `/self-study` 自学
   - `/spring-family-bucket` [Spring 全家桶](self-study/spring-family-bucket)
+- /company-homework 公司作业
+  - `/fullstack-ai-development` [全栈 AI 开发](company-homework/fullstack-ai-development)
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 

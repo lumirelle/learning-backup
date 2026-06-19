@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6ee7b7"/>
+      <stop offset="0.55" stop-color="#10b981"/>
+      <stop offset="1" stop-color="#14b8a6"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#g)"/>
+  <!-- 嫩芽：两片叶子从茎抽出 -->
+  <path d="M16 24 V14" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+  <path d="M16 16 C 12 16 10 13 10 10 C 13 10 16 12 16 16 Z" fill="#fff"/>
+  <path d="M16 13 C 20 13 22 10 22 7 C 19 7 16 9 16 13 Z" fill="#fff"/>
+</svg>

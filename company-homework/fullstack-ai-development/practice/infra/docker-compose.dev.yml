@@ -1,0 +1,52 @@
+# ─────────────────────────────────────────────────────────────
+#  ATS 开发环境 · 只起 Postgres + Redis
+#  使用：从仓库根目录执行
+#    docker-compose -f infra/docker-compose.dev.yml up -d
+#    docker-compose -f infra/docker-compose.dev.yml logs -f
+#    docker-compose -f infra/docker-compose.dev.yml down -v   # 清库
+#
+#  兼容：Docker / docker-compose v1 / Podman 4+ (`podman compose`)
+# ─────────────────────────────────────────────────────────────
+
+services:
+  postgres:
+    image: docker.io/library/postgres:16-alpine
+    container_name: ats-postgres-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-ats_db}
+      POSTGRES_USER: ${POSTGRES_USER:-ats_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ats_pwd}
+      TZ: Asia/Shanghai
+      PGTZ: Asia/Shanghai
+    ports:
+      - '${POSTGRES_PORT:-5432}:5432'
+    volumes:
+      - ats-pg-data:/var/lib/postgresql/data
+      # schema.sql 自动初始化（仅首次启动空库时执行；改 schema 后需 down -v）
+      # 单一来源：直接挂载 docs/ 下的设计文档源 SQL
+      - ../docs/project-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro,Z
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U ${POSTGRES_USER:-ats_user} -d ${POSTGRES_DB:-ats_db}']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: docker.io/library/redis:7-alpine
+    container_name: ats-redis-dev
+    restart: unless-stopped
+    command: ['redis-server', '--appendonly', 'yes', '--maxmemory', '256mb', '--maxmemory-policy', 'allkeys-lru']
+    ports:
+      - '${REDIS_PORT:-6379}:6379'
+    volumes:
+      - ats-redis-data:/data
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  ats-pg-data:
+  ats-redis-data:

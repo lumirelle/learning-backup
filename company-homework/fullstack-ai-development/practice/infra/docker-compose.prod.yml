@@ -1,0 +1,108 @@
+# ─────────────────────────────────────────────────────────────────────
+# ATS 生产环境 compose · postgres + redis + backend + frontend(nginx)
+#
+# 第一次部署：
+#   cp infra/.env.prod.example infra/.env.prod
+#   vi infra/.env.prod                                # 替换所有 *** 占位
+#   bun run prod:up
+#
+# 日常：
+#   bun run prod:up      启动 / 重启
+#   bun run prod:logs    跟踪日志
+#   bun run prod:down    停止（保留卷）
+#   bun run prod:reset   销毁卷（DB 数据全清，慎用）
+#
+# 兼容：Docker / docker-compose v1 / Podman 4+
+# ─────────────────────────────────────────────────────────────────────
+
+services:
+  postgres:
+    image: docker.io/library/postgres:16-alpine
+    container_name: ats-postgres-prod
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      TZ: Asia/Shanghai
+      PGTZ: Asia/Shanghai
+    volumes:
+      - ats-pg-data:/var/lib/postgresql/data
+      - ../docs/project-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro,Z
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    # 生产不暴露端口（仅内网 backend 连）
+
+  redis:
+    image: docker.io/library/redis:7-alpine
+    container_name: ats-redis-prod
+    restart: unless-stopped
+    command: ['redis-server', '--appendonly', 'yes', '--maxmemory', '512mb', '--maxmemory-policy', 'allkeys-lru']
+    volumes:
+      - ats-redis-data:/data
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    image: ats-backend:latest
+    build:
+      context: ../ats-backend
+      dockerfile: Dockerfile
+    container_name: ats-backend-prod
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      ATS_JWT_KEY_DIR: /app/jwt
+      JWT_PRIVATE_KEY_FILE: ${JWT_PRIVATE_KEY_FILE:-prod-private.pem}
+      JWT_PUBLIC_KEY_FILE: ${JWT_PUBLIC_KEY_FILE:-prod-public.pem}
+      JWT_ISSUER: ${JWT_ISSUER:-ats.prod}
+      JWT_REFRESH_COOKIE_SAMESITE: ${JWT_REFRESH_COOKIE_SAMESITE:-Lax}
+      JWT_REFRESH_COOKIE_SECURE: ${JWT_REFRESH_COOKIE_SECURE:-false}
+      UPLOAD_PATH: /app/uploads
+      UPLOAD_MAX_FILE_MB: ${UPLOAD_MAX_FILE_MB:-5}
+    volumes:
+      # JWT 钥匙：生产请用独立 prod keypair（非 dev-*.pem）
+      - ./jwt:/app/jwt:ro,Z
+      # 简历持久化：容器重启不丢
+      - ats-uploads:/app/uploads
+    healthcheck:
+      test: [CMD, wget, -qO-, 'http://127.0.0.1:8080/api/v1/health']
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  frontend:
+    image: ats-frontend:latest
+    build:
+      context: ../ats-frontend
+      dockerfile: Dockerfile
+    container_name: ats-frontend-prod
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - '${WEB_PORT:-80}:80'
+
+volumes:
+  ats-pg-data:
+  ats-redis-data:
+  ats-uploads:

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ats.repository.JobMapper">
+
+  <!--
+    M6 改造说明：
+    - jobs 已 DROP location 列；工作地点改从 sub_departments.location 取
+    - jobs.department_id 改为 jobs.sub_department_id（指向叶子节点）
+    - 所有 list / count / id 查询都需要 join sub_departments + departments 拿展示和过滤字段
+    - 过滤语义：
+        q.subDepartmentId 单选 → AND j.sub_department_id = ?         （精确叶子）
+        q.departmentId    单选 → AND sd.parent_department_id = ?     （按"上层部门"筛，命中该部门下所有子部门的岗位）
+        q.location  非空模糊  → AND sd.location ILIKE '%x%'         （从子部门 location 取，语义不变）
+  -->
+
+  <!-- 公共 WHERE 条件：用 <sql>+<include> 在 list/count 复用 -->
+  <sql id="conditions">
+    j.deleted_at IS NULL
+    <if test="ownerOnlyUserId != null">
+      AND j.created_by = #{ownerOnlyUserId}
+    </if>
+    <if test="hrScope != null">
+      AND (
+        j.created_by = #{hrScope.hrUserId}
+        <if test="hrScope.subDepartmentIds != null and !hrScope.subDepartmentIds.isEmpty()">
+          OR j.sub_department_id IN
+          <foreach collection="hrScope.subDepartmentIds" item="sid" open="(" separator="," close=")">#{sid}</foreach>
+        </if>
+      )
+    </if>
+    <if test="visibleStatuses != null and !visibleStatuses.isEmpty()">
+      AND j.status::text IN
+      <foreach collection="visibleStatuses" item="s" open="(" separator="," close=")">#{s}</foreach>
+    </if>
+    <if test="q.keyword != null and q.keyword != ''">
+      AND (
+        j.title ILIKE '%' || #{q.keyword} || '%'
+        OR j.description ILIKE '%' || #{q.keyword} || '%'
+        OR to_tsvector('english', coalesce(j.description, ''))
+           @@ plainto_tsquery('english', #{q.keyword})
+        OR to_tsvector('simple', coalesce(j.description, ''))
+           @@ plainto_tsquery('simple', #{q.keyword})
+      )
+    </if>
+    <if test="q.status != null and !q.status.isEmpty()">
+      AND j.status::text IN
+      <foreach collection="q.status" item="s" open="(" separator="," close=")">#{s}</foreach>
+    </if>
+    <if test="q.workType != null and !q.workType.isEmpty()">
+      AND j.work_type::text IN
+      <foreach collection="q.workType" item="w" open="(" separator="," close=")">#{w}</foreach>
+    </if>
+    <if test="q.level != null and !q.level.isEmpty()">
+      AND j.level::text IN
+      <foreach collection="q.level" item="l" open="(" separator="," close=")">#{l}</foreach>
+    </if>
+    <if test="q.subDepartmentId != null">
+      AND j.sub_department_id = #{q.subDepartmentId}
+    </if>
+    <if test="q.departmentId != null">
+      AND sd.parent_department_id = #{q.departmentId}
+    </if>
+    <if test="q.location != null and q.location != ''">
+      AND sd.location ILIKE '%' || #{q.location} || '%'
+    </if>
+    <!--
+      薪资过滤语义（"区间相交"，而非"完全落在区间内"）：
+      - salaryMin 给定 → 要求该岗位薪资上限 >= salaryMin（候选愿意接受的最低值能被覆盖）
+      - salaryMax 给定 → 要求该岗位薪资下限 <= salaryMax（不会全部超出候选预期）
+      - 任一端为 null 即视为该端不限制（兼容"面议"岗位也能被覆盖到一侧）
+    -->
+    <if test="q.salaryMin != null">
+      AND (j.salary_max IS NULL OR j.salary_max &gt;= #{q.salaryMin})
+    </if>
+    <if test="q.salaryMax != null">
+      AND (j.salary_min IS NULL OR j.salary_min &lt;= #{q.salaryMax})
+    </if>
+    <if test="q.tagSlugs != null and !q.tagSlugs.isEmpty()">
+      AND EXISTS (
+        SELECT 1 FROM job_tags jt
+        JOIN tags t ON t.id = jt.tag_id
+        WHERE jt.job_id = j.id
+          AND t.slug IN
+          <foreach collection="q.tagSlugs" item="s" open="(" separator="," close=")">#{s}</foreach>
+      )
+    </if>
+  </sql>
+
+  <select id="listJobs" resultType="com.ats.entity.Job">
+    SELECT
+      j.id, j.sub_department_id, j.created_by,
+      j.title, j.description,
+      j.work_type::text AS work_type,
+      j.level::text     AS level,
+      j.salary_min, j.salary_max, j.headcount,
+      j.status::text    AS status,
+      j.view_count, j.published_at, j.closed_at,
+      j.created_at, j.updated_at, j.deleted_at
+    FROM jobs j
+    JOIN sub_departments sd ON sd.id = j.sub_department_id
+    WHERE
+      <include refid="conditions"/>
+    ORDER BY ${sortColumn} ${sortDir} NULLS LAST, j.id DESC
+    LIMIT #{size} OFFSET #{offset}
+  </select>
+
+  <select id="countJobs" resultType="long">
+    SELECT count(*) FROM jobs j
+    JOIN sub_departments sd ON sd.id = j.sub_department_id
+    WHERE
+      <include refid="conditions"/>
+  </select>
+
+  <!--
+    给"看板多维筛选"使用：只查 id，按 published_at DESC NULLS LAST 兜底排序保证
+    "更新近 / 更活跃"的岗位优先进入候选。limit 由 service 传入，对单次请求设上限。
+  -->
+  <select id="selectFilteredJobIds" resultType="long">
+    SELECT j.id FROM jobs j
+    JOIN sub_departments sd ON sd.id = j.sub_department_id
+    WHERE
+      <include refid="conditions"/>
+    ORDER BY j.published_at DESC NULLS LAST, j.id DESC
+    LIMIT #{limit}
+  </select>
+
+  <select id="selectJobIdsInHrScope" resultType="long">
+    SELECT j.id FROM jobs j
+    JOIN sub_departments sd ON sd.id = j.sub_department_id
+    WHERE j.deleted_at IS NULL
+      <if test="hrScope != null">
+        AND (
+          j.created_by = #{hrScope.hrUserId}
+          <if test="hrScope.subDepartmentIds != null and !hrScope.subDepartmentIds.isEmpty()">
+            OR j.sub_department_id IN
+            <foreach collection="hrScope.subDepartmentIds" item="sid" open="(" separator="," close=")">#{sid}</foreach>
+          </if>
+        )
+      </if>
+    ORDER BY j.published_at DESC NULLS LAST, j.id DESC
+    LIMIT #{limit}
+  </select>
+
+</mapper>

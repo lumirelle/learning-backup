@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>招聘管理系统（ATS）需求文档 v1.1</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    /* ── 侧边导航 ── */
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 220px;
+      height: 100vh;
+      background: #fafafa;
+      border-right: 1px solid #e8e8e8;
+      overflow-y: auto;
+      padding: 24px 0 40px;
+      z-index: 100;
+    }
+    .sidebar-logo {
+      padding: 0 20px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a1a;
+      border-bottom: 1px solid #e8e8e8;
+      margin-bottom: 12px;
+    }
+    .sidebar-logo span { color: #888; font-weight: 400; }
+    .sidebar nav a {
+      display: block;
+      padding: 5px 20px;
+      font-size: 13px;
+      color: #555;
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .sidebar nav a:hover { color: #1a1a1a; background: #f0f0f0; }
+    .sidebar nav a.active { color: #1565c0; border-left-color: #1565c0; background: #f0f5ff; }
+    .sidebar nav .nav-group { font-size: 11px; font-weight: 600; color: #aaa; padding: 14px 20px 4px; letter-spacing: 0.5px; text-transform: uppercase; }
+
+    /* ── 主内容 ── */
+    .main { margin-left: 220px; padding: 40px 48px 80px; max-width: 1100px; }
+
+    /* ── 标题 ── */
+    h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.3px; }
+    h2 { font-size: 19px; font-weight: 700; margin-top: 48px; padding-top: 20px; border-top: 1px solid #e8e8e8; }
+    h3 { font-size: 15px; font-weight: 600; margin-top: 28px; color: #1a1a1a; }
+    h4 { font-size: 13px; font-weight: 600; margin-top: 18px; color: #444; }
+
+    /* ── 文档头 ── */
+    .doc-header { padding-bottom: 24px; border-bottom: 2px solid #1565c0; margin-bottom: 8px; }
+    .doc-meta { display: flex; gap: 24px; margin-top: 10px; flex-wrap: wrap; }
+    .doc-meta span { font-size: 12px; color: #888; }
+    .doc-meta strong { color: #555; }
+
+    /* ── Pill ── */
+    .pill { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; vertical-align: middle; }
+    .pill-p0 { background: #fdecea; color: #c62828; }
+    .pill-p1 { background: #fff3e0; color: #e65100; }
+    .pill-p2 { background: #e8f5e9; color: #2e7d32; }
+    .pill-mvp { background: #1565c0; color: #fff; }
+    .pill-later { background: #ebebeb; color: #777; }
+    .pill-hr { background: #e3eeff; color: #1565c0; }
+    .pill-cand { background: #f3e5f5; color: #6a1b9a; }
+    .pill-admin { background: #fce4ec; color: #ad1457; }
+
+    /* ── 段落间距 ── */
+    p { margin-top: 10px; color: #444; }
+    ul, ol { margin-top: 10px; padding-left: 24px; }
+    li { margin-top: 4px; color: #444; }
+    li strong { color: #1a1a1a; }
+
+    /* ── 表格 ── */
+    .table-wrap { overflow-x: auto; margin-top: 14px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead th { text-align: left; font-weight: 600; font-size: 12px; color: #888; border-bottom: 2px solid #e0e0e0; padding: 9px 12px; background: #fafafa; }
+    tbody td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: #f9f9f9; }
+    code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 12px; background: #f5f5f5; padding: 1px 5px; border-radius: 3px; color: #c7254e; }
+
+    /* ── Callout ── */
+    .callout { border-left: 3px solid; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-top: 16px; }
+    .callout-info { border-color: #1565c0; background: #f0f5ff; }
+    .callout-warn { border-color: #e65100; background: #fff8f0; }
+    .callout-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .callout-info .callout-title { color: #1565c0; }
+    .callout-warn .callout-title { color: #e65100; }
+    .callout p { margin: 0; font-size: 13px; }
+
+    /* ── 状态机图 ── */
+    .state-flow {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0;
+      margin-top: 20px;
+      background: #fafafa;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      padding: 20px 24px;
+    }
+    .state-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .state-box {
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      border: 1.5px solid;
+    }
+    .state-init  { background: #e3f2fd; border-color: #1565c0; color: #1565c0; }
+    .state-pass  { background: #e8f5e9; border-color: #2e7d32; color: #2e7d32; }
+    .state-stage { background: #fff3e0; border-color: #e65100; color: #e65100; }
+    .state-offer { background: #f3e5f5; border-color: #6a1b9a; color: #6a1b9a; }
+    .state-hired { background: #1565c0; border-color: #1565c0; color: #fff; }
+    .state-reject { background: #fdecea; border-color: #c62828; color: #c62828; }
+    .arrow {
+      font-size: 18px;
+      color: #bbb;
+      padding: 0 6px;
+      line-height: 1;
+    }
+    .state-reject-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px dashed #e0e0e0;
+    }
+    .reject-item { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .reject-arrow { font-size: 11px; color: #ccc; }
+
+    /* ── ERD 简图 ── */
+    .erd-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+    @media (max-width: 700px) { .erd-grid { grid-template-columns: 1fr; } }
+    .erd-table {
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      overflow: hidden;
+      font-size: 12px;
+    }
+    .erd-table-header {
+      background: #1565c0;
+      color: #fff;
+      font-weight: 700;
+      padding: 7px 12px;
+      font-size: 13px;
+    }
+    .erd-table-header.secondary { background: #5c6bc0; }
+    .erd-table-header.tertiary  { background: #7b1fa2; }
+    .erd-field {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 12px;
+      border-bottom: 1px solid #f5f5f5;
+      color: #444;
+    }
+    .erd-field:last-child { border-bottom: none; }
+    .erd-field .field-name { font-family: monospace; font-size: 11px; }
+    .erd-field .field-type { font-size: 11px; color: #aaa; }
+    .erd-pk { color: #e65100; font-weight: 700; }
+    .erd-fk { color: #1565c0; }
+
+    /* ── API 列表 ── */
+    .api-group { margin-top: 20px; }
+    .api-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 8px 12px;
+      border-bottom: 1px solid #f5f5f5;
+      font-size: 13px;
+    }
+    .api-row:last-child { border-bottom: none; }
+    .method {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 3px;
+      min-width: 50px;
+      text-align: center;
+    }
+    .get    { background: #e8f5e9; color: #2e7d32; }
+    .post   { background: #e3eeff; color: #1565c0; }
+    .put    { background: #fff3e0; color: #e65100; }
+    .patch  { background: #f3e5f5; color: #6a1b9a; }
+    .delete { background: #fdecea; color: #c62828; }
+    .api-path { font-family: monospace; font-size: 12px; color: #333; flex: 1; }
+    .api-desc { color: #888; font-size: 12px; flex: 1.5; }
+    .api-auth { font-size: 11px; color: #aaa; white-space: nowrap; }
+
+    /* ── 进度条 ── */
+    .progress-bar { height: 6px; background: #e8e8e8; border-radius: 3px; margin-top: 4px; }
+    .progress-fill { height: 100%; border-radius: 3px; background: #1565c0; }
+
+    /* ── section ── */
+    section { margin-top: 8px; }
+
+    /* ── 打印 ── */
+    @media print {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 侧边导航 -->
+<div class="sidebar">
+  <div class="sidebar-logo">ATS 需求文档 <span>v1.1</span></div>
+  <nav>
+    <div class="nav-group">概述</div>
+    <a href="#overview">项目背景</a>
+    <a href="#goals">目标与范围</a>
+    <a href="#roles">角色与权限</a>
+    <div class="nav-group">功能需求</div>
+    <a href="#auth">认证模块</a>
+    <a href="#jobs">岗位管理</a>
+    <a href="#candidates">候选人管理</a>
+    <a href="#pipeline">招聘看板</a>
+    <a href="#interview">面试记录</a>
+    <a href="#dashboard">数据看板</a>
+    <div class="nav-group">技术设计</div>
+    <a href="#statemachine">状态机</a>
+    <a href="#erd">数据模型</a>
+    <a href="#api">API 设计</a>
+    <a href="#tech">技术架构</a>
+    <div class="nav-group">其他</div>
+    <a href="#nonfunc">非功能需求</a>
+    <a href="#mvp">MVP 范围</a>
+    <a href="#timeline">开发里程碑</a>
+  </nav>
+</div>
+
+<!-- 主内容 -->
+<div class="main">
+
+  <!-- 文档头 -->
+  <div class="doc-header">
+    <h1>招聘管理系统（ATS）需求文档</h1>
+    <div class="doc-meta">
+      <span><strong>版本：</strong>v1.1</span>
+      <span><strong>状态：</strong>草稿</span>
+      <span><strong>日期：</strong>2026-05-21</span>
+      <span><strong>作者：</strong>AI 辅助调研</span>
+      <span><strong>定位：</strong>全栈练手 / 考核押题 MVP</span>
+    </div>
+  </div>
+
+  <!-- ══ 1. 项目背景 ══ -->
+  <h2 id="overview">1. 项目背景</h2>
+  <p>
+    招聘管理系统（Applicant Tracking System，ATS）是 HR 团队管理岗位发布、候选人筛选与面试流程的核心工具。
+    本项目以 MVP 为目标，覆盖招聘全流程的核心链路，同时作为全栈开发学习的实战载体。
+  </p>
+  <p>
+    参考产品形态：Greenhouse、Lever、飞书招聘。
+  </p>
+
+  <div class="callout callout-info">
+    <div class="callout-title">MVP 定位说明</div>
+    <p>本文档区分 <span class="pill pill-mvp">MVP</span> 与 <span class="pill pill-later">后续迭代</span> 两类需求，2周内仅交付 MVP 标注功能。</p>
+  </div>
+
+  <!-- ══ 2. 目标与范围 ══ -->
+  <h2 id="goals">2. 目标与范围</h2>
+
+  <h3>2.1 业务目标</h3>
+  <ul>
+    <li>HR 可以在线发布、管理招聘岗位</li>
+    <li>候选人可通过系统投递简历，查看申请状态</li>
+    <li>HR 可通过看板式界面直观管理候选人面试流程</li>
+    <li>面试官可录入面试评价，形成评估记录</li>
+    <li>管理员可查看招聘漏斗、效率等数据报表</li>
+  </ul>
+
+  <h3>2.2 MVP 范围（2周交付）</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>模块</th><th>功能</th><th>优先级</th><th>是否 MVP</th></tr></thead>
+      <tbody>
+        <tr><td>认证</td><td>注册、登录、JWT 鉴权、多角色</td><td><span class="pill pill-p0">P0</span></td><td><span class="pill pill-mvp">MVP</span></td></tr>
+        <tr><td>岗位管理</td><td>岗位 CRUD、状态控制（开放/关闭）</td><td><span class="pill pill-p0">P0</span></td><td><span class="pill pill-mvp">MVP</span></td></tr>
+        <tr><td>简历投递</td><td>候选人填写信息并上传简历 PDF</td><td><span class="pill pill-p0">P0</span></td><td><span class="pill pill-mvp">MVP</span></td></tr>
+        <tr><td>候选人管理</td><td>简历列表、PDF 预览、候选人详情</td><td><span class="pill pill-p0">P0</span></td><td><span class="pill pill-mvp">MVP</span></td></tr>
+        <tr><td>招聘看板</td><td>看板视图、拖拽调整阶段</td><td><span class="pill pill-p0">P0</span></td><td><span class="pill pill-mvp">MVP</span></td></tr>
+        <tr><td>面试记录</td><td>添加评价与结论，历史记录查看</td><td><span class="pill pill-p1">P1</span></td><td><span class="pill pill-mvp">MVP</span></td></tr>
+        <tr><td>数据看板</td><td>招聘漏斗、岗位统计</td><td><span class="pill pill-p1">P1</span></td><td><span class="pill pill-mvp">MVP</span></td></tr>
+        <tr><td>邮件通知</td><td>状态变更通知候选人</td><td><span class="pill pill-p2">P2</span></td><td><span class="pill pill-later">后续迭代</span></td></tr>
+        <tr><td>简历解析</td><td>AI 自动解析简历字段</td><td><span class="pill pill-p2">P2</span></td><td><span class="pill pill-later">后续迭代</span></td></tr>
+        <tr><td>日历集成</td><td>面试时间与日历同步</td><td><span class="pill pill-p2">P2</span></td><td><span class="pill pill-later">后续迭代</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ 3. 角色与权限 ══ -->
+  <h2 id="roles">3. 角色与权限</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>角色</th><th>标识</th><th>核心权限</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="pill pill-admin">超级管理员</span></td>
+          <td><code>ADMIN</code></td>
+          <td>所有权限，包括用户管理、系统配置、查看全量数据报表</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-hr">HR</span></td>
+          <td><code>HR</code></td>
+          <td>岗位 CRUD、查看所有候选人、管理面试流程、录入面试评价</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-cand">候选人</span></td>
+          <td><code>CANDIDATE</code></td>
+          <td>查看岗位列表、投递简历、查看自己的申请状态</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ 4. 功能需求 ══ -->
+  <h2 id="auth">4. 功能需求</h2>
+
+  <h3 id="auth">4.1 用户认证模块</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>用例</th><th>角色</th><th>描述</th></tr></thead>
+      <tbody>
+        <tr><td>UC-01</td><td>注册</td><td>全部</td><td>邮箱+密码注册，默认角色为 CANDIDATE；HR 账号由管理员后台创建</td></tr>
+        <tr><td>UC-02</td><td>登录</td><td>全部</td><td>邮箱+密码登录，返回 JWT AccessToken（有效期 2h）+ RefreshToken（7d）</td></tr>
+        <tr><td>UC-03</td><td>刷新 Token</td><td>全部</td><td>用 RefreshToken 换新 AccessToken，无需重新登录</td></tr>
+        <tr><td>UC-04</td><td>修改密码</td><td>全部</td><td>需验证旧密码</td></tr>
+        <tr><td>UC-05</td><td>登出</td><td>全部</td><td>前端清除 Token，服务端可选加入黑名单（Redis）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="jobs">4.2 岗位管理模块</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>用例</th><th>角色</th><th>描述</th></tr></thead>
+      <tbody>
+        <tr><td>UC-10</td><td>发布岗位</td><td>HR</td><td>填写岗位名称、部门、工作地点、薪资范围、JD 正文、招聘人数，状态默认"草稿"</td></tr>
+        <tr><td>UC-11</td><td>编辑岗位</td><td>HR</td><td>可修改所有字段；已发布状态下修改需二次确认</td></tr>
+        <tr><td>UC-12</td><td>变更状态</td><td>HR</td><td>草稿 → 开放 → 关闭；关闭后不再接受新申请</td></tr>
+        <tr><td>UC-13</td><td>岗位列表</td><td>HR / 候选人</td><td>HR 可见全部；候选人仅可见"开放"状态岗位；支持关键字搜索、部门筛选</td></tr>
+        <tr><td>UC-14</td><td>岗位详情</td><td>全部</td><td>查看完整 JD，候选人可在此页发起投递</td></tr>
+        <tr><td>UC-15</td><td>删除岗位</td><td>HR</td><td>仅"草稿"状态可删除，已有申请的岗位不可删除</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="candidates">4.3 候选人管理模块</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>用例</th><th>角色</th><th>描述</th></tr></thead>
+      <tbody>
+        <tr><td>UC-20</td><td>投递简历</td><td>候选人</td><td>填写姓名、手机、邮箱、工作年限、上传简历 PDF（≤5MB），一个岗位仅可投递一次</td></tr>
+        <tr><td>UC-21</td><td>候选人列表</td><td>HR</td><td>按岗位筛选，支持搜索姓名/邮箱，显示当前阶段、投递时间</td></tr>
+        <tr><td>UC-22</td><td>候选人详情</td><td>HR</td><td>基本信息、简历预览（PDF 内嵌查看）、流程历史时间线</td></tr>
+        <tr><td>UC-23</td><td>查看投递状态</td><td>候选人</td><td>候选人登录后可看到自己的所有申请及当前阶段</td></tr>
+        <tr><td>UC-24</td><td>标记不合适</td><td>HR</td><td>在任意阶段将候选人置为"已拒绝"，需填写原因</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="pipeline">4.4 招聘看板（Pipeline）</h3>
+  <p>核心亮点模块，看板按阶段展示所有候选人卡片，HR 可通过拖拽调整候选人所在阶段。</p>
+  <div class="table-wrap" style="margin-top:12px;">
+    <table>
+      <thead><tr><th>#</th><th>用例</th><th>角色</th><th>描述</th></tr></thead>
+      <tbody>
+        <tr><td>UC-30</td><td>看板视图</td><td>HR</td><td>按岗位展示各阶段泳道，每张卡片含候选人姓名、头像缩写、投递时间</td></tr>
+        <tr><td>UC-31</td><td>拖拽流转</td><td>HR</td><td>将候选人卡片从一个阶段拖入另一阶段，自动记录流转时间与操作人</td></tr>
+        <tr><td>UC-32</td><td>快速操作</td><td>HR</td><td>卡片右键或悬停菜单：查看详情、标记拒绝、添加备注</td></tr>
+        <tr><td>UC-33</td><td>阶段数量角标</td><td>HR</td><td>每列顶部显示该阶段候选人数量</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>招聘阶段定义（默认）</h4>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>阶段</th><th>英文标识</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>待筛选</td><td><code>APPLIED</code></td><td>刚投递，HR 尚未处理</td></tr>
+        <tr><td>简历通过</td><td><code>SCREENING_PASS</code></td><td>HR 初步筛选通过</td></tr>
+        <tr><td>电话面试</td><td><code>PHONE_INTERVIEW</code></td><td>电话/视频初面阶段</td></tr>
+        <tr><td>技术面试</td><td><code>TECH_INTERVIEW</code></td><td>专业技术轮次</td></tr>
+        <tr><td>HR 终面</td><td><code>HR_INTERVIEW</code></td><td>HR 综合面试</td></tr>
+        <tr><td>发放 Offer</td><td><code>OFFER</code></td><td>意向确定，待候选人确认</td></tr>
+        <tr><td>已入职</td><td><code>HIRED</code></td><td>候选人已入职，流程结束</td></tr>
+        <tr><td>已拒绝</td><td><code>REJECTED</code></td><td>任意阶段可转入，终态</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="interview">4.5 面试记录模块</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>用例</th><th>角色</th><th>描述</th></tr></thead>
+      <tbody>
+        <tr><td>UC-40</td><td>添加面试评价</td><td>HR</td><td>选择面试轮次、填写面试官、评分（1-5星）、优劣势、最终结论（通过/拒绝/待定）</td></tr>
+        <tr><td>UC-41</td><td>查看面试历史</td><td>HR</td><td>候选人详情页展示所有面试记录时间线，按轮次排序</td></tr>
+        <tr><td>UC-42</td><td>编辑评价</td><td>HR</td><td>仅当日内可编辑</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="dashboard">4.6 数据看板模块</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>指标</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>UC-50</td><td>招聘漏斗</td><td>各阶段候选人数量，直观展示转化率（折线/柱状图）</td></tr>
+        <tr><td>UC-51</td><td>岗位概览</td><td>各岗位申请数、通过率、平均招聘周期</td></tr>
+        <tr><td>UC-52</td><td>本月数据</td><td>本月新增申请、发 Offer 数、入职数</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ 5. 状态机 ══ -->
+  <h2 id="statemachine">5. 候选人状态机</h2>
+  <p>申请的状态流转是系统核心业务逻辑，所有阶段变更均需记录操作时间和操作人。</p>
+
+  <div class="state-flow">
+    <div class="state-node"><div class="state-box state-init">APPLIED<br/><small style="font-weight:400;">待筛选</small></div></div>
+    <div class="arrow">→</div>
+    <div class="state-node"><div class="state-box state-pass">SCREENING_PASS<br/><small style="font-weight:400;">简历通过</small></div></div>
+    <div class="arrow">→</div>
+    <div class="state-node"><div class="state-box state-stage">PHONE_INTERVIEW<br/><small style="font-weight:400;">电话面试</small></div></div>
+    <div class="arrow">→</div>
+    <div class="state-node"><div class="state-box state-stage">TECH_INTERVIEW<br/><small style="font-weight:400;">技术面试</small></div></div>
+    <div class="arrow">→</div>
+    <div class="state-node"><div class="state-box state-stage">HR_INTERVIEW<br/><small style="font-weight:400;">HR 终面</small></div></div>
+    <div class="arrow">→</div>
+    <div class="state-node"><div class="state-box state-offer">OFFER<br/><small style="font-weight:400;">发放 Offer</small></div></div>
+    <div class="arrow">→</div>
+    <div class="state-node"><div class="state-box state-hired">HIRED<br/><small style="font-weight:400;">已入职</small></div></div>
+
+    <div class="state-reject-row" style="width:100%;">
+      <span style="font-size:12px; color:#aaa; align-self:center;">任意阶段可拒绝：</span>
+      <div class="reject-item"><div class="state-box state-reject" style="font-size:11px;padding:4px 10px;">REJECTED 已拒绝</div></div>
+    </div>
+  </div>
+
+  <div class="callout callout-warn" style="margin-top:16px;">
+    <div class="callout-title">状态变更约束</div>
+    <p>状态只能向前推进或进入 REJECTED，不可回退；HIRED 和 REJECTED 为终态，不可再次变更。</p>
+  </div>
+
+  <!-- ══ 6. 数据模型 ══ -->
+  <h2 id="erd">6. 数据模型（ERD）</h2>
+  <p>以下为核心表结构，使用 PostgreSQL，主键均为自增整型或 UUID。</p>
+
+  <div class="erd-grid">
+
+    <div class="erd-table">
+      <div class="erd-table-header">users</div>
+      <div class="erd-field"><span class="field-name erd-pk">id</span><span class="field-type">bigserial PK</span></div>
+      <div class="erd-field"><span class="field-name">email</span><span class="field-type">varchar unique</span></div>
+      <div class="erd-field"><span class="field-name">password_hash</span><span class="field-type">varchar</span></div>
+      <div class="erd-field"><span class="field-name">full_name</span><span class="field-type">varchar</span></div>
+      <div class="erd-field"><span class="field-name">role</span><span class="field-type">enum(HR,CANDIDATE)</span></div>
+      <div class="erd-field"><span class="field-name">created_at</span><span class="field-type">timestamptz</span></div>
+    </div>
+
+    <div class="erd-table">
+      <div class="erd-table-header">departments</div>
+      <div class="erd-field"><span class="field-name erd-pk">id</span><span class="field-type">bigserial PK</span></div>
+      <div class="erd-field"><span class="field-name">name</span><span class="field-type">varchar</span></div>
+      <div class="erd-field"><span class="field-name">created_at</span><span class="field-type">timestamptz</span></div>
+    </div>
+
+    <div class="erd-table">
+      <div class="erd-table-header">jobs</div>
+      <div class="erd-field"><span class="field-name erd-pk">id</span><span class="field-type">bigserial PK</span></div>
+      <div class="erd-field"><span class="field-name erd-fk">department_id</span><span class="field-type">FK → departments</span></div>
+      <div class="erd-field"><span class="field-name erd-fk">created_by</span><span class="field-type">FK → users</span></div>
+      <div class="erd-field"><span class="field-name">title</span><span class="field-type">varchar</span></div>
+      <div class="erd-field"><span class="field-name">location</span><span class="field-type">varchar</span></div>
+      <div class="erd-field"><span class="field-name">salary_range</span><span class="field-type">varchar</span></div>
+      <div class="erd-field"><span class="field-name">headcount</span><span class="field-type">int</span></div>
+      <div class="erd-field"><span class="field-name">description</span><span class="field-type">text</span></div>
+      <div class="erd-field"><span class="field-name">status</span><span class="field-type">enum(DRAFT,OPEN,CLOSED)</span></div>
+      <div class="erd-field"><span class="field-name">created_at</span><span class="field-type">timestamptz</span></div>
+    </div>
+
+    <div class="erd-table">
+      <div class="erd-table-header secondary">applications</div>
+      <div class="erd-field"><span class="field-name erd-pk">id</span><span class="field-type">bigserial PK</span></div>
+      <div class="erd-field"><span class="field-name erd-fk">job_id</span><span class="field-type">FK → jobs</span></div>
+      <div class="erd-field"><span class="field-name erd-fk">candidate_id</span><span class="field-type">FK → users</span></div>
+      <div class="erd-field"><span class="field-name">stage</span><span class="field-type">enum(8个阶段)</span></div>
+      <div class="erd-field"><span class="field-name">resume_url</span><span class="field-type">varchar</span></div>
+      <div class="erd-field"><span class="field-name">years_exp</span><span class="field-type">int</span></div>
+      <div class="erd-field"><span class="field-name">reject_reason</span><span class="field-type">text nullable</span></div>
+      <div class="erd-field"><span class="field-name">applied_at</span><span class="field-type">timestamptz</span></div>
+      <div class="erd-field"><span class="field-name">updated_at</span><span class="field-type">timestamptz</span></div>
+    </div>
+
+    <div class="erd-table">
+      <div class="erd-table-header secondary">stage_logs</div>
+      <div class="erd-field"><span class="field-name erd-pk">id</span><span class="field-type">bigserial PK</span></div>
+      <div class="erd-field"><span class="field-name erd-fk">application_id</span><span class="field-type">FK → applications</span></div>
+      <div class="erd-field"><span class="field-name erd-fk">operated_by</span><span class="field-type">FK → users</span></div>
+      <div class="erd-field"><span class="field-name">from_stage</span><span class="field-type">varchar</span></div>
+      <div class="erd-field"><span class="field-name">to_stage</span><span class="field-type">varchar</span></div>
+      <div class="erd-field"><span class="field-name">operated_at</span><span class="field-type">timestamptz</span></div>
+    </div>
+
+    <div class="erd-table">
+      <div class="erd-table-header tertiary">interview_records</div>
+      <div class="erd-field"><span class="field-name erd-pk">id</span><span class="field-type">bigserial PK</span></div>
+      <div class="erd-field"><span class="field-name erd-fk">application_id</span><span class="field-type">FK → applications</span></div>
+      <div class="erd-field"><span class="field-name erd-fk">interviewer_id</span><span class="field-type">FK → users</span></div>
+      <div class="erd-field"><span class="field-name">round</span><span class="field-type">varchar（面试轮次）</span></div>
+      <div class="erd-field"><span class="field-name">rating</span><span class="field-type">int (1-5)</span></div>
+      <div class="erd-field"><span class="field-name">strengths</span><span class="field-type">text</span></div>
+      <div class="erd-field"><span class="field-name">weaknesses</span><span class="field-type">text</span></div>
+      <div class="erd-field"><span class="field-name">conclusion</span><span class="field-type">enum(PASS,REJECT,HOLD)</span></div>
+      <div class="erd-field"><span class="field-name">created_at</span><span class="field-type">timestamptz</span></div>
+    </div>
+
+  </div>
+
+  <!-- ══ 7. API 设计 ══ -->
+  <h2 id="api">7. API 设计</h2>
+  <p>RESTful 风格，统一路径前缀 <code>/api/v1</code>，鉴权通过请求头 <code>Authorization: Bearer &lt;token&gt;</code>。</p>
+
+  <h3>7.1 认证接口</h3>
+  <div class="api-group" style="border:1px solid #f0f0f0; border-radius:6px; overflow:hidden;">
+    <div class="api-row"><span class="method post">POST</span><span class="api-path">/api/v1/auth/register</span><span class="api-desc">用户注册</span><span class="api-auth">Public</span></div>
+    <div class="api-row"><span class="method post">POST</span><span class="api-path">/api/v1/auth/login</span><span class="api-desc">用户登录，返回 JWT</span><span class="api-auth">Public</span></div>
+    <div class="api-row"><span class="method post">POST</span><span class="api-path">/api/v1/auth/refresh</span><span class="api-desc">刷新 AccessToken</span><span class="api-auth">RefreshToken</span></div>
+    <div class="api-row"><span class="method post">POST</span><span class="api-path">/api/v1/auth/logout</span><span class="api-desc">登出</span><span class="api-auth">JWT</span></div>
+  </div>
+
+  <h3>7.2 岗位接口</h3>
+  <div class="api-group" style="border:1px solid #f0f0f0; border-radius:6px; overflow:hidden;">
+    <div class="api-row"><span class="method get">GET</span><span class="api-path">/api/v1/jobs</span><span class="api-desc">岗位列表（支持分页、筛选）</span><span class="api-auth">JWT / Public</span></div>
+    <div class="api-row"><span class="method get">GET</span><span class="api-path">/api/v1/jobs/:id</span><span class="api-desc">岗位详情</span><span class="api-auth">JWT / Public</span></div>
+    <div class="api-row"><span class="method post">POST</span><span class="api-path">/api/v1/jobs</span><span class="api-desc">创建岗位</span><span class="api-auth">HR</span></div>
+    <div class="api-row"><span class="method put">PUT</span><span class="api-path">/api/v1/jobs/:id</span><span class="api-desc">更新岗位</span><span class="api-auth">HR</span></div>
+    <div class="api-row"><span class="method patch">PATCH</span><span class="api-path">/api/v1/jobs/:id/status</span><span class="api-desc">变更岗位状态</span><span class="api-auth">HR</span></div>
+    <div class="api-row"><span class="method delete">DELETE</span><span class="api-path">/api/v1/jobs/:id</span><span class="api-desc">删除岗位（仅草稿）</span><span class="api-auth">HR</span></div>
+  </div>
+
+  <h3>7.3 申请（候选人）接口</h3>
+  <div class="api-group" style="border:1px solid #f0f0f0; border-radius:6px; overflow:hidden;">
+    <div class="api-row"><span class="method post">POST</span><span class="api-path">/api/v1/jobs/:id/apply</span><span class="api-desc">投递简历（含文件上传）</span><span class="api-auth">CANDIDATE</span></div>
+    <div class="api-row"><span class="method get">GET</span><span class="api-path">/api/v1/applications</span><span class="api-desc">HR：全量申请列表；候选人：自己的申请</span><span class="api-auth">JWT</span></div>
+    <div class="api-row"><span class="method get">GET</span><span class="api-path">/api/v1/applications/:id</span><span class="api-desc">申请详情</span><span class="api-auth">JWT</span></div>
+    <div class="api-row"><span class="method patch">PATCH</span><span class="api-path">/api/v1/applications/:id/stage</span><span class="api-desc">变更候选人阶段（含拖拽）</span><span class="api-auth">HR</span></div>
+    <div class="api-row"><span class="method patch">PATCH</span><span class="api-path">/api/v1/applications/:id/reject</span><span class="api-desc">拒绝候选人（含原因）</span><span class="api-auth">HR</span></div>
+  </div>
+
+  <h3>7.4 面试记录接口</h3>
+  <div class="api-group" style="border:1px solid #f0f0f0; border-radius:6px; overflow:hidden;">
+    <div class="api-row"><span class="method get">GET</span><span class="api-path">/api/v1/applications/:id/interviews</span><span class="api-desc">该申请的所有面试记录</span><span class="api-auth">HR</span></div>
+    <div class="api-row"><span class="method post">POST</span><span class="api-path">/api/v1/applications/:id/interviews</span><span class="api-desc">添加面试评价</span><span class="api-auth">HR</span></div>
+    <div class="api-row"><span class="method put">PUT</span><span class="api-path">/api/v1/interviews/:id</span><span class="api-desc">编辑评价（当日内）</span><span class="api-auth">HR</span></div>
+  </div>
+
+  <h3>7.5 数据看板接口</h3>
+  <div class="api-group" style="border:1px solid #f0f0f0; border-radius:6px; overflow:hidden;">
+    <div class="api-row"><span class="method get">GET</span><span class="api-path">/api/v1/stats/funnel</span><span class="api-desc">招聘漏斗（各阶段人数）</span><span class="api-auth">HR</span></div>
+    <div class="api-row"><span class="method get">GET</span><span class="api-path">/api/v1/stats/overview</span><span class="api-desc">月度概览数据</span><span class="api-auth">HR</span></div>
+  </div>
+
+  <h3>7.6 文件接口</h3>
+  <div class="api-group" style="border:1px solid #f0f0f0; border-radius:6px; overflow:hidden;">
+    <div class="api-row"><span class="method post">POST</span><span class="api-path">/api/v1/files/upload</span><span class="api-desc">上传文件（multipart/form-data），返回文件 URL</span><span class="api-auth">JWT</span></div>
+    <div class="api-row"><span class="method get">GET</span><span class="api-path">/api/v1/files/:filename</span><span class="api-desc">下载/预览文件</span><span class="api-auth">HR</span></div>
+  </div>
+
+  <!-- ══ 8. 技术架构 ══ -->
+  <h2 id="tech">8. 技术架构</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>层次</th><th>技术选型</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><strong>前端框架</strong></td><td>Vue 3 + Vite</td><td>Composition API，TypeScript</td></tr>
+        <tr><td><strong>UI 组件库</strong></td><td>Naive UI（推荐）或 Element Plus</td><td>Naive UI 设计感更现代，TypeScript 友好</td></tr>
+        <tr><td><strong>拖拽</strong></td><td>vuedraggable / dnd-kit-vue</td><td>看板核心交互</td></tr>
+        <tr><td><strong>图表</strong></td><td>ECharts 或 Chart.js</td><td>数据看板漏斗图</td></tr>
+        <tr><td><strong>HTTP 客户端</strong></td><td>Axios</td><td>统一封装请求/响应拦截器</td></tr>
+        <tr><td><strong>状态管理</strong></td><td>Pinia</td><td>用户信息、Token 持久化</td></tr>
+        <tr><td><strong>路由</strong></td><td>Vue Router 4</td><td>路由守卫处理鉴权</td></tr>
+        <tr><td><strong>后端框架</strong></td><td>Spring Boot 3（首选）或 Gin</td><td>优先用已掌握的 Java 栈快速起步</td></tr>
+        <tr><td><strong>数据库</strong></td><td>PostgreSQL 16</td><td>ORM 使用 MyBatis-Plus 或 JPA</td></tr>
+        <tr><td><strong>缓存</strong></td><td>Redis 7</td><td>RefreshToken 存储、Token 黑名单</td></tr>
+        <tr><td><strong>文件存储</strong></td><td>本地 + Nginx 静态服务（MVP）</td><td>后续可迁移至 MinIO / OSS</td></tr>
+        <tr><td><strong>鉴权</strong></td><td>JJWT（Java）/ jwt-go（Go）</td><td>JWT RS256 签名</td></tr>
+        <tr><td><strong>部署</strong></td><td>Docker Compose</td><td>本地一键启动；可选部署至云服务器</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>8.1 系统分层架构</h3>
+  <div style="background:#fafafa; border:1px solid #e0e0e0; border-radius:8px; padding:20px 24px; margin-top:14px; font-size:13px; font-family:monospace; line-height:2;">
+    <div style="color:#1565c0; font-weight:700;">[ 浏览器 ]  Vue3 + Vite + Naive UI</div>
+    <div style="color:#aaa; padding-left:16px;">↕  HTTP / JSON  (Axios)</div>
+    <div style="color:#2e7d32; font-weight:700;">[ 后端 ]  Spring Boot / Gin</div>
+    <div style="padding-left:16px; color:#555;">Controller → Service → Repository</div>
+    <div style="color:#aaa; padding-left:16px;">↕  JDBC / ORM</div>
+    <div style="display:flex; gap:32px;">
+      <div style="color:#6a1b9a; font-weight:700;">[ PostgreSQL ]  主数据库</div>
+      <div style="color:#e65100; font-weight:700;">[ Redis ]  缓存 / Token</div>
+      <div style="color:#555; font-weight:700;">[ 本地 FS ]  文件存储</div>
+    </div>
+  </div>
+
+  <!-- ══ 9. 非功能需求 ══ -->
+  <h2 id="nonfunc">9. 非功能需求</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>类别</th><th>指标</th><th>MVP 要求</th></tr></thead>
+      <tbody>
+        <tr><td><strong>性能</strong></td><td>API 响应时间</td><td>P95 &lt; 500ms（本地环境）</td></tr>
+        <tr><td><strong>安全</strong></td><td>密码存储</td><td>BCrypt Hash，禁止明文</td></tr>
+        <tr><td><strong>安全</strong></td><td>接口鉴权</td><td>所有非 Public 接口强制验证 JWT</td></tr>
+        <tr><td><strong>安全</strong></td><td>文件访问</td><td>简历 PDF 仅 HR 可访问，需验证权限</td></tr>
+        <tr><td><strong>可用性</strong></td><td>表单校验</td><td>前后端双重校验，错误信息友好</td></tr>
+        <tr><td><strong>可用性</strong></td><td>加载状态</td><td>所有异步操作展示 Loading 状态</td></tr>
+        <tr><td><strong>兼容性</strong></td><td>浏览器支持</td><td>Baseline Widely Available（Vite 默认）</td></tr>
+        <tr><td><strong>可维护性</strong></td><td>代码规范</td><td>OXLint + ESLint（前端，参考项目根目录），统一异常处理（后端）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ 10. MVP 范围总结 ══ -->
+  <h2 id="mvp">10. MVP 范围与页面清单</h2>
+
+  <h3>前端页面</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>页面</th><th>路由</th><th>角色可见</th></tr></thead>
+      <tbody>
+        <tr><td>登录页</td><td><code>/login</code></td><td>All</td></tr>
+        <tr><td>注册页</td><td><code>/register</code></td><td>All</td></tr>
+        <tr><td>岗位列表（公开）</td><td><code>/jobs</code></td><td>All</td></tr>
+        <tr><td>岗位详情 / 投递</td><td><code>/jobs/:id</code></td><td>All / Candidate</td></tr>
+        <tr><td>HR 首页看板</td><td><code>/hr/dashboard</code></td><td>HR</td></tr>
+        <tr><td>HR 岗位管理</td><td><code>/hr/jobs</code></td><td>HR</td></tr>
+        <tr><td>岗位创建 / 编辑</td><td><code>/hr/jobs/edit</code></td><td>HR</td></tr>
+        <tr><td>招聘看板（Pipeline）</td><td><code>/hr/pipeline/:jobId</code></td><td>HR</td></tr>
+        <tr><td>候选人详情</td><td><code>/hr/candidates/:id</code></td><td>HR</td></tr>
+        <tr><td>我的申请</td><td><code>/my/applications</code></td><td>Candidate</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ 11. 开发里程碑 ══ -->
+  <h2 id="timeline">11. 开发里程碑</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>阶段</th><th>时间</th><th>后端任务</th><th>前端任务</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>M1 基建</strong></td>
+          <td>Day 1–3</td>
+          <td>项目初始化、DB 表结构、JWT 认证接口</td>
+          <td>Vite 项目初始化、路由、登录/注册页</td>
+        </tr>
+        <tr>
+          <td><strong>M2 核心</strong></td>
+          <td>Day 4–8</td>
+          <td>岗位 CRUD、申请投递接口、文件上传接口</td>
+          <td>岗位列表/详情、投递表单、HR 岗位管理</td>
+        </tr>
+        <tr>
+          <td><strong>M3 亮点</strong></td>
+          <td>Day 9–11</td>
+          <td>阶段流转接口（stage_logs）、面试记录接口</td>
+          <td>招聘看板（拖拽）、候选人详情页</td>
+        </tr>
+        <tr>
+          <td><strong>M4 收尾</strong></td>
+          <td>Day 12–14</td>
+          <td>数据看板接口、单元测试、Docker Compose</td>
+          <td>数据看板图表、UI 打磨、联调部署</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-info" style="margin-top:20px;">
+    <div class="callout-title">推荐开源参考项目</div>
+    <p>
+      <strong>Hireflow</strong>（GitHub 搜索 open-source ATS）· <strong>OpenCATS</strong> ·
+      <strong>Komodo</strong> — 阅读其数据模型和 API 设计，借助 AI 快速消化核心逻辑后，自己从 0 重建。
+    </p>
+  </div>
+
+  <p style="margin-top: 40px; font-size: 12px; color: #ccc;">ATS 需求文档 v1.0 · 生成于 2026-05-21 · AI 辅助调研</p>
+
+</div>
+
+<script>
+  // 滚动高亮导航
+  const links = document.querySelectorAll('.sidebar nav a');
+  const sections = [];
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) sections.push({ el, a });
+  });
+  window.addEventListener('scroll', () => {
+    let cur = sections[0];
+    sections.forEach(s => {
+      if (window.scrollY + 80 >= s.el.offsetTop) cur = s;
+    });
+    links.forEach(a => a.classList.remove('active'));
+    if (cur) cur.a.classList.add('active');
+  }, { passive: true });
+</script>
+</body>
+</html>

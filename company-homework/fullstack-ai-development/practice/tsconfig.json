@@ -1,0 +1,9 @@
+{
+  "extends": "@lumirelle/tsconfig/ts",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "types": ["bun-types"],
+    "allowJs": true
+  },
+  "include": ["scripts/**/*", "*.ts", "*.js"]
+}

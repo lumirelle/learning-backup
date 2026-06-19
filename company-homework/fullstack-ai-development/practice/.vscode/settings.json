@@ -1,0 +1,30 @@
+{
+  // Code Quality
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "always",
+    "source.fixAll.eslint": "always",
+    "source.organizeImports": "never"
+  },
+  "eslint.runtime": "bun",
+  "eslint.execArgv": ["-b"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml",
+    "toml",
+    "xml",
+    "css",
+    "postcss",
+    "scss",
+    "sass",
+    "less"
+  ]
+}

@@ -1,0 +1,28 @@
+# ================================================================
+# 测试 profile：完全脱离 PG/Redis，仅供 @WebMvcTest / @SpringBootTest 单测使用
+# - JwtProperties 由 @MockitoBean 替换，但 @ConfigurationProperties 启动校验仍需值
+# - 实际 JwtService 在 controller / web 测试里也是 @MockitoBean
+# - JwtServiceTest 是纯单测，根本不启 Spring，本文件不影响它
+# ================================================================
+ats:
+  jwt:
+    key-dir: build/test-jwt
+    private-key-file: priv.pem
+    public-key-file: pub.pem
+    access-ttl-seconds: 900
+    refresh-ttl-seconds: 86400
+    issuer: ats.test
+    refresh-cookie:
+      name: ats_refresh
+      path: /api/v1/auth
+      same-site: Lax
+      secure: false
+  upload:
+    path: ./build/test-uploads
+    max-file-mb: 5
+
+logging:
+  level:
+    root: WARN
+    com.ats: INFO
+    org.springframework.security: WARN

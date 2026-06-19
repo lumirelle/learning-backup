@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATS 开发计划（Phase 3） v1.0</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    /* ── 侧边导航 ── */
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 230px;
+      height: 100vh;
+      background: #fafafa;
+      border-right: 1px solid #e8e8e8;
+      overflow-y: auto;
+      padding: 24px 0 40px;
+      z-index: 100;
+    }
+    .sidebar-logo {
+      padding: 0 20px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a1a;
+      border-bottom: 1px solid #e8e8e8;
+      margin-bottom: 12px;
+    }
+    .sidebar-logo span { color: #888; font-weight: 400; }
+    .sidebar nav a {
+      display: block;
+      padding: 5px 20px;
+      font-size: 13px;
+      color: #555;
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .sidebar nav a:hover { color: #1a1a1a; background: #f0f0f0; }
+    .sidebar nav a.active { color: #1565c0; border-left-color: #1565c0; background: #f0f5ff; }
+    .sidebar nav .nav-group {
+      font-size: 11px; font-weight: 600; color: #aaa;
+      padding: 14px 20px 4px; letter-spacing: 0.5px; text-transform: uppercase;
+    }
+
+    /* ── 主内容 ── */
+    .main { margin-left: 230px; padding: 40px 48px 80px; max-width: 1180px; }
+
+    h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.3px; }
+    h2 { font-size: 19px; font-weight: 700; margin-top: 48px; padding-top: 20px; border-top: 1px solid #e8e8e8; }
+    h3 { font-size: 15px; font-weight: 600; margin-top: 28px; color: #1a1a1a; }
+    h4 { font-size: 13px; font-weight: 600; margin-top: 18px; color: #444; }
+
+    .doc-header { padding-bottom: 24px; border-bottom: 2px solid #1565c0; margin-bottom: 8px; }
+    .doc-meta { display: flex; gap: 24px; margin-top: 10px; flex-wrap: wrap; }
+    .doc-meta span { font-size: 12px; color: #888; }
+    .doc-meta strong { color: #555; }
+
+    p { margin-top: 10px; color: #444; }
+    ul, ol { margin-top: 10px; padding-left: 24px; }
+    li { margin-top: 4px; color: #444; }
+    li strong { color: #1a1a1a; }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      background: #f5f5f5;
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: #c7254e;
+    }
+
+    /* ── Callout ── */
+    .callout { border-left: 3px solid; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-top: 16px; }
+    .callout-info  { border-color: #1565c0; background: #f0f5ff; }
+    .callout-warn  { border-color: #e65100; background: #fff8f0; }
+    .callout-green { border-color: #2e7d32; background: #f1f8e9; }
+    .callout-purple{ border-color: #6a1b9a; background: #faf3fb; }
+    .callout-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .callout-info   .callout-title { color: #1565c0; }
+    .callout-warn   .callout-title { color: #e65100; }
+    .callout-green  .callout-title { color: #2e7d32; }
+    .callout-purple .callout-title { color: #6a1b9a; }
+    .callout p { margin: 0; font-size: 13px; }
+
+    /* ── 里程碑卡片 ── */
+    .ms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 16px; }
+    @media (max-width: 900px) { .ms-grid { grid-template-columns: 1fr; } }
+    .ms-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .ms-card-header {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 1px solid #efefef;
+    }
+    .ms-title { font-size: 13px; font-weight: 700; }
+    .ms-id {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      letter-spacing: 0.3px;
+    }
+    .ms-blue   { background: #e3eeff; color: #1565c0; }
+    .ms-green  { background: #e8f5e9; color: #2e7d32; }
+    .ms-purple { background: #f3e5f5; color: #6a1b9a; }
+    .ms-orange { background: #fff3e0; color: #e65100; }
+    .ms-red    { background: #fdecea; color: #c62828; }
+    .ms-teal   { background: #e0f2f1; color: #00695c; }
+    .ms-card-body { padding: 12px 16px 16px; }
+    .ms-card-body h5 {
+      font-size: 11px; color: #888; font-weight: 600;
+      letter-spacing: 0.4px; text-transform: uppercase;
+      margin-top: 10px; margin-bottom: 4px;
+    }
+    .ms-card-body h5:first-child { margin-top: 0; }
+    .ms-card-body ul { padding-left: 18px; margin-top: 2px; }
+    .ms-card-body li { font-size: 12.5px; color: #444; margin-top: 2px; }
+    .ms-meta {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      font-size: 11.5px; color: #888;
+      margin-top: 4px;
+    }
+    .ms-meta span strong { color: #555; }
+
+    /* ── 表格 ── */
+    .table-wrap { overflow-x: auto; margin-top: 14px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead th {
+      text-align: left; font-weight: 600; font-size: 12px;
+      color: #888; border-bottom: 2px solid #e0e0e0;
+      padding: 9px 12px; background: #fafafa;
+    }
+    tbody td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: #f9f9f9; }
+    td.center { text-align: center; }
+
+    /* 任务徽章 */
+    .badge {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+    .badge-be   { background: #e8f5e9; color: #2e7d32; }
+    .badge-fe   { background: #e3eeff; color: #1565c0; }
+    .badge-mix  { background: #fff3e0; color: #e65100; }
+    .badge-ops  { background: #e0f2f1; color: #00695c; }
+    .badge-db   { background: #f3e5f5; color: #6a1b9a; }
+    .badge-h    { background: #fdecea; color: #c62828; }
+    .badge-m    { background: #fff8e1; color: #f57f17; }
+    .badge-l    { background: #f1f8e9; color: #558b2f; }
+
+    /* ── 甘特图 ── */
+    .gantt {
+      margin-top: 16px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .gantt-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 12.5px;
+    }
+    .gantt-row:last-child { border-bottom: none; }
+    .gantt-row.header {
+      background: #fafafa;
+      font-weight: 600;
+      color: #888;
+      font-size: 11.5px;
+      letter-spacing: 0.3px;
+    }
+    .gantt-label {
+      padding: 8px 12px;
+      border-right: 1px solid #f0f0f0;
+      color: #444;
+      font-weight: 600;
+    }
+    .gantt-track {
+      position: relative;
+      height: 36px;
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+    }
+    .gantt-day {
+      border-right: 1px dashed #efefef;
+      padding-top: 16px;
+      text-align: center;
+      color: #aaa;
+      font-size: 11px;
+    }
+    .gantt-day:last-child { border-right: none; }
+    .gantt-bar {
+      position: absolute;
+      top: 8px;
+      height: 20px;
+      border-radius: 4px;
+      font-size: 11px;
+      color: #fff;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+      white-space: nowrap;
+    }
+    .gb-m0 { background: #1565c0; }
+    .gb-m1 { background: #2e7d32; }
+    .gb-m2 { background: #6a1b9a; }
+    .gb-m3 { background: #e65100; }
+    .gb-m4 { background: #00695c; }
+    .gb-m5 { background: #c62828; }
+
+    /* ── 流程箭头 ── */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      padding: 16px;
+      background: #fafafa;
+      border-radius: 8px;
+      border: 1px solid #e8e8e8;
+    }
+    .flow-step {
+      padding: 8px 14px;
+      background: #fff;
+      border: 1px solid #d0d0d0;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #444;
+    }
+    .flow-step.start { background: #e3eeff; color: #1565c0; border-color: #1565c0; }
+    .flow-step.end   { background: #e8f5e9; color: #2e7d32; border-color: #2e7d32; }
+    .flow-arrow { color: #bbb; font-size: 16px; }
+
+    /* ── 代码块 ── */
+    .code-block {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-top: 12px;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 12.5px;
+      line-height: 1.8;
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .ck-comment { color: #6a9955; }
+    .ck-key     { color: #569cd6; }
+    .ck-str     { color: #ce9178; }
+    .ck-fn      { color: #dcdcaa; }
+
+    /* ── 双列规范 ── */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    @media (max-width: 800px) { .spec-grid { grid-template-columns: 1fr; } }
+    .spec-card {
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      padding: 14px 18px;
+    }
+    .spec-card h4 { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; margin-top: 0; }
+    .spec-card ul { padding-left: 18px; }
+    .spec-card li { font-size: 12.5px; color: #555; margin-top: 4px; }
+
+    /* ── 风险矩阵 ── */
+    .risk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
+    @media (max-width: 800px) { .risk-grid { grid-template-columns: 1fr; } }
+    .risk-card {
+      border-radius: 8px;
+      padding: 12px 14px;
+      border: 1px solid;
+    }
+    .risk-h { background: #fdecea; border-color: #f5b5af; }
+    .risk-m { background: #fff8e1; border-color: #ffe082; }
+    .risk-l { background: #f1f8e9; border-color: #c5e1a5; }
+    .risk-card .risk-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .risk-h .risk-title { color: #c62828; }
+    .risk-m .risk-title { color: #f57f17; }
+    .risk-l .risk-title { color: #558b2f; }
+    .risk-card p { font-size: 12px; color: #555; margin-top: 0; }
+    .risk-card ul { padding-left: 18px; margin-top: 4px; }
+    .risk-card li { font-size: 12px; color: #555; margin-top: 2px; }
+
+    section { margin-top: 8px; }
+
+    @media print {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 侧边导航 -->
+<div class="sidebar">
+  <div class="sidebar-logo">ATS 开发计划 <span>Phase 3 · v1.0</span></div>
+  <nav>
+    <div class="nav-group">总览</div>
+    <a href="#overview">目标与产出</a>
+    <a href="#strategy">总体策略</a>
+    <a href="#gantt">里程碑甘特图</a>
+    <div class="nav-group">里程碑</div>
+    <a href="#m0">M0 项目基建</a>
+    <a href="#m1">M1 认证模块</a>
+    <a href="#m2">M2 岗位 CRUD</a>
+    <a href="#m3">M3 状态机看板</a>
+    <a href="#m4">M4 辅助模块</a>
+    <a href="#m5">M5 打磨交付</a>
+    <div class="nav-group">开发环境准备</div>
+    <a href="#env">开发环境准备</a>
+    <div class="nav-group">实施细节</div>
+    <a href="#task-list">完整任务清单</a>
+    <a href="#tech-points">关键技术要点</a>
+    <a href="#integration">联调节点</a>
+    <div class="nav-group">协作规范</div>
+    <a href="#ai-sop">AI 辅助 SOP</a>
+    <a href="#review">代码自检清单</a>
+    <a href="#dod">完成判定（DoD）</a>
+    <div class="nav-group">风险与交付</div>
+    <a href="#risk">风险与应对</a>
+    <a href="#deliverables">阶段交付物</a>
+  </nav>
+</div>
+
+<!-- 主内容 -->
+<div class="main">
+
+  <!-- 文档头 -->
+  <div class="doc-header">
+    <h1>ATS 招聘管理系统 — Phase 3 开发计划</h1>
+    <div class="doc-meta">
+      <span><strong>版本：</strong>v1.0</span>
+      <span><strong>状态：</strong>待评审</span>
+      <span><strong>日期：</strong>2026-05-21</span>
+      <span><strong>关联：</strong>project-requirements.html · project-schema.sql · project-tech-design.html</span>
+    </div>
+  </div>
+
+  <!-- ═══ 1. 总览 ═══ -->
+  <h2 id="overview">1. 目标与产出</h2>
+
+  <div class="callout callout-info">
+    <div class="callout-title">阶段定位</div>
+    <p>
+      Phase 3 是<strong>编码实现阶段</strong>：把 Phase 2 的 Schema 与技术设计落地为可运行的前后端代码，
+      产出可演示的 MVP，并为 Phase 4 的部署交付做好准备。本计划以 <strong>10 个工作日</strong> 为基准节奏，
+      可根据实际投入按比例伸缩。
+    </p>
+  </div>
+
+  <div class="spec-grid">
+    <div class="spec-card">
+      <h4>输入（来自 Phase 1 / 2）</h4>
+      <ul>
+        <li>需求文档：<code>docs/project-requirements.html</code></li>
+        <li>数据库 DDL：<code>docs/project-schema.sql</code></li>
+        <li>技术设计：<code>docs/project-tech-design.html</code></li>
+        <li>已确定的技术栈：Spring Boot 3 · Vue 3 · PostgreSQL 16 · Redis 7</li>
+      </ul>
+    </div>
+    <div class="spec-card">
+      <h4>输出（Phase 3 末态）</h4>
+      <ul>
+        <li>后端仓库 <code>ats-backend/</code>，本地可运行</li>
+        <li>前端仓库 <code>ats-frontend/</code>，本地可运行</li>
+        <li>开发用 <code>docker-compose.yml</code>（含 postgres / redis）</li>
+        <li>初始化脚本 / 演示数据 / API 自测脚本</li>
+        <li>每个里程碑结束的<strong>可演示版本</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 id="strategy">2. 总体策略</h2>
+
+  <div class="flow">
+    <div class="flow-step start">后端基建</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">认证</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">岗位 CRUD</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">状态机看板</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">辅助模块</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step end">打磨交付</div>
+  </div>
+
+  <h3>2.1 核心原则</h3>
+  <ul>
+    <li><strong>纵切而非横切</strong>：每个里程碑都打通「后端 → 前端 → 联调」一条完整链路，避免后端先写一个月再前端联调时大返工</li>
+    <li><strong>主线优先</strong>：候选人投递 → HR 看板流转 是业务主线，优先于辅助模块</li>
+    <li><strong>契约先行</strong>：每个接口先与 <code>project-tech-design.html</code> 的接口约定对齐，再让 AI 生成代码</li>
+    <li><strong>小步快跑</strong>：单次 AI 生成代码量 ≤ 1 个 Controller + Service + Mapper，生成后立即跑通再继续</li>
+    <li><strong>状态机闭环</strong>：每次写入 <code>applications.stage</code> 必须同时写 <code>stage_logs</code>，在同一事务</li>
+  </ul>
+
+  <!-- ═══ 甘特图 ═══ -->
+  <h2 id="gantt">3. 里程碑甘特图</h2>
+
+  <div class="gantt">
+    <div class="gantt-row header">
+      <div class="gantt-label">里程碑</div>
+      <div class="gantt-track">
+        <div class="gantt-day">D1</div>
+        <div class="gantt-day">D2</div>
+        <div class="gantt-day">D3</div>
+        <div class="gantt-day">D4</div>
+        <div class="gantt-day">D5</div>
+        <div class="gantt-day">D6</div>
+        <div class="gantt-day">D7</div>
+        <div class="gantt-day">D8</div>
+        <div class="gantt-day">D9</div>
+        <div class="gantt-day">D10</div>
+      </div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">M0 项目基建</div>
+      <div class="gantt-track">
+        <div class="gantt-bar gb-m0" style="left: 0; width: 10%;">M0</div>
+      </div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">M1 认证模块</div>
+      <div class="gantt-track">
+        <div class="gantt-bar gb-m1" style="left: 10%; width: 20%;">M1 注册/登录/JWT</div>
+      </div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">M2 岗位 CRUD</div>
+      <div class="gantt-track">
+        <div class="gantt-bar gb-m2" style="left: 30%; width: 10%;">M2 Jobs</div>
+      </div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">M3 状态机看板</div>
+      <div class="gantt-track">
+        <div class="gantt-bar gb-m3" style="left: 40%; width: 20%;">M3 投递 + 看板拖拽</div>
+      </div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">M4 辅助模块</div>
+      <div class="gantt-track">
+        <div class="gantt-bar gb-m4" style="left: 60%; width: 20%;">M4 文件 / 面试 / 数据看板</div>
+      </div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">M5 打磨交付</div>
+      <div class="gantt-track">
+        <div class="gantt-bar gb-m5" style="left: 80%; width: 20%;">M5 UI 打磨 + Docker + 演示</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-purple">
+    <div class="callout-title">里程碑节奏</div>
+    <p>
+      每个里程碑结束都应该<strong>能跑起来、能演示一个场景</strong>。如果 Mn 未通过联调验收，禁止直接进入 Mn+1。
+    </p>
+  </div>
+
+  <!-- ═══ 各里程碑详情 ═══ -->
+  <h2 id="m0">4. 里程碑详细规划</h2>
+
+  <!-- M0 -->
+  <h3 id="m0">4.1 M0 · 项目基建（Day 1）</h3>
+  <div class="ms-grid">
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">后端基建</div>
+        <span class="ms-id ms-blue">M0-BE</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>核心任务</h5>
+        <ul>
+          <li>Spring Initializr 生成项目（Java 21 · Boot 3.x）</li>
+          <li><code>pom.xml</code> 引入：MyBatis-Plus、PostgreSQL Driver、JJWT、Spring Security、Spring Data Redis、Lombok、Validation</li>
+          <li><code>application.yml</code> 读取 <code>.env</code> 变量</li>
+          <li>建立目录骨架（controller / service / repository / model / config / middleware / exception）</li>
+          <li><code>set_updated_at()</code> 触发器与 DDL 跑通建库</li>
+          <li>实现 <code>/api/v1/health</code> 简单接口验证</li>
+        </ul>
+        <h5>验收</h5>
+        <ul>
+          <li><code>curl /api/v1/health</code> 返回 200</li>
+          <li><code>psql</code> 能查到 7 张表 + 视图 + 种子数据</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">前端基建</div>
+        <span class="ms-id ms-green">M0-FE</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>核心任务</h5>
+        <ul>
+          <li><code>npm create vite@latest</code> · Vue + TS 模板</li>
+          <li>安装：naive-ui、pinia、pinia-plugin-persistedstate、vue-router、axios、dayjs、vuedraggable、echarts</li>
+          <li>建立 <code>src/{views,components,stores,api,router,utils,types}</code></li>
+          <li><code>vite.config.ts</code> 配置 <code>/api</code> proxy 到后端 8080</li>
+          <li>路由骨架（Login / JobList 两条空路由）+ <code>App.vue</code> 注入 <code>NMessageProvider</code></li>
+          <li>初始化 <code>request.ts</code> Axios 实例（拦截器先留空）</li>
+        </ul>
+        <h5>验收</h5>
+        <ul>
+          <li><code>npm run dev</code> 打开页面 200，路由切换正常</li>
+          <li>通过 proxy 调 <code>/api/v1/health</code> 成功</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">基础设施</div>
+        <span class="ms-id ms-teal">M0-OPS</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>核心任务</h5>
+        <ul>
+          <li>编写最小化 <code>docker-compose.dev.yml</code>，启动 <code>postgres</code> + <code>redis</code></li>
+          <li>挂载 <code>project-schema.sql</code> 到 postgres 的 <code>/docker-entrypoint-initdb.d/</code></li>
+          <li>提供 <code>.env.example</code> 模板（前后端各一份）</li>
+          <li>提交 <code>.gitignore</code> 与 README（"如何启动开发环境"一节）</li>
+        </ul>
+        <h5>验收</h5>
+        <ul>
+          <li><code>docker compose -f docker-compose.dev.yml up -d</code> 后 5432 / 6379 可连接</li>
+          <li>DB 初始化自动完成，表与种子数据就绪</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">联调与产出</div>
+        <span class="ms-id ms-orange">M0-INT</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>必须打通</h5>
+        <ul>
+          <li>前端通过 Vite proxy 成功访问后端 <code>/health</code></li>
+          <li>后端能连接 docker 起的 postgres（用种子数据账号登录）</li>
+        </ul>
+        <h5>本日提交物</h5>
+        <ul>
+          <li><code>ats-backend/</code> 初始骨架</li>
+          <li><code>ats-frontend/</code> 初始骨架</li>
+          <li><code>docker-compose.dev.yml</code> + 两份 <code>.env.example</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- M1 -->
+  <h3 id="m1">4.2 M1 · 认证模块（Day 2 – Day 3）</h3>
+  <div class="ms-grid">
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">后端：认证</div>
+        <span class="ms-id ms-blue">M1-BE</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>实现要点</h5>
+        <ul>
+          <li>实体：<code>User</code> + <code>UserMapper</code>（MyBatis-Plus）</li>
+          <li>DTO：<code>RegisterRequest</code>（含 <code>@Email</code>、<code>@Size(min=8)</code>）/ <code>LoginRequest</code> / <code>RefreshRequest</code></li>
+          <li>VO：<code>UserVO</code>（脱敏 password_hash）/ <code>TokenPair</code></li>
+          <li><code>JwtConfig</code>：RS256 加载密钥、签发/解析 Access &amp; Refresh</li>
+          <li><code>JwtAuthFilter</code>：从 Header 提取 Token，注入 SecurityContext</li>
+          <li><code>SecurityConfig</code>：白名单 <code>/auth/**</code>、<code>GET /jobs/**</code>；其他需鉴权</li>
+          <li>RefreshToken 哈希入 Redis（key=<code>rt:{userId}:{tokenHash}</code>，TTL=7d）</li>
+          <li><code>GlobalExceptionHandler</code> + <code>BizException</code> + <code>ErrorCode</code> 落地</li>
+        </ul>
+        <h5>接口</h5>
+        <ul>
+          <li><code>POST /api/v1/auth/register</code></li>
+          <li><code>POST /api/v1/auth/login</code></li>
+          <li><code>POST /api/v1/auth/refresh</code></li>
+          <li><code>POST /api/v1/auth/logout</code></li>
+          <li><code>GET  /api/v1/auth/me</code></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">前端：登录态</div>
+        <span class="ms-id ms-green">M1-FE</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>实现要点</h5>
+        <ul>
+          <li><code>LoginView.vue</code> / <code>RegisterView.vue</code>：Naive UI <code>NForm</code> + 校验</li>
+          <li><code>useAuthStore</code>：<code>user</code>、<code>accessToken</code>、<code>refreshToken</code>，持久化到 localStorage</li>
+          <li><code>api/auth.ts</code>：register / login / refresh / logout / me</li>
+          <li><code>request.ts</code>：请求拦截注入 <code>Authorization</code>，响应拦截 401 → 自动 refresh → 重试原请求（队列防重入）</li>
+          <li><code>router/index.ts</code>：全局 <code>beforeEach</code> 守卫（未登录跳 /login、角色不符跳 403）</li>
+        </ul>
+        <h5>UX 细节</h5>
+        <ul>
+          <li>登录按钮 loading 状态；错误 toast；回车提交</li>
+          <li>已登录用户访问 <code>/login</code> 直接跳首页</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">联调验收</div>
+        <span class="ms-id ms-orange">M1-INT</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>必跑场景</h5>
+        <ul>
+          <li>注册一个 HR 账号 → 登录 → 拿到 token → 访问 <code>/auth/me</code> 成功</li>
+          <li>故意把 access token 改坏 → 401 → 拦截器走 refresh → 重试成功</li>
+          <li>logout → access/refresh 均被吊销，<code>/me</code> 返回 401</li>
+          <li>未登录访问 HR 页面 → 自动跳 <code>/login</code></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">注意事项</div>
+        <span class="ms-id ms-red">⚠ Risk</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li>密码 BCrypt cost=12，禁止任何日志输出 raw password</li>
+          <li>refresh 失败要清空本地 token，避免死循环 401 → refresh → 401</li>
+          <li>种子管理员密码的占位 hash 必须在 M1 末替换为真实 hash</li>
+          <li>注册接口默认角色为 <code>CANDIDATE</code>，HR 角色仅 ADMIN 可创建（M1 末暴露一个内部脚本即可）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- M2 -->
+  <h3 id="m2">4.3 M2 · 岗位 CRUD（Day 4）</h3>
+  <div class="ms-grid">
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">后端：Jobs API</div>
+        <span class="ms-id ms-blue">M2-BE</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>实现要点</h5>
+        <ul>
+          <li>实体 <code>Job</code> + <code>JobMapper</code>；XML 写关键词搜索 SQL（<code>plainto_tsquery</code>）</li>
+          <li>DTO：<code>JobCreateRequest</code>、<code>JobUpdateRequest</code>、<code>JobQuery</code>（分页 + 关键词 + status + department）</li>
+          <li>VO：<code>JobVO</code> 含 <code>departmentName</code>、<code>creatorName</code>（JOIN 后冗余）</li>
+          <li>状态机：<code>DRAFT → OPEN → CLOSED</code> 单向，校验放 Service 层</li>
+          <li>权限：HR/ADMIN 可创建/更新；候选人只能 <code>GET</code> 且仅 <code>status=OPEN</code></li>
+        </ul>
+        <h5>接口</h5>
+        <ul>
+          <li><code>GET    /api/v1/jobs</code>（分页 + 搜索）</li>
+          <li><code>GET    /api/v1/jobs/{id}</code></li>
+          <li><code>POST   /api/v1/jobs</code> · HR</li>
+          <li><code>PUT    /api/v1/jobs/{id}</code> · HR</li>
+          <li><code>PATCH  /api/v1/jobs/{id}/status</code> · HR · 状态机校验</li>
+          <li><code>DELETE /api/v1/jobs/{id}</code> · 仅 DRAFT 可删</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">前端：岗位页面</div>
+        <span class="ms-id ms-green">M2-FE</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>实现要点</h5>
+        <ul>
+          <li><code>JobListView.vue</code>：候选人/游客可见，仅展示 <code>OPEN</code>；分页 + 关键词搜索</li>
+          <li><code>JobDetailView.vue</code>：岗位详情 + 投递按钮（登录后激活）</li>
+          <li><code>hr/JobManageView.vue</code>：HR 看自己创建的所有岗位（含草稿/关闭），可改状态</li>
+          <li><code>hr/JobEditView.vue</code>：富文本描述（Naive UI 暂用 textarea，留扩展位）</li>
+          <li><code>types/api.d.ts</code> 增加 <code>JobVO</code>、<code>JobStatus</code></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">联调验收</div>
+        <span class="ms-id ms-orange">M2-INT</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li>HR 创建岗位 → 状态 <code>DRAFT</code> → 改 <code>OPEN</code> → 候选人列表能看到</li>
+          <li>关键词搜索（如「前端」）命中 GIN 索引</li>
+          <li>候选人尝试访问 <code>POST /jobs</code> → 返回 403 错误码 <code>10002</code></li>
+          <li>非法状态流转（OPEN → DRAFT）返回错误码 <code>20002</code></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">易踩坑</div>
+        <span class="ms-id ms-red">⚠ Risk</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li>列表接口默认排除 <code>status=DRAFT</code> 给候选人时，必须在 SQL 层过滤，不可只在 Service 层判断</li>
+          <li>分页参数命名统一 <code>page</code> / <code>pageSize</code>，与前端约定一致</li>
+          <li>关键词搜索使用 <code>simple</code> 分词器（DDL 已配置），中文模糊匹配走 <code>ILIKE</code> 兜底</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- M3 -->
+  <h3 id="m3">4.4 M3 · 状态机看板（Day 5 – Day 6）⭐ 项目核心亮点</h3>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">这是项目最核心、最容易出 bug 的模块</div>
+    <p>状态机 + 审计日志 + 看板拖拽 三者必须强一致。本里程碑 <strong>需要单元测试覆盖关键流转分支</strong>。</p>
+  </div>
+
+  <div class="ms-grid">
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">后端：投递 + 流转</div>
+        <span class="ms-id ms-blue">M3-BE</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>实现要点</h5>
+        <ul>
+          <li>实体 <code>Application</code> / <code>StageLog</code> + 对应 Mapper</li>
+          <li><code>ApplicationService</code>：
+            <ul>
+              <li><strong>合法流转图</strong>：<code>static final Map&lt;Stage, Set&lt;Stage&gt;&gt; LEGAL_TRANSITIONS</code></li>
+              <li><strong>终态保护</strong>：HIRED / REJECTED 不可再变更</li>
+              <li><strong>拒绝必填原因</strong>：to_stage=REJECTED 时 reject_reason 不可空</li>
+              <li>状态变更与 <code>stage_logs</code> 写入<strong>同事务 @Transactional</strong></li>
+            </ul>
+          </li>
+          <li>权限：投递仅 CANDIDATE 自身；流转仅 HR / ADMIN</li>
+          <li>看板接口返回按 <code>stage</code> 分组的 application 数组，控制 N+1 用一次 join</li>
+        </ul>
+        <h5>接口</h5>
+        <ul>
+          <li><code>POST  /api/v1/applications</code> · 候选人投递（含 <code>UNIQUE(job_id, candidate_id)</code> 防重）</li>
+          <li><code>GET   /api/v1/applications/me</code> · 候选人看自己的</li>
+          <li><code>GET   /api/v1/jobs/{jobId}/pipeline</code> · HR 拉取看板数据</li>
+          <li><code>PATCH /api/v1/applications/{id}/stage</code> · 流转</li>
+          <li><code>GET   /api/v1/applications/{id}/logs</code> · 审计时间线</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">前端：候选人侧</div>
+        <span class="ms-id ms-green">M3-FE-C</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li>JobDetailView 增加「投递」按钮 → 调用 <code>POST /applications</code></li>
+          <li>已投递状态在岗位详情按钮变灰，显示当前阶段</li>
+          <li><code>MyApplicationsView.vue</code>：候选人看自己所有申请的列表，含 <code>StageTimeline</code></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">前端：HR 看板</div>
+        <span class="ms-id ms-purple">M3-FE-HR</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li><code>hr/PipelineView.vue</code>：左右滚动看板，每个 stage 一列</li>
+          <li><code>KanbanColumn.vue</code> + <code>KanbanCard.vue</code>（vuedraggable）</li>
+          <li>拖拽事件 → 调 <code>PATCH /applications/:id/stage</code>，<strong>失败时本地状态回滚</strong></li>
+          <li>拖入「REJECTED」列时弹窗强制输入拒绝原因</li>
+          <li><code>CandidateDetailView.vue</code>：右抽屉显示申请详情 + <code>StageTimeline</code>（从 logs 接口）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">联调验收</div>
+        <span class="ms-id ms-orange">M3-INT</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>必跑场景</h5>
+        <ul>
+          <li>候选人投递同一岗位两次 → 第二次返回错误码 <code>20003</code></li>
+          <li>HR 拖卡片 APPLIED → SCREENING_PASS → … → OFFER → HIRED 全流程</li>
+          <li>从 HIRED 试图拖回 OFFER → 返回 <code>20002</code>，前端 UI 回滚</li>
+          <li>拖到 REJECTED 不填原因 → 表单校验阻止</li>
+          <li>每次流转后 <code>stage_logs</code> 新增一行；时间线展示</li>
+        </ul>
+        <h5>建议单测</h5>
+        <ul>
+          <li><code>ApplicationServiceTest</code>：覆盖 8 个合法流转 + 至少 3 个非法流转</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- M4 -->
+  <h3 id="m4">4.5 M4 · 辅助模块（Day 7 – Day 8）</h3>
+  <div class="ms-grid">
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">文件上传（简历 PDF）</div>
+        <span class="ms-id ms-blue">M4-FILE</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>后端</h5>
+        <ul>
+          <li><code>FileStorageService</code>：保存到 <code>UPLOAD_PATH/resumes/{uuid}.pdf</code></li>
+          <li>白名单：仅 <code>application/pdf</code>，<code>≤ 5 MB</code></li>
+          <li>读取接口需鉴权：候选人本人 或 HR 可见</li>
+          <li><code>resume_url</code> 写到 <code>applications.resume_url</code></li>
+        </ul>
+        <h5>前端</h5>
+        <ul>
+          <li>投递表单加 <code>NUpload</code>（accept=".pdf"，限制大小）</li>
+          <li><code>ResumeViewer.vue</code>：<code>&lt;iframe&gt;</code> 内嵌 PDF（带 token query 或临时签名 URL）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">面试评价</div>
+        <span class="ms-id ms-green">M4-INTV</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>后端</h5>
+        <ul>
+          <li><code>InterviewRecord</code> CRUD（创建/列表/更新/删除）</li>
+          <li>权限：仅 HR / ADMIN 可写；候选人不可见自己的评价</li>
+          <li>支持同一 application 多轮记录</li>
+        </ul>
+        <h5>前端</h5>
+        <ul>
+          <li><code>InterviewForm.vue</code>：评分 1-5 / 优点 / 不足 / 结论 PASS/REJECT/HOLD</li>
+          <li>CandidateDetailView 内嵌「面试记录」Tab，按时间倒序展示</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">数据看板</div>
+        <span class="ms-id ms-purple">M4-STATS</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>后端</h5>
+        <ul>
+          <li><code>StatsController</code>：</li>
+          <li><code>GET /stats/funnel?jobId=</code> · 查 <code>v_pipeline_funnel</code> 视图</li>
+          <li><code>GET /stats/overview</code> · 查 <code>v_monthly_overview</code> 视图</li>
+          <li>结果加 Redis 缓存 5 min，缓存 key 含查询参数</li>
+        </ul>
+        <h5>前端</h5>
+        <ul>
+          <li><code>hr/DashboardView.vue</code>：</li>
+          <li>顶部 3 张卡片：本月新增 / Offer 数 / 入职数</li>
+          <li><code>FunnelChart.vue</code> ECharts 漏斗图，可切换岗位</li>
+          <li>路由 <code>/hr/dashboard</code> 设为 HR 默认首页</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">联调验收</div>
+        <span class="ms-id ms-orange">M4-INT</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li>上传一份 PDF → HR 详情页能预览</li>
+          <li>非 PDF / 超过 5MB → 返回 <code>30001</code>，前端友好提示</li>
+          <li>HR 给候选人加 2 轮面试记录 → 详情按时间倒序展示</li>
+          <li>看板拖动状态变更后，Dashboard 数据反映新分布（可手动刷新或 5 min 后）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- M5 -->
+  <h3 id="m5">4.6 M5 · 打磨与交付（Day 9 – Day 10）</h3>
+  <div class="ms-grid">
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">UI / UX 打磨</div>
+        <span class="ms-id ms-blue">M5-UI</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li>所有列表补<strong>空态</strong>插画 / 文案</li>
+          <li>所有异步操作补 loading（按钮、骨架屏、全局 spin）</li>
+          <li>所有可能出错的请求补 <code>useMessage().error()</code> 提示</li>
+          <li>表单统一加 <code>:rules</code> 校验，提交前 <code>formRef.validate()</code></li>
+          <li>响应式自检：1280 / 1024 / 768 三档</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">Docker Compose</div>
+        <span class="ms-id ms-teal">M5-OPS</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li><code>Dockerfile</code>（backend：jdk21-alpine + jar）</li>
+          <li><code>Dockerfile</code>（frontend：node20-alpine 构建 → nginx:alpine）</li>
+          <li><code>nginx.conf</code>：history 路由 + <code>/api</code> 反代 backend:8080</li>
+          <li>正式版 <code>docker-compose.yml</code>：4 服务（postgres / redis / backend / frontend）</li>
+          <li><code>healthcheck</code> + <code>depends_on: condition: service_healthy</code></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">演示与文档</div>
+        <span class="ms-id ms-purple">M5-DOC</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li>演示数据 SQL：1 HR + 5 候选人 + 3 岗位 + 各阶段申请</li>
+          <li>README：项目简介 / 启动 / 演示账号 / 截图</li>
+          <li>录屏脚本（2-3 min）：登录 → 看板拖拽 → 添加面试 → 查看 Dashboard</li>
+          <li>架构说明 PPT/PDF（可复用 Phase 1/2 文档）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">最终验收</div>
+        <span class="ms-id ms-orange">M5-ACC</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li><code>docker compose up -d</code> 一条命令启动全栈</li>
+          <li>用演示账号走通 6 大业务流</li>
+          <li>前端 <code>npm run lint</code> 与后端 <code>mvn verify</code> 均无错</li>
+          <li>所有 Phase 1/2 接口约定 100% 实现</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 5. 开发环境准备 ═══ -->
+  <h2 id="env">5. 开发环境准备</h2>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">为什么单独成章</div>
+    <p>
+      MVP 项目超过一半的时间被环境问题吞掉：JDK 版本不匹配、端口被占、镜像拉不下来、JWT 密钥没生成、
+      Docker Desktop 没开 WSL2……<strong>在 M0 之前花 1–2 小时把环境彻底打通</strong>，
+      能节省后面 3–5 倍的调试时间。本章必须 100% 通过自检后才能进入 M0。
+    </p>
+  </div>
+
+  <h3>5.1 工具与版本清单</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>工具</th>
+          <th>最低版本</th>
+          <th>必要性</th>
+          <th>用途</th>
+          <th>检查命令</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>JDK</td><td>21 (LTS)</td><td><span class="badge badge-h">必须</span></td><td>后端运行时 / 编译</td><td><code>java -version</code></td></tr>
+        <tr><td>Maven</td><td>3.9+</td><td><span class="badge badge-h">必须</span></td><td>后端构建</td><td><code>mvn -v</code></td></tr>
+        <tr><td>Node.js</td><td>20 (LTS)</td><td><span class="badge badge-h">必须</span></td><td>前端构建 / 工具链</td><td><code>node -v</code></td></tr>
+        <tr><td>包管理器</td><td>pnpm 9 / npm 10 / bun 1.1+</td><td><span class="badge badge-h">必须</span></td><td>前端依赖</td><td><code>pnpm -v</code> / <code>npm -v</code></td></tr>
+        <tr><td>Docker Desktop</td><td>24+ (Compose v2)</td><td><span class="badge badge-h">必须</span></td><td>本地 pg / redis / 一键启动</td><td><code>docker version</code><br><code>docker compose version</code></td></tr>
+        <tr><td>Git</td><td>2.40+</td><td><span class="badge badge-h">必须</span></td><td>版本控制</td><td><code>git --version</code></td></tr>
+        <tr><td>OpenSSL</td><td>3.0+</td><td><span class="badge badge-h">必须</span></td><td>生成 JWT RS256 密钥对</td><td><code>openssl version</code></td></tr>
+        <tr><td>psql 客户端</td><td>16</td><td><span class="badge badge-m">可选</span></td><td>本机连 Docker pg 调试</td><td><code>psql --version</code></td></tr>
+        <tr><td>redis-cli</td><td>7</td><td><span class="badge badge-m">可选</span></td><td>缓存调试</td><td><code>redis-cli --version</code></td></tr>
+        <tr><td>HTTP 客户端</td><td>Postman / curl / httpie</td><td><span class="badge badge-m">可选</span></td><td>接口自测</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>5.2 本地服务方案对比</h3>
+
+  <div class="ms-grid">
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">方案 A：Docker Compose（推荐）</div>
+        <span class="ms-id ms-blue">推荐 MVP</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>优点</h5>
+        <ul>
+          <li>一条命令 <code>docker compose up -d</code> 就绪</li>
+          <li>schema.sql 自动初始化到 <code>/docker-entrypoint-initdb.d/</code></li>
+          <li>移除 / 重建数据库一条命令，演示数据可反复重置</li>
+          <li>团队成员环境完全一致</li>
+        </ul>
+        <h5>注意</h5>
+        <ul>
+          <li>Windows 需启用 WSL2 + Docker Desktop 集成</li>
+          <li>第一次拉镜像可能需配置国内镜像源（见 3.7）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">方案 B：本机原生安装</div>
+        <span class="ms-id ms-teal">长期开发</span>
+      </div>
+      <div class="ms-card-body">
+        <h5>优点</h5>
+        <ul>
+          <li>启动更快，无 Docker overhead</li>
+          <li>调试连接、日志、磁盘 IO 更直接</li>
+        </ul>
+        <h5>缺点</h5>
+        <ul>
+          <li>跨平台差异大（macOS Homebrew / Windows installer / Linux apt）</li>
+          <li>schema.sql 需手动 <code>psql -f</code> 执行</li>
+          <li>团队成员版本难以严格对齐</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-info">
+    <div class="callout-title">建议</div>
+    <p>
+      MVP 阶段统一使用 <strong>方案 A</strong>，等正式进入团队协作或部署阶段再考虑混合使用。
+      Phase 2 技术设计文档已提供 <code>docker-compose.yml</code> 的服务规划。
+    </p>
+  </div>
+
+  <h3>5.3 凭据与密钥准备</h3>
+
+  <h4>5.3.1 JWT RS256 密钥对（必做）</h4>
+  <p>在仓库外的 <code>~/.ats/keys/</code> 或 backend 的 <code>secrets/</code>（已加入 <code>.gitignore</code>）生成密钥对：</p>
+
+  <div class="code-block"><span class="ck-comment"># Bash / Git Bash / WSL</span>
+<span class="ck-fn">openssl</span> genrsa -out jwt-private.pem 2048
+<span class="ck-fn">openssl</span> rsa -in jwt-private.pem -pubout -out jwt-public.pem
+
+<span class="ck-comment"># 转 base64 写入 .env</span>
+<span class="ck-fn">base64</span> -w0 jwt-private.pem &gt; jwt-private.b64
+<span class="ck-fn">base64</span> -w0 jwt-public.pem  &gt; jwt-public.b64
+
+<span class="ck-comment"># PowerShell（Windows 等价）</span>
+<span class="ck-fn">openssl</span> genrsa -out jwt-private.pem 2048
+<span class="ck-fn">openssl</span> rsa -in jwt-private.pem -pubout -out jwt-public.pem
+[<span class="ck-key">Convert</span>]::<span class="ck-fn">ToBase64String</span>([<span class="ck-key">IO.File</span>]::<span class="ck-fn">ReadAllBytes</span>(<span class="ck-str">"jwt-private.pem"</span>)) | <span class="ck-fn">Set-Content</span> jwt-private.b64
+[<span class="ck-key">Convert</span>]::<span class="ck-fn">ToBase64String</span>([<span class="ck-key">IO.File</span>]::<span class="ck-fn">ReadAllBytes</span>(<span class="ck-str">"jwt-public.pem"</span>))  | <span class="ck-fn">Set-Content</span> jwt-public.b64</div>
+
+  <h4>5.3.2 .env 文件准备</h4>
+  <ul>
+    <li>后端：<code>ats-backend/.env</code> ← 复制自 <code>.env.example</code>，填入 DB / Redis / JWT base64 值</li>
+    <li>前端：<code>ats-frontend/.env.local</code> ← 复制自 <code>.env.example</code>，填 <code>VITE_API_BASE_URL</code></li>
+    <li>初始管理员账号的 BCrypt hash 生成：</li>
+  </ul>
+
+  <div class="code-block"><span class="ck-comment"># 用 htpasswd 生成（推荐）</span>
+<span class="ck-fn">htpasswd</span> -bnBC 12 <span class="ck-str">""</span> <span class="ck-str">"YourAdminPassword"</span> | <span class="ck-fn">tr</span> -d <span class="ck-str">':\n'</span>
+
+<span class="ck-comment"># 替换 schema.sql 种子数据中的占位 hash</span></div>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">安全红线</div>
+    <p>
+      <code>.env</code>、<code>*.pem</code>、<code>*.b64</code>、<code>jwt-*</code> 必须全部加入 <code>.gitignore</code>。
+      切勿在任何 commit / log / 截图中泄露真实密钥与密码。
+    </p>
+  </div>
+
+  <h3>5.4 代码仓库与 Git 规范</h3>
+
+  <div class="spec-grid">
+    <div class="spec-card">
+      <h4>仓库布局</h4>
+      <ul>
+        <li>MVP 阶段建议 <strong>Monorepo</strong>：
+          <code>ats/</code> 根目录下 <code>ats-backend/</code> + <code>ats-frontend/</code> + <code>docker-compose.yml</code></li>
+        <li>团队规模 &gt; 5 人或前后端发版节奏差异大时再拆 polyrepo</li>
+        <li>所有文档放 <code>docs/</code>，与 Phase 1/2 产出对齐</li>
+      </ul>
+    </div>
+    <div class="spec-card">
+      <h4>.gitignore 必含项</h4>
+      <ul>
+        <li><code>.env</code>, <code>.env.local</code>, <code>.env.*.local</code></li>
+        <li><code>*.pem</code>, <code>*.b64</code>, <code>secrets/</code></li>
+        <li>后端：<code>target/</code>, <code>*.iml</code>, <code>.idea/</code>, <code>logs/</code>, <code>uploads/</code></li>
+        <li>前端：<code>node_modules/</code>, <code>dist/</code>, <code>.vite/</code></li>
+        <li>系统：<code>.DS_Store</code>, <code>Thumbs.db</code></li>
+      </ul>
+    </div>
+    <div class="spec-card">
+      <h4>分支策略</h4>
+      <ul>
+        <li><code>main</code>：保护分支，仅通过 PR 合并</li>
+        <li><code>feature/m1-auth</code>、<code>feature/m3-pipeline</code>：每个里程碑一条 feature 分支</li>
+        <li>提交频率：每完成一个 DoD 单元即 commit + push</li>
+      </ul>
+    </div>
+    <div class="spec-card">
+      <h4>Commit 规范</h4>
+      <ul>
+        <li>格式：<code>[模块] 动词 + 内容</code>，例：<code>[auth] add refresh endpoint</code></li>
+        <li>或采用 conventional commits：<code>feat(auth): ...</code> / <code>fix(pipeline): ...</code></li>
+        <li>禁止 <code>WIP</code>、<code>update</code>、<code>fix bug</code> 等无信息量提交</li>
+        <li>commit 前 self-review：<code>git diff --staged</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>5.5 IDE 与编辑器推荐</h3>
+  <div class="ms-grid">
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">后端：IntelliJ IDEA / Cursor</div>
+        <span class="ms-id ms-green">BE</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li><strong>IDEA Ultimate</strong> 最佳，Community 也够用</li>
+          <li>Cursor + VS Code 时需装：Extension Pack for Java、Spring Boot Tools、Lombok</li>
+          <li>启用 <code>annotation processing</code>（Lombok / MapStruct）</li>
+          <li>项目 SDK 选 JDK 21；Maven 用 wrapper（<code>./mvnw</code>）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">前端：Cursor / VS Code</div>
+        <span class="ms-id ms-blue">FE</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li>必装：<strong>Vue (Official)</strong>（原 Volar）、<strong>TypeScript Vue Plugin</strong></li>
+          <li>必装：ESLint、Oxlint、EditorConfig</li>
+          <li>推荐：GitLens、Error Lens、Auto Import</li>
+          <li>禁用旧版 Vetur（与 Volar 冲突）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">数据库 / Redis 客户端</div>
+        <span class="ms-id ms-purple">DB</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li>DBeaver（免费跨平台） / DataGrip / TablePlus</li>
+          <li>VS Code 扩展：Database Client、PostgreSQL（cweijan）</li>
+          <li>Redis：RedisInsight 或 VS Code Database Client</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ms-card">
+      <div class="ms-card-header">
+        <div class="ms-title">通用</div>
+        <span class="ms-id ms-teal">ALL</span>
+      </div>
+      <div class="ms-card-body">
+        <ul>
+          <li>API 调试：Postman / Bruno / Insomnia / VS Code REST Client</li>
+          <li>提交辅助：lazygit / VS Code Git Graph</li>
+          <li>Markdown 预览：Cursor 内置 / Markdown All in One</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h3>5.6 环境自检脚本</h3>
+  <p>把以下脚本保存为 <code>scripts/check-env.sh</code>（Bash）或 <code>scripts/check-env.ps1</code>（PowerShell），在 M0 启动前运行一次：</p>
+
+  <div class="code-block"><span class="ck-comment">#!/usr/bin/env bash · check-env.sh</span>
+<span class="ck-key">set</span> -e
+
+<span class="ck-fn">check</span>() { <span class="ck-fn">printf</span> <span class="ck-str">"%-22s"</span> <span class="ck-str">"$1"</span>; <span class="ck-fn">eval</span> <span class="ck-str">"$2"</span> &gt; /dev/null 2&gt;&amp;1 &amp;&amp; <span class="ck-fn">echo</span> <span class="ck-str">"✅"</span> || <span class="ck-fn">echo</span> <span class="ck-str">"❌"</span>; }
+
+<span class="ck-fn">check</span> <span class="ck-str">"JDK 21+"</span>        <span class="ck-str">'java -version 2&gt;&amp;1 | grep -E "version \"(2[1-9]|[3-9][0-9])"'</span>
+<span class="ck-fn">check</span> <span class="ck-str">"Maven 3.9+"</span>     <span class="ck-str">'mvn -v | grep -E "Apache Maven 3\.(9|1[0-9])"'</span>
+<span class="ck-fn">check</span> <span class="ck-str">"Node 20+"</span>       <span class="ck-str">'node -v | grep -E "^v(2[0-9]|[3-9][0-9])"'</span>
+<span class="ck-fn">check</span> <span class="ck-str">"pnpm 或 npm"</span>     <span class="ck-str">'pnpm -v || npm -v'</span>
+<span class="ck-fn">check</span> <span class="ck-str">"Docker"</span>         <span class="ck-str">'docker version'</span>
+<span class="ck-fn">check</span> <span class="ck-str">"Docker Compose"</span> <span class="ck-str">'docker compose version'</span>
+<span class="ck-fn">check</span> <span class="ck-str">"Git"</span>            <span class="ck-str">'git --version'</span>
+<span class="ck-fn">check</span> <span class="ck-str">"OpenSSL"</span>        <span class="ck-str">'openssl version'</span>
+<span class="ck-fn">check</span> <span class="ck-str">"5432 端口空闲"</span>   <span class="ck-str">'! lsof -i:5432'</span>
+<span class="ck-fn">check</span> <span class="ck-str">"6379 端口空闲"</span>   <span class="ck-str">'! lsof -i:6379'</span>
+<span class="ck-fn">check</span> <span class="ck-str">"8080 端口空闲"</span>   <span class="ck-str">'! lsof -i:8080'</span>
+<span class="ck-fn">check</span> <span class="ck-str">"5173 端口空闲"</span>   <span class="ck-str">'! lsof -i:5173'</span></div>
+
+  <div class="code-block"><span class="ck-comment"># PowerShell · check-env.ps1</span>
+<span class="ck-key">function</span> <span class="ck-fn">Check</span>($name, $cmd) {
+  <span class="ck-key">try</span> { <span class="ck-fn">Invoke-Expression</span> $cmd *&gt; $<span class="ck-key">null</span>; <span class="ck-str">"{0,-22} ✅"</span> -f $name }
+  <span class="ck-key">catch</span> { <span class="ck-str">"{0,-22} ❌"</span> -f $name }
+}
+
+<span class="ck-fn">Check</span> <span class="ck-str">"JDK 21+"</span>        <span class="ck-str">'java -version'</span>
+<span class="ck-fn">Check</span> <span class="ck-str">"Maven 3.9+"</span>     <span class="ck-str">'mvn -v'</span>
+<span class="ck-fn">Check</span> <span class="ck-str">"Node 20+"</span>       <span class="ck-str">'node -v'</span>
+<span class="ck-fn">Check</span> <span class="ck-str">"Docker"</span>         <span class="ck-str">'docker version'</span>
+<span class="ck-fn">Check</span> <span class="ck-str">"Docker Compose"</span> <span class="ck-str">'docker compose version'</span>
+<span class="ck-fn">Check</span> <span class="ck-str">"Git"</span>            <span class="ck-str">'git --version'</span>
+<span class="ck-fn">Check</span> <span class="ck-str">"OpenSSL"</span>        <span class="ck-str">'openssl version'</span>
+<span class="ck-comment"># 端口检查</span>
+<span class="ck-fn">foreach</span> ($p <span class="ck-key">in</span> 5432, 6379, 8080, 5173) {
+  $busy = <span class="ck-fn">Test-NetConnection</span> -ComputerName localhost -Port $p -InformationLevel Quiet
+  <span class="ck-str">"{0,-22} {1}"</span> -f <span class="ck-str">"$p 端口空闲"</span>, ($busy ? <span class="ck-str">"❌ 被占"</span> : <span class="ck-str">"✅"</span>)
+}</div>
+
+  <h3>5.7 常见问题与预案</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>问题</th><th>表现</th><th>解决方案</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>5432 端口被占</td>
+          <td>Docker 起 pg 失败：<code>port is already allocated</code></td>
+          <td>本机已装 PG，停掉服务或在 compose 中映射到 <code>15432:5432</code></td>
+        </tr>
+        <tr>
+          <td>Maven 拉依赖慢</td>
+          <td><code>mvn install</code> 卡在中央仓库</td>
+          <td><code>~/.m2/settings.xml</code> 配置阿里云镜像（mirror 节点）</td>
+        </tr>
+        <tr>
+          <td>npm install 卡死</td>
+          <td>依赖下载超时</td>
+          <td><code>npm config set registry https://registry.npmmirror.com</code></td>
+        </tr>
+        <tr>
+          <td>Docker 拉镜像超时</td>
+          <td><code>pull access denied</code> / 超时</td>
+          <td>Docker Desktop → Settings → Docker Engine 添加国内镜像 mirror</td>
+        </tr>
+        <tr>
+          <td>Windows Docker 无法启动</td>
+          <td>提示 WSL2 未启用</td>
+          <td>启用 WSL2 + Hyper-V，<code>wsl --install</code> + 重启</td>
+        </tr>
+        <tr>
+          <td>JDK 版本混乱</td>
+          <td>编译报错 <code>--release 21 is not supported</code></td>
+          <td>用 SDKMAN（mac/linux）或 jEnv 管理多版本；或直接 <code>JAVA_HOME</code> 切换</td>
+        </tr>
+        <tr>
+          <td>OpenSSL 在 Windows 找不到</td>
+          <td><code>'openssl' is not recognized</code></td>
+          <td>装 Git for Windows（自带 openssl）或独立安装 <code>winget install openssl</code></td>
+        </tr>
+        <tr>
+          <td>BCrypt hash 含 <code>$</code> 写入 .env</td>
+          <td>变量被 shell 解释截断</td>
+          <td>用单引号包裹，或转义 <code>\$</code>；或写入 application.yml 配置而非 .env</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>5.8 环境就绪验收</h3>
+  <ul>
+    <li>✅ 自检脚本所有项目均 ✅</li>
+    <li>✅ <code>docker compose -f docker-compose.dev.yml up -d</code> 成功，<code>docker ps</code> 显示 pg / redis 健康</li>
+    <li>✅ <code>psql -h localhost -U ats_user -d ats_db -c "\\dt"</code> 能列出 7 张表</li>
+    <li>✅ <code>redis-cli ping</code> 返回 <code>PONG</code></li>
+    <li>✅ JWT 公私钥已生成并填入 <code>.env</code></li>
+    <li>✅ Git 仓库已初始化、<code>.gitignore</code> 已配齐</li>
+    <li>✅ IDE 能识别后端 JDK 21、前端 TS / Vue 项目</li>
+  </ul>
+
+  <div class="callout callout-green">
+    <div class="callout-title">达到本节验收 → 即可进入 M0</div>
+    <p>建议把本节自检脚本与就绪 checklist 写进 <code>README.md</code>，新人入项后照单复核即可。</p>
+  </div>
+
+  <!-- ═══ 完整任务清单 ═══ -->
+  <h2 id="task-list">6. 完整任务清单</h2>
+  <p>所有任务以「<code>MX-编号</code>」标识，依赖列引用其他任务编号；后端=BE / 前端=FE / 联调=MIX / 运维=OPS。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>编号</th>
+          <th>任务</th>
+          <th>类型</th>
+          <th>依赖</th>
+          <th>预估 (h)</th>
+          <th>优先级</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>M0-01</td><td>Spring Boot 项目初始化 + pom 依赖</td><td><span class="badge badge-be">BE</span></td><td>—</td><td class="center">1</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M0-02</td><td>application.yml + env 读取 + 目录骨架</td><td><span class="badge badge-be">BE</span></td><td>M0-01</td><td class="center">1</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M0-03</td><td>建库 + 执行 schema.sql + 种子数据</td><td><span class="badge badge-db">DB</span></td><td>M0-04</td><td class="center">0.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M0-04</td><td>docker-compose.dev.yml（pg + redis）</td><td><span class="badge badge-ops">OPS</span></td><td>—</td><td class="center">1</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M0-05</td><td>/health 接口 + 全局 ApiResponse 包装</td><td><span class="badge badge-be">BE</span></td><td>M0-02</td><td class="center">1</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M0-06</td><td>Vite + Vue 项目初始化 + 依赖安装</td><td><span class="badge badge-fe">FE</span></td><td>—</td><td class="center">1</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M0-07</td><td>路由骨架 + Axios 实例 + proxy</td><td><span class="badge badge-fe">FE</span></td><td>M0-06</td><td class="center">1.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M0-08</td><td>跑通 FE → /health 联调</td><td><span class="badge badge-mix">MIX</span></td><td>M0-05, M0-07</td><td class="center">0.5</td><td><span class="badge badge-h">高</span></td></tr>
+
+        <tr><td>M1-01</td><td>User Entity / Mapper / VO / DTO</td><td><span class="badge badge-be">BE</span></td><td>M0-05</td><td class="center">1.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M1-02</td><td>JwtConfig（RS256 加载/签发/解析）</td><td><span class="badge badge-be">BE</span></td><td>M0-02</td><td class="center">2</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M1-03</td><td>JwtAuthFilter + SecurityConfig</td><td><span class="badge badge-be">BE</span></td><td>M1-02</td><td class="center">2</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M1-04</td><td>register / login / refresh / logout / me 5 接口</td><td><span class="badge badge-be">BE</span></td><td>M1-01,03</td><td class="center">3</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M1-05</td><td>GlobalExceptionHandler + ErrorCode</td><td><span class="badge badge-be">BE</span></td><td>M0-05</td><td class="center">1</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M1-06</td><td>LoginView + RegisterView（表单 + 校验）</td><td><span class="badge badge-fe">FE</span></td><td>M0-07</td><td class="center">2.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M1-07</td><td>useAuthStore + token 持久化</td><td><span class="badge badge-fe">FE</span></td><td>M0-07</td><td class="center">1.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M1-08</td><td>Axios 拦截器：注入 token + 401 自动 refresh</td><td><span class="badge badge-fe">FE</span></td><td>M1-07</td><td class="center">2</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M1-09</td><td>路由守卫（鉴权 + 角色）</td><td><span class="badge badge-fe">FE</span></td><td>M1-07</td><td class="center">1</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M1-10</td><td>端到端联调：注册 → 登录 → /me → 登出</td><td><span class="badge badge-mix">MIX</span></td><td>M1-04, M1-09</td><td class="center">1.5</td><td><span class="badge badge-h">高</span></td></tr>
+
+        <tr><td>M2-01</td><td>Job Entity / Mapper / DTO / VO</td><td><span class="badge badge-be">BE</span></td><td>M1-04</td><td class="center">1.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M2-02</td><td>JobService（含状态机 + 全文搜索 XML）</td><td><span class="badge badge-be">BE</span></td><td>M2-01</td><td class="center">2.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M2-03</td><td>JobController 6 接口 + 权限注解</td><td><span class="badge badge-be">BE</span></td><td>M2-02</td><td class="center">1.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M2-04</td><td>JobListView + JobDetailView（候选人侧）</td><td><span class="badge badge-fe">FE</span></td><td>M2-03</td><td class="center">2.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M2-05</td><td>hr/JobManageView + JobEditView</td><td><span class="badge badge-fe">FE</span></td><td>M2-03</td><td class="center">3</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M2-06</td><td>联调验收 + types/api.d.ts 对齐</td><td><span class="badge badge-mix">MIX</span></td><td>M2-04, M2-05</td><td class="center">1</td><td><span class="badge badge-h">高</span></td></tr>
+
+        <tr><td>M3-01</td><td>Application / StageLog Entity + Mapper</td><td><span class="badge badge-be">BE</span></td><td>M2-03</td><td class="center">1.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M3-02</td><td>ApplicationService 状态机表 + 事务流转</td><td><span class="badge badge-be">BE</span></td><td>M3-01</td><td class="center">3</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M3-03</td><td>ApplicationServiceTest 单测（流转/终态/拒绝）</td><td><span class="badge badge-be">BE</span></td><td>M3-02</td><td class="center">2</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M3-04</td><td>投递 / 我的申请 / 流转 / 看板 / 日志 5 接口</td><td><span class="badge badge-be">BE</span></td><td>M3-02</td><td class="center">2.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M3-05</td><td>JobDetailView 投递按钮 + MyApplicationsView</td><td><span class="badge badge-fe">FE</span></td><td>M3-04</td><td class="center">2.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M3-06</td><td>KanbanColumn + KanbanCard + vuedraggable 集成</td><td><span class="badge badge-fe">FE</span></td><td>M3-04</td><td class="center">3</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M3-07</td><td>PipelineView 拖拽 → 流转 + 失败回滚 + 拒绝弹窗</td><td><span class="badge badge-fe">FE</span></td><td>M3-06</td><td class="center">3</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M3-08</td><td>StageTimeline + CandidateDetailView</td><td><span class="badge badge-fe">FE</span></td><td>M3-04</td><td class="center">2</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M3-09</td><td>端到端全流转联调</td><td><span class="badge badge-mix">MIX</span></td><td>M3-07, M3-08</td><td class="center">1.5</td><td><span class="badge badge-h">高</span></td></tr>
+
+        <tr><td>M4-01</td><td>FileStorageService（UUID 命名 + 白名单）</td><td><span class="badge badge-be">BE</span></td><td>M0-02</td><td class="center">2</td><td><span class="badge badge-m">中</span></td></tr>
+        <tr><td>M4-02</td><td>FileController 上传/下载 + 鉴权</td><td><span class="badge badge-be">BE</span></td><td>M4-01</td><td class="center">1.5</td><td><span class="badge badge-m">中</span></td></tr>
+        <tr><td>M4-03</td><td>NUpload 投递表单 + ResumeViewer iframe</td><td><span class="badge badge-fe">FE</span></td><td>M4-02</td><td class="center">2</td><td><span class="badge badge-m">中</span></td></tr>
+        <tr><td>M4-04</td><td>InterviewRecord 实体 + Service + 4 接口</td><td><span class="badge badge-be">BE</span></td><td>M3-04</td><td class="center">2.5</td><td><span class="badge badge-m">中</span></td></tr>
+        <tr><td>M4-05</td><td>InterviewForm + CandidateDetail 面试 Tab</td><td><span class="badge badge-fe">FE</span></td><td>M4-04</td><td class="center">2.5</td><td><span class="badge badge-m">中</span></td></tr>
+        <tr><td>M4-06</td><td>StatsService（查视图 + Redis 缓存）</td><td><span class="badge badge-be">BE</span></td><td>M3-04</td><td class="center">2</td><td><span class="badge badge-m">中</span></td></tr>
+        <tr><td>M4-07</td><td>DashboardView + FunnelChart</td><td><span class="badge badge-fe">FE</span></td><td>M4-06</td><td class="center">2.5</td><td><span class="badge badge-m">中</span></td></tr>
+        <tr><td>M4-08</td><td>辅助模块联调验收</td><td><span class="badge badge-mix">MIX</span></td><td>M4-03,05,07</td><td class="center">1</td><td><span class="badge badge-m">中</span></td></tr>
+
+        <tr><td>M5-01</td><td>UI 打磨：空态/loading/错误提示</td><td><span class="badge badge-fe">FE</span></td><td>M4-08</td><td class="center">3</td><td><span class="badge badge-m">中</span></td></tr>
+        <tr><td>M5-02</td><td>响应式自检（1280/1024/768）</td><td><span class="badge badge-fe">FE</span></td><td>M5-01</td><td class="center">1</td><td><span class="badge badge-l">低</span></td></tr>
+        <tr><td>M5-03</td><td>Backend Dockerfile + jar build</td><td><span class="badge badge-ops">OPS</span></td><td>M4-08</td><td class="center">1.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M5-04</td><td>Frontend Dockerfile + nginx.conf</td><td><span class="badge badge-ops">OPS</span></td><td>M4-08</td><td class="center">1.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M5-05</td><td>正式 docker-compose.yml + healthcheck</td><td><span class="badge badge-ops">OPS</span></td><td>M5-03, M5-04</td><td class="center">1.5</td><td><span class="badge badge-h">高</span></td></tr>
+        <tr><td>M5-06</td><td>演示数据 SQL 脚本</td><td><span class="badge badge-db">DB</span></td><td>M3-09</td><td class="center">1.5</td><td><span class="badge badge-m">中</span></td></tr>
+        <tr><td>M5-07</td><td>README + 演示账号 + 截图</td><td><span class="badge badge-mix">MIX</span></td><td>M5-05</td><td class="center">1.5</td><td><span class="badge badge-m">中</span></td></tr>
+        <tr><td>M5-08</td><td>录屏 + 最终走查</td><td><span class="badge badge-mix">MIX</span></td><td>M5-07</td><td class="center">2</td><td><span class="badge badge-m">中</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-info">
+    <div class="callout-title">工时合计</div>
+    <p>
+      合计约 <strong>85 小时</strong>，按 8h/天计算约 10 个工作日。
+      AI 辅助理论可压缩 30%-40%，但<strong>审阅、联调、调试</strong>的时间难以省，请保留缓冲。
+    </p>
+  </div>
+
+  <!-- ═══ 关键技术要点 ═══ -->
+  <h2 id="tech-points">7. 关键技术实现要点</h2>
+
+  <h3>7.1 JWT 双 Token 流程</h3>
+  <div class="code-block"><span class="ck-comment">// 登录成功后</span>
+{
+  accessToken:  RS256(claims, 2h),   <span class="ck-comment">// 仅放内存/localStorage</span>
+  refreshToken: opaque random 256bit <span class="ck-comment">// 前端持有，后端 redis 存 SHA256(rt)</span>
+}
+
+<span class="ck-comment">// 401 拦截器伪代码（前端 request.ts）</span>
+<span class="ck-key">if</span> (<span class="ck-fn">isAccessExpired</span>(err)) {
+  <span class="ck-key">if</span> (refreshing) <span class="ck-key">return</span> waitQueue.<span class="ck-fn">push</span>(retry);
+  refreshing = <span class="ck-key">true</span>;
+  <span class="ck-key">await</span> <span class="ck-fn">refresh</span>(refreshToken);   <span class="ck-comment">// 失败 → 清状态跳 /login</span>
+  refreshing = <span class="ck-key">false</span>;
+  waitQueue.<span class="ck-fn">forEach</span>(fn =&gt; <span class="ck-fn">fn</span>());  <span class="ck-comment">// 队列重试</span>
+}</div>
+
+  <h3>7.2 状态机声明（Java）</h3>
+  <div class="code-block"><span class="ck-key">private static final</span> Map&lt;Stage, Set&lt;Stage&gt;&gt; LEGAL = Map.<span class="ck-fn">of</span>(
+  Stage.APPLIED,         Set.<span class="ck-fn">of</span>(Stage.SCREENING_PASS, Stage.REJECTED),
+  Stage.SCREENING_PASS,  Set.<span class="ck-fn">of</span>(Stage.PHONE_INTERVIEW, Stage.REJECTED),
+  Stage.PHONE_INTERVIEW, Set.<span class="ck-fn">of</span>(Stage.TECH_INTERVIEW,  Stage.REJECTED),
+  Stage.TECH_INTERVIEW,  Set.<span class="ck-fn">of</span>(Stage.HR_INTERVIEW,    Stage.REJECTED),
+  Stage.HR_INTERVIEW,    Set.<span class="ck-fn">of</span>(Stage.OFFER,           Stage.REJECTED),
+  Stage.OFFER,           Set.<span class="ck-fn">of</span>(Stage.HIRED,           Stage.REJECTED)
+  <span class="ck-comment">// HIRED / REJECTED 不在 key 中 → 终态</span>
+);
+
+<span class="ck-key">if</span> (!LEGAL.<span class="ck-fn">getOrDefault</span>(from, Set.<span class="ck-fn">of</span>()).<span class="ck-fn">contains</span>(to)) {
+  <span class="ck-key">throw new</span> <span class="ck-fn">BizException</span>(ErrorCode.ILLEGAL_TRANSITION);
+}</div>
+
+  <h3>7.3 看板拖拽 + 失败回滚（Vue）</h3>
+  <div class="code-block"><span class="ck-comment">// PipelineView.vue</span>
+<span class="ck-key">async function</span> <span class="ck-fn">onDrop</span>(evt) {
+  <span class="ck-key">const</span> snapshot = JSON.<span class="ck-fn">parse</span>(JSON.<span class="ck-fn">stringify</span>(board.value));
+  <span class="ck-comment">// 乐观更新已由 vuedraggable 完成</span>
+  <span class="ck-key">try</span> {
+    <span class="ck-key">await</span> <span class="ck-fn">changeStage</span>(evt.appId, evt.toStage, evt.rejectReason);
+    message.<span class="ck-fn">success</span>(<span class="ck-str">'已流转'</span>);
+  } <span class="ck-key">catch</span> (e) {
+    board.value = snapshot;            <span class="ck-comment">// 回滚</span>
+    message.<span class="ck-fn">error</span>(e.message);
+  }
+}</div>
+
+  <h3>7.4 文件上传白名单（后端）</h3>
+  <ul>
+    <li>读取魔数（PDF 起始字节 <code>%PDF-</code>）而非只信任 <code>Content-Type</code></li>
+    <li>大小校验放在 <code>MultipartConfigElement</code>（避免占满磁盘）</li>
+    <li>文件名 UUID 化，原始文件名仅存 DB，<strong>禁止</strong>用用户传入文件名拼路径</li>
+    <li>下载接口必须鉴权后流式返回，不要直接由 nginx 静态暴露 <code>/uploads/</code></li>
+  </ul>
+
+  <h3>7.5 全文搜索（PostgreSQL）</h3>
+  <div class="code-block"><span class="ck-comment">-- Mapper XML</span>
+<span class="ck-key">SELECT</span> * <span class="ck-key">FROM</span> jobs
+<span class="ck-key">WHERE</span> status = <span class="ck-str">'OPEN'</span>
+  <span class="ck-key">AND</span> <span class="ck-fn">to_tsvector</span>(<span class="ck-str">'simple'</span>, title || <span class="ck-str">' '</span> || coalesce(location, <span class="ck-str">''</span>))
+      @@ <span class="ck-fn">plainto_tsquery</span>(<span class="ck-str">'simple'</span>, #{kw})
+<span class="ck-key">ORDER BY</span> created_at <span class="ck-key">DESC</span>
+<span class="ck-key">LIMIT</span> #{size} <span class="ck-key">OFFSET</span> #{offset};</div>
+
+  <!-- ═══ 联调节点 ═══ -->
+  <h2 id="integration">8. 联调节点</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>节点</th><th>验收场景</th><th>关键检查项</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>M0 末</strong></td>
+          <td>前端能调通后端 /health</td>
+          <td>CORS、proxy、ApiResponse 包装格式</td>
+        </tr>
+        <tr>
+          <td><strong>M1 末</strong></td>
+          <td>注册 → 登录 → 访问 /me</td>
+          <td>JWT 签发/解析、401 自动 refresh、路由守卫</td>
+        </tr>
+        <tr>
+          <td><strong>M2 末</strong></td>
+          <td>HR 发岗 → 候选人能看到</td>
+          <td>状态机过滤 DRAFT、关键词搜索、权限注解</td>
+        </tr>
+        <tr>
+          <td><strong>M3 末 ⭐</strong></td>
+          <td>投递 → 看板拖拽 → 全流转</td>
+          <td>事务一致、stage_logs 落库、REJECTED 拒绝原因校验</td>
+        </tr>
+        <tr>
+          <td><strong>M4 末</strong></td>
+          <td>简历上传 → 面试评价 → 看 Dashboard</td>
+          <td>白名单、缓存命中、漏斗数据正确</td>
+        </tr>
+        <tr>
+          <td><strong>M5 末</strong></td>
+          <td>docker compose up -d 一键启动</td>
+          <td>服务健康、nginx 反代、history 路由刷新不 404</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══ AI 辅助 SOP ═══ -->
+  <h2 id="ai-sop">9. AI 辅助开发 SOP</h2>
+
+  <div class="callout callout-purple">
+    <div class="callout-title">原则一：契约先行</div>
+    <p>
+      每次让 AI 写一个接口前，先把 <strong>DDL 片段 + 接口约定 + 已有代码风格示例</strong> 一起喂给它。
+      不要让它"猜"字段名或返回结构。
+    </p>
+  </div>
+
+  <h3>9.1 Prompt 模板</h3>
+
+  <div class="code-block"><span class="ck-comment">## 任务</span>
+实现 <span class="ck-str">POST /api/v1/applications</span> 候选人投递接口。
+
+<span class="ck-comment">## 输入约定</span>
+{
+  jobId: number,
+  resumeUrl: string,     <span class="ck-comment">// 已上传后的 URL</span>
+  yearsExp: number,      <span class="ck-comment">// 0-50</span>
+  phone: string          <span class="ck-comment">// 11 位手机号</span>
+}
+
+<span class="ck-comment">## 输出约定</span>
+ApiResponse&lt;ApplicationVO&gt;
+
+<span class="ck-comment">## 业务规则</span>
+1. 当前用户必须是 CANDIDATE
+2. 该 job 必须 status=OPEN，否则抛 BizException(20001)
+3. 同一候选人不能重复投递（依赖 UNIQUE(job_id, candidate_id)），
+   触发唯一键冲突时抛 BizException(20003)
+4. 初始 stage = APPLIED，同事务写入一条 stage_logs(from=null, to=APPLIED)
+
+<span class="ck-comment">## 参考代码风格</span>
+&lt;贴 JobService.createJob 的实现 30 行&gt;
+
+<span class="ck-comment">## 数据库 DDL（相关表）</span>
+&lt;贴 applications 与 stage_logs 的 CREATE TABLE&gt;</div>
+
+  <h3>9.2 AI 生成代码的合理粒度</h3>
+  <ul>
+    <li>✅ <strong>OK</strong>：一次生成一个 <code>Controller + Service + Mapper</code> 三件套（同一业务）</li>
+    <li>✅ <strong>OK</strong>：一次生成一个 Vue 页面 + 对应的 api 函数</li>
+    <li>❌ <strong>避免</strong>：一次让 AI 写完整模块（如全部认证）—— 难以审阅</li>
+    <li>❌ <strong>避免</strong>：先让 AI 写完 30 个文件再统一调试 —— 累积错误难定位</li>
+  </ul>
+
+  <h3>9.3 多方案时如何选择</h3>
+  <ul>
+    <li><strong>选最接近已有代码风格的那一种</strong>，不要混用（如 MyBatis-Plus 已在用，就不要再引 JPA）</li>
+    <li>方案差异显著时让 AI 列出 trade-off，自己定夺，不要直接接受 "AI 推荐"</li>
+    <li>遇到 AI 给的方案与 <code>project-tech-design.html</code> 冲突时，<strong>以设计文档为准</strong></li>
+  </ul>
+
+  <!-- ═══ 代码自检清单 ═══ -->
+  <h2 id="review">10. 代码自检清单（每次 AI 生成后必做）</h2>
+
+  <div class="spec-grid">
+    <div class="spec-card">
+      <h4>后端 7 项</h4>
+      <ul>
+        <li>1. 字段名/类型与 DDL 是否对齐？enum 序列化方式（name 而非 ordinal）</li>
+        <li>2. 接口是否加 <code>@PreAuthorize</code> 或在 SecurityConfig 配规则？</li>
+        <li>3. 涉及多表写入是否 <code>@Transactional</code>？</li>
+        <li>4. 参数校验注解（<code>@Valid</code> + 入参 DTO 的 <code>@NotNull/@Size/...</code>）齐全？</li>
+        <li>5. 有没有用字符串拼 SQL？必须用 <code>#{}</code> 占位符或 MyBatis-Plus Wrapper</li>
+        <li>6. 状态机相关代码是否调用了统一校验方法，未自定义判断？</li>
+        <li>7. 日志里有无敏感字段（密码、token、手机号）？</li>
+      </ul>
+    </div>
+    <div class="spec-card">
+      <h4>前端 7 项</h4>
+      <ul>
+        <li>1. 类型是否从 <code>types/api.d.ts</code> 引入而非现写？</li>
+        <li>2. 异步操作是否带 loading？错误是否 toast？</li>
+        <li>3. 表单提交前是否 <code>formRef.validate()</code>？</li>
+        <li>4. 路由是否在 <code>meta.roles</code> 声明角色？</li>
+        <li>5. 是否有 hardcode 颜色（应使用 Naive UI theme token）？</li>
+        <li>6. 接口失败时本地乐观更新是否有回滚？</li>
+        <li>7. <code>any</code> 是否已消除？枚举是否从 <code>enums.ts</code> 引用？</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ DoD ═══ -->
+  <h2 id="dod">11. 单任务完成判定（Definition of Done）</h2>
+  <ol>
+    <li>本地能跑通对应场景（含至少一条 happy path + 一条异常 path）</li>
+    <li>接口返回结构符合 <code>{ code, msg, data }</code>，HTTP 状态码与 code 一致</li>
+    <li><code>npm run lint</code> / <code>mvn verify</code> 无新增报错</li>
+    <li>关键逻辑（状态机、文件上传校验等）至少 1 个单测覆盖</li>
+    <li>提交前 git diff self-review，删除 console.log / 调试用代码</li>
+    <li>commit message 遵循 <code>[模块] 动词 + 内容</code>（如 <code>[auth] add refresh endpoint</code>）</li>
+  </ol>
+
+  <!-- ═══ 风险与应对 ═══ -->
+  <h2 id="risk">12. 风险与应对</h2>
+
+  <div class="risk-grid">
+    <div class="risk-card risk-h">
+      <div class="risk-title">高风险</div>
+      <ul>
+        <li><strong>状态机非法流转</strong>：单测兜底 + 终态保护 + 数据库 CHECK</li>
+        <li><strong>Token refresh 死循环</strong>：拦截器内 refresh 失败必须清状态跳 /login</li>
+        <li><strong>看板并发拖拽</strong>：后端基于 from_stage 校验，UI 失败回滚</li>
+        <li><strong>文件上传越权下载</strong>：所有下载接口必须查 application 归属</li>
+      </ul>
+    </div>
+    <div class="risk-card risk-m">
+      <div class="risk-title">中风险</div>
+      <ul>
+        <li><strong>AI 生成字段名漂移</strong>：契约先行 + 自检清单第 1 项</li>
+        <li><strong>事务边界遗漏</strong>：自检清单第 3 项，复盘时再次确认</li>
+        <li><strong>分页参数命名不一致</strong>：约定 <code>page</code> / <code>pageSize</code>，全局统一</li>
+        <li><strong>CORS / Cookie 问题</strong>：开发用 vite proxy 规避，部署用 nginx 反代</li>
+      </ul>
+    </div>
+    <div class="risk-card risk-l">
+      <div class="risk-title">低风险</div>
+      <ul>
+        <li>标准 CRUD（jobs / departments）— AI 完成度高</li>
+        <li>样式 / UI 细节 — 在 M5 集中打磨即可</li>
+        <li>面试评价模块 — 业务规则简单</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ 阶段交付物 ═══ -->
+  <h2 id="deliverables">13. 阶段交付物清单</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>类型</th><th>产出物</th><th>路径</th></tr></thead>
+      <tbody>
+        <tr><td>代码仓库</td><td>后端工程</td><td><code>ats-backend/</code></td></tr>
+        <tr><td>代码仓库</td><td>前端工程</td><td><code>ats-frontend/</code></td></tr>
+        <tr><td>部署脚本</td><td>开发用 compose</td><td><code>docker-compose.dev.yml</code></td></tr>
+        <tr><td>部署脚本</td><td>生产用 compose</td><td><code>docker-compose.yml</code></td></tr>
+        <tr><td>配置</td><td>环境变量模板（前后端）</td><td><code>.env.example</code> × 2</td></tr>
+        <tr><td>脚本</td><td>演示数据 SQL</td><td><code>scripts/seed-demo.sql</code></td></tr>
+        <tr><td>文档</td><td>项目 README（启动 + 演示账号 + 截图）</td><td><code>README.md</code></td></tr>
+        <tr><td>测试</td><td>状态机单测</td><td><code>ats-backend/.../ApplicationServiceTest.java</code></td></tr>
+        <tr><td>录屏</td><td>2-3 分钟演示视频</td><td><code>docs/demo.mp4</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-green" style="margin-top: 30px;">
+    <div class="callout-title">下一步</div>
+    <p>
+      本计划评审通过后，按 M0 → M5 顺序进入编码实施。每个里程碑结束更新本文档「状态」列或追加变更记录。
+      所有偏离 Phase 1/2 设计的决策，请在对应文档中同步更新。
+    </p>
+  </div>
+
+  <p style="margin-top: 40px; font-size: 12px; color: #ccc;">ATS Phase 3 开发计划 v1.0 · 生成于 2026-05-21 · AI 辅助设计</p>
+
+</div>
+
+<script>
+  const links = document.querySelectorAll('.sidebar nav a');
+  const sections = [];
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) sections.push({ el, a });
+  });
+  window.addEventListener('scroll', () => {
+    let cur = sections[0];
+    sections.forEach(s => {
+      if (window.scrollY + 80 >= s.el.offsetTop) cur = s;
+    });
+    links.forEach(a => a.classList.remove('active'));
+    if (cur) cur.a.classList.add('active');
+  }, { passive: true });
+</script>
+</body>
+</html>

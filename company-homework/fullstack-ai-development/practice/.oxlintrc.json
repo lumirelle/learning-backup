@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  // What a pity that OxLint doesn't support scope packages in "extends" field now, so we have to use the full path to the config file.
+  // See https://github.com/oxc-project/oxc/issues/15538
+  // "extends": ["@lumirelle/oxlint-config/ts"],
+  "extends": ["./node_modules/@lumirelle/oxlint-config/.oxlintrc.ts.json"],
+  // Must specify the environment by youself, because "extends" does not apply to "env".
+  // Custom as your need.
+  "env": {
+    "builtin": true,
+    "es2026": true,
+    "browser": true,
+    "node": true
+  }
+}

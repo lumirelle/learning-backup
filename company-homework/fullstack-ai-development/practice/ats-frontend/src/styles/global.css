@@ -1,0 +1,307 @@
+@import './tokens.css';
+
+/*  ─────────────────────────────────────────────────────────────
+ *  global.css 极简化（UnoCSS 接管 utilities 后）
+ *  本文件只负责：
+ *    1. 基础 reset / 字体 / 滚动条
+ *    2. 复杂 keyframes（aurora-drift / pulse）
+ *    3. 依赖伪元素或 JS 注入变量的特殊 class（with-noise / aurora-layer / cursor-glow / reveal）
+ *    4. 路由 Transition 类（Vue Transition 的命名机制要求是 plain class，不能走 atomic）
+ *    5. prefers-reduced-motion 的全局兜底
+ *
+ *  其它一切 utility（text-gradient / spacing / typography ...）请用 UnoCSS atomic / shortcut。
+ *  ───────────────────────────────────────────────────────────── */
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+  /* 始终为滚动条预留宽度，防止过渡动画期间滚动条出现/消失引起布局抖动 */
+  scrollbar-gutter: stable;
+  /* 锚点滚动留出 fixed navbar (60px) 的偏移，避免目标元素被遮挡。
+     同时作用于浏览器原生 <a href="#xxx"> 跳转和 vue-router scrollBehavior */
+  scroll-padding-top: 76px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--text-primary);
+  background: var(--bg-app);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  text-rendering: optimizeLegibility;
+  /* 表单控件（checkbox / radio / range / progress）统一品牌色，比强写自定义 CSS 简洁 */
+  accent-color: var(--brand-500);
+}
+
+/* ────────────────────────────────────────
+ * 全局键盘焦点环 —— Naive UI 组件内部已自管 focus，
+ * 这里只覆盖裸 <button> / <a> / [tabindex] 元素，避免 Naive UI 双环。
+ * 用 :focus-visible 而非 :focus 保证鼠标点击不出现"刺眼蓝框"。
+ * ──────────────────────────────────────── */
+:where(a, button, [role="button"], [tabindex]):focus-visible {
+  outline: 2px solid var(--brand-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* tabular numbers for data-heavy UI */
+.num,
+table td.num,
+table th.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+a {
+  color: var(--brand-500);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+a:not(.btn-cta):hover { color: var(--brand-600); }
+
+::selection {
+  background: var(--brand-200);
+  color: var(--brand-900);
+}
+
+[data-theme="dark"] ::selection {
+  background: rgba(16, 185, 129, 0.35);
+  color: var(--gray-950);
+}
+
+/* Markdown 岗位描述 · 深色下提高 brand 对比度 */
+[data-theme="dark"] .job-md h3,
+[data-theme="dark"] .job-md code {
+  color: var(--brand-300);
+}
+
+/* scrollbar — 中性极简 */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
+
+/* ────────────────────────────────────────
+ * 复杂视觉效果（依赖伪元素 / JS 变量，不适合 atomic）
+ * ──────────────────────────────────────── */
+
+/* 噪点 overlay（::after 伪元素叠在大色块上） */
+.with-noise { position: relative; isolation: isolate; }
+.with-noise::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: var(--noise-url);
+  background-repeat: repeat;
+  opacity: 0.5;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+.with-noise > * { position: relative; z-index: 1; }
+
+/* aurora 漂移背景（24s 缓慢有机感） */
+@keyframes aurora-drift {
+  0%   { transform: translate3d(0%, 0%, 0)   scale(1);    }
+  33%  { transform: translate3d(2%, -3%, 0)  scale(1.04); }
+  66%  { transform: translate3d(-2%, 2%, 0)  scale(0.98); }
+  100% { transform: translate3d(0%, 0%, 0)   scale(1);    }
+}
+.aurora-layer {
+  position: absolute; inset: -10%;
+  background: var(--grad-aurora);
+  filter: blur(40px);
+  animation: aurora-drift var(--dur-aurora) ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 鼠标跟随光晕（依赖 JS 注入 --mx/--my） */
+.cursor-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    400px circle at var(--mx, 50%) var(--my, 30%),
+    rgba(16, 185, 129, 0.10),
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 400ms var(--ease-out);
+}
+
+/* 状态徽章脉冲（hero status-chip 用） */
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  50%      { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+}
+
+/* ────────────────────────────────────────
+ * 认证页（Login / Register）共享 keyframes
+ * UnoCSS 通过 animate-* utility 引用，定义必须在 CSS 里
+ * ──────────────────────────────────────── */
+
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  50%  { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes aurora-shift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(-3%, 2%, 0) scale(1.05); }
+}
+
+@keyframes orb-float-a {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(40px, 30px, 0); }
+}
+@keyframes orb-float-b {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(-50px, -30px, 0); }
+}
+
+@keyframes gradient-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+@keyframes card-bob {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -6px; }
+}
+
+@keyframes tag-float-a {
+  0%, 100% { transform: translate(0, 0) rotate(-6deg); }
+  50%      { transform: translate(-6px, -10px) rotate(-4deg); }
+}
+@keyframes tag-float-b {
+  0%, 100% { transform: translate(0, 0) rotate(4deg); }
+  50%      { transform: translate(8px, -12px) rotate(6deg); }
+}
+
+/* scroll-triggered reveal（依赖 JS 加 .is-visible，不适合 atomic） */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition:
+    opacity   var(--dur-fade) var(--ease-page-in),
+    transform 480ms           var(--ease-page-in);
+  will-change: opacity, transform;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* ────────────────────────────────────────
+ * 路由 Transition 类（Vue Transition 的命名约定，必须是 plain class）
+ * ──────────────────────────────────────── */
+.fade-slide-enter-active {
+  transition:
+    opacity   var(--dur-fade)    var(--ease-page-in),
+    transform var(--dur-page-in) var(--ease-page-in);
+  will-change: opacity, transform;
+}
+.fade-slide-leave-active {
+  transition:
+    opacity   160ms               var(--ease-page-out),
+    transform var(--dur-page-out) var(--ease-page-out);
+  will-change: opacity, transform;
+}
+.fade-slide-enter-from { opacity: 0; transform: translate3d(0, 12px, 0); }
+.fade-slide-leave-to   { opacity: 0; transform: translate3d(0, -6px, 0); }
+
+.fade-enter-active { transition: opacity var(--dur-page-in)  var(--ease-page-in); }
+.fade-leave-active { transition: opacity var(--dur-page-out) var(--ease-page-out); }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+
+.fade-scale-enter-active {
+  transition:
+    opacity   220ms var(--ease-page-in),
+    transform 320ms var(--ease-bounce);
+  will-change: opacity, transform;
+}
+.fade-scale-leave-active {
+  transition:
+    opacity   160ms var(--ease-page-out),
+    transform 200ms var(--ease-page-out);
+}
+.fade-scale-enter-from { opacity: 0; transform: scale3d(0.96, 0.96, 1); }
+.fade-scale-leave-to   { opacity: 0; transform: scale3d(1.03, 1.03, 1); }
+
+/* slide-right：从右侧推入（用于进入认证流程） */
+.slide-right-enter-active {
+  transition:
+    opacity   200ms var(--ease-page-in),
+    transform var(--dur-page-in) var(--ease-page-in);
+  will-change: opacity, transform;
+}
+.slide-right-leave-active {
+  transition:
+    opacity   180ms var(--ease-page-out),
+    transform var(--dur-page-out) var(--ease-page-out);
+  will-change: opacity, transform;
+}
+.slide-right-enter-from { opacity: 0; transform: translate3d(32px, 0, 0); }
+.slide-right-leave-to   { opacity: 0; transform: translate3d(-20px, 0, 0); }
+
+/* slide-up：从下推入（用于浮现式内容页） */
+.slide-up-enter-active {
+  transition:
+    opacity   220ms var(--ease-page-in),
+    transform 340ms var(--ease-page-in);
+  will-change: opacity, transform;
+}
+.slide-up-leave-active {
+  transition:
+    opacity   160ms var(--ease-page-out),
+    transform 220ms var(--ease-page-out);
+}
+.slide-up-enter-from { opacity: 0; transform: translate3d(0, 24px, 0); }
+.slide-up-leave-to   { opacity: 0; transform: translate3d(0, -12px, 0); }
+
+/* 全局可达性兜底 */
+@media (prefers-reduced-motion: reduce) {
+  .aurora-layer,
+  [class*="animate-aurora"],
+  [class*="animate-orb"],
+  [class*="animate-gradient"],
+  [class*="animate-card-bob"],
+  [class*="animate-tag-float"],
+  [class*="animate-shimmer"],
+  [class*="animate-pulse"] { animation: none !important; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .fade-slide-enter-active, .fade-slide-leave-active,
+  .fade-enter-active, .fade-leave-active,
+  .fade-scale-enter-active, .fade-scale-leave-active,
+  .slide-right-enter-active, .slide-right-leave-active,
+  .slide-up-enter-active, .slide-up-leave-active { transition: none !important; }
+  .fade-slide-enter-from, .fade-slide-leave-to,
+  .fade-scale-enter-from, .fade-scale-leave-to,
+  .slide-right-enter-from, .slide-right-leave-to,
+  .slide-up-enter-from, .slide-up-leave-to { transform: none !important; opacity: 1 !important; }
+}

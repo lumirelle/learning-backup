@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>选题分析：押题练手项目推荐</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      line-height: 1.6;
+      padding: 32px 16px 64px;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ─── Typography ─── */
+    h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.3px; }
+    h2 { font-size: 17px; font-weight: 600; color: #1a1a1a; }
+    h3 { font-size: 15px; font-weight: 600; }
+    p, li { font-size: 14px; color: #444; }
+
+    .subtitle { font-size: 13px; color: #888; margin-top: 6px; }
+
+    /* ─── Section spacing ─── */
+    .section { margin-top: 32px; }
+    .divider { border: none; border-top: 1px solid #e0e0e0; margin: 28px 0; }
+
+    /* ─── Callout ─── */
+    .callout {
+      border-left: 3px solid;
+      padding: 14px 16px;
+      border-radius: 0 6px 6px 0;
+      margin-top: 16px;
+    }
+    .callout.success { border-color: #2e7d32; background: #f1f8f1; }
+    .callout.info    { border-color: #1565c0; background: #f0f5ff; }
+    .callout .callout-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .callout.success .callout-title { color: #2e7d32; }
+    .callout.info    .callout-title { color: #1565c0; }
+    .callout p { font-size: 13px; color: #444; }
+
+    /* ─── Pills ─── */
+    .pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      vertical-align: middle;
+    }
+    .pill-success { background: #e6f4ea; color: #2e7d32; }
+    .pill-info    { background: #e3eeff; color: #1565c0; }
+    .pill-muted   { background: #ebebeb; color: #777; }
+
+    /* ─── Table ─── */
+    .table-wrap { overflow-x: auto; margin-top: 14px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead th {
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+      color: #888;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 8px 12px;
+    }
+    tbody td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr.row-success td:first-child { border-left: 3px solid #2e7d32; }
+    tbody tr.row-info    td:first-child { border-left: 3px solid #1565c0; }
+    tbody tr.row-success { background: #fafff9; }
+    tbody tr.row-info    { background: #f6f9ff; }
+
+    /* ─── Score bars ─── */
+    .score-row { display: flex; gap: 4px; align-items: center; }
+    .score-dot {
+      width: 12px; height: 12px; border-radius: 2px;
+    }
+    .score-label { font-size: 11px; color: #aaa; margin-left: 4px; }
+
+    /* ─── Card grid ─── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+    @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .card.dim { opacity: 0.7; }
+    .card-header {
+      padding: 12px 16px 10px;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .card-title { font-size: 14px; font-weight: 600; }
+    .card-subtitle { font-size: 12px; color: #888; margin-top: 2px; }
+    .card-body { padding: 14px 16px; }
+    .card-body ul { list-style: none; padding: 0; }
+    .card-body ul li { font-size: 13px; color: #555; padding: 2px 0; }
+    .card-body ul li::before { content: "· "; color: #aaa; }
+
+    .score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .score-item label { display: block; font-size: 11px; color: #999; margin-bottom: 4px; }
+
+    /* ─── Header block ─── */
+    .page-header { padding-bottom: 20px; border-bottom: 1px solid #e0e0e0; }
+
+    /* ─── System detail ─── */
+    .system-detail { margin-top: 20px; }
+    .system-title-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+
+    /* ─── Timeline table alt row ─── */
+    .timeline td:first-child { font-weight: 600; white-space: nowrap; }
+    .timeline td:nth-child(2) { color: #aaa; white-space: nowrap; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1>选题分析：押题练手项目推荐</h1>
+    <p class="subtitle">白板识别 · 5个候选系统 · 基于2周学习周期 + 全栈MVP考核目标</p>
+  </div>
+
+  <!-- Top callout -->
+  <div class="callout success" style="margin-top: 24px;">
+    <div class="callout-title">首选推荐：招聘系统（ATS）</div>
+    <p>看板式流程拥有强视觉冲击力，业务流程清晰成熟（参考 Notion Hiring / Greenhouse），技术上覆盖状态机、多角色权限、文件上传等全栈核心能力，2周内可完整落地MVP。</p>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- 系统识别 -->
+  <div class="section">
+    <h2>白板系统识别</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>编号</th><th>系统名称</th><th>类型</th><th>白板备注</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>①</td><td>CRM</td><td>客户关系管理系统</td><td>无标注</td></tr>
+          <tr><td>②</td><td>运营分析系统</td><td>数据分析平台（公用）</td><td>有下划线</td></tr>
+          <tr><td>③</td><td>财务对账系统</td><td>账务核对系统</td><td>有下划线</td></tr>
+          <tr class="row-info"><td>④</td><td>培训学习系统</td><td>LMS 在线学习系统</td><td>✓ 已标选</td></tr>
+          <tr class="row-success"><td>⑤</td><td>招聘系统</td><td>ATS 招聘管理系统</td><td>有下划线</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- 各系统评分卡片 -->
+  <div class="section">
+    <h2>各系统横向评分</h2>
+    <div class="grid-2">
+
+      <!-- CRM -->
+      <div class="card dim">
+        <div class="card-header">
+          <div><div class="card-title">CRM</div><div class="card-subtitle">客户关系管理系统</div></div>
+          <span class="pill pill-muted">不推荐</span>
+        </div>
+        <div class="card-body">
+          <div class="score-grid">
+            <div class="score-item"><label>复杂度</label><div class="score-row"><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><span class="score-label">5/5</span></div></div>
+            <div class="score-item"><label>UI亮点</label><div class="score-row"><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#e0e0e0"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">3/5</span></div></div>
+            <div class="score-item"><label>2周可行性</label><div class="score-row"><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#e0e0e0"></div><div class="score-dot" style="background:#e0e0e0"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">2/5</span></div></div>
+            <div class="score-item"><label>技术栈匹配</label><div class="score-row"><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">4/5</span></div></div>
+          </div>
+          <hr style="margin: 12px 0; border:none; border-top:1px solid #f0f0f0;" />
+          <p style="font-size:12px;color:#999;">模块多（联系人、商机、跟进），范围难控，MVP边界不清</p>
+        </div>
+      </div>
+
+      <!-- 运营分析 -->
+      <div class="card dim">
+        <div class="card-header">
+          <div><div class="card-title">运营分析系统</div><div class="card-subtitle">运营分析系统（公用）</div></div>
+          <span class="pill pill-muted">不推荐</span>
+        </div>
+        <div class="card-body">
+          <div class="score-grid">
+            <div class="score-item"><label>复杂度</label><div class="score-row"><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">4/5</span></div></div>
+            <div class="score-item"><label>UI亮点</label><div class="score-row"><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">4/5</span></div></div>
+            <div class="score-item"><label>2周可行性</label><div class="score-row"><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#e0e0e0"></div><div class="score-dot" style="background:#e0e0e0"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">2/5</span></div></div>
+            <div class="score-item"><label>技术栈匹配</label><div class="score-row"><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#e0e0e0"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">3/5</span></div></div>
+          </div>
+          <hr style="margin: 12px 0; border:none; border-top:1px solid #f0f0f0;" />
+          <p style="font-size:12px;color:#999;">依赖真实数据源，BI能力要求高，2周内难产出有说服力的MVP</p>
+        </div>
+      </div>
+
+      <!-- 财务对账 -->
+      <div class="card dim">
+        <div class="card-header">
+          <div><div class="card-title">财务对账系统</div><div class="card-subtitle">财务对账系统</div></div>
+          <span class="pill pill-muted">不推荐</span>
+        </div>
+        <div class="card-body">
+          <div class="score-grid">
+            <div class="score-item"><label>复杂度</label><div class="score-row"><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">4/5</span></div></div>
+            <div class="score-item"><label>UI亮点</label><div class="score-row"><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#e0e0e0"></div><div class="score-dot" style="background:#e0e0e0"></div><div class="score-dot" style="background:#e0e0e0"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">1/5</span></div></div>
+            <div class="score-item"><label>2周可行性</label><div class="score-row"><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#e0e0e0"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">3/5</span></div></div>
+            <div class="score-item"><label>技术栈匹配</label><div class="score-row"><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#e0e0e0"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">3/5</span></div></div>
+          </div>
+          <hr style="margin: 12px 0; border:none; border-top:1px solid #f0f0f0;" />
+          <p style="font-size:12px;color:#999;">业务逻辑复杂，UI表现力弱，产品素养难以体现</p>
+        </div>
+      </div>
+
+      <!-- 培训学习 -->
+      <div class="card">
+        <div class="card-header">
+          <div><div class="card-title">培训学习系统</div><div class="card-subtitle">LMS 在线学习系统</div></div>
+          <span class="pill pill-info">候选</span>
+        </div>
+        <div class="card-body">
+          <div class="score-grid">
+            <div class="score-item"><label>复杂度</label><div class="score-row"><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e0e0e0"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">3/5</span></div></div>
+            <div class="score-item"><label>UI亮点</label><div class="score-row"><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">4/5</span></div></div>
+            <div class="score-item"><label>2周可行性</label><div class="score-row"><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#4caf50"></div><span class="score-label">5/5</span></div></div>
+            <div class="score-item"><label>技术栈匹配</label><div class="score-row"><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><span class="score-label">5/5</span></div></div>
+          </div>
+          <hr style="margin: 12px 0; border:none; border-top:1px solid #f0f0f0;" />
+          <p style="font-size:12px;color:#999;">白板已标✓，课程卡片+进度+测评模块清晰，UI亮点丰富</p>
+        </div>
+      </div>
+
+      <!-- 招聘系统 -->
+      <div class="card" style="grid-column: 1 / -1; border-color: #2e7d32;">
+        <div class="card-header" style="background:#fafff9;">
+          <div><div class="card-title">招聘系统（ATS）</div><div class="card-subtitle">Applicant Tracking System</div></div>
+          <span class="pill pill-success">首选</span>
+        </div>
+        <div class="card-body">
+          <div class="score-grid" style="grid-template-columns: repeat(4, 1fr);">
+            <div class="score-item"><label>复杂度</label><div class="score-row"><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e8a000"></div><div class="score-dot" style="background:#e0e0e0"></div><div class="score-dot" style="background:#e0e0e0"></div><span class="score-label">3/5</span></div></div>
+            <div class="score-item"><label>UI亮点</label><div class="score-row"><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><span class="score-label">5/5</span></div></div>
+            <div class="score-item"><label>2周可行性</label><div class="score-row"><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#4caf50"></div><div class="score-dot" style="background:#4caf50"></div><span class="score-label">5/5</span></div></div>
+            <div class="score-item"><label>技术栈匹配</label><div class="score-row"><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><div class="score-dot" style="background:#1565c0"></div><span class="score-label">5/5</span></div></div>
+          </div>
+          <hr style="margin: 12px 0; border:none; border-top:1px solid #f0f0f0;" />
+          <p style="font-size:12px;color:#666;">看板式面试流程、多角色权限、状态机设计，视觉冲击力强且不依赖真实数据</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- 综合对比表 -->
+  <div class="section">
+    <h2>综合对比</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>系统</th><th>UI亮点</th><th>2周可行</th><th>复杂度</th><th>推荐</th></tr>
+        </thead>
+        <tbody>
+          <tr class="row-success"><td><strong>招聘系统</strong></td><td>5/5</td><td>5/5</td><td>3/5</td><td><span class="pill pill-success">首选</span></td></tr>
+          <tr class="row-info"><td>培训学习系统</td><td>4/5</td><td>5/5</td><td>3/5</td><td><span class="pill pill-info">候选</span></td></tr>
+          <tr><td>运营分析系统</td><td>4/5</td><td>2/5</td><td>4/5</td><td><span class="pill pill-muted">不推荐</span></td></tr>
+          <tr><td>财务对账系统</td><td>1/5</td><td>3/5</td><td>4/5</td><td><span class="pill pill-muted">不推荐</span></td></tr>
+          <tr><td>CRM</td><td>3/5</td><td>2/5</td><td>5/5</td><td><span class="pill pill-muted">不推荐</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- 推荐方案详解 -->
+  <div class="section">
+    <h2>推荐方案详解</h2>
+
+    <!-- 招聘系统 -->
+    <div class="system-detail">
+      <div class="system-title-row">
+        <h3>首选：招聘系统（ATS）</h3>
+        <span class="pill pill-success">推荐</span>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><div class="card-title">核心模块（MVP范围）</div></div>
+          <div class="card-body">
+            <ul>
+              <li>岗位管理（JD发布、编辑、状态控制）</li>
+              <li>候选人简历库（上传、解析展示）</li>
+              <li>面试流程看板（拖拽卡片换阶段）</li>
+              <li>HR 与候选人双角色权限</li>
+              <li>面试记录与评价</li>
+              <li>数据看板（招聘漏斗统计）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">技术亮点覆盖</div></div>
+          <div class="card-body">
+            <ul>
+              <li>状态机设计（简历流转状态）</li>
+              <li>JWT 多角色权限控制</li>
+              <li>文件上传与预览（PDF简历）</li>
+              <li>拖拽看板（前端交互亮点）</li>
+              <li>PostgreSQL 关联查询设计</li>
+              <li>RESTful API 规范设计</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 14px;">
+        <div class="card-header"><div class="card-title">为什么有亮点</div></div>
+        <div class="card-body">
+          <table style="border-collapse:collapse; width:100%;">
+            <tbody>
+              <tr>
+                <td style="padding: 8px 12px; font-size:13px; font-weight:600; width:100px; vertical-align:top; color:#555; border-bottom:1px solid #f5f5f5;">产品素养</td>
+                <td style="padding: 8px 12px; font-size:13px; color:#555; border-bottom:1px solid #f5f5f5;">面试看板是业内标准交互（Greenhouse / Lever 产品形态），考官一眼认出，说明你理解了领域最佳实践。</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 12px; font-size:13px; font-weight:600; vertical-align:top; color:#555; border-bottom:1px solid #f5f5f5;">UI / UX</td>
+                <td style="padding: 8px 12px; font-size:13px; color:#555; border-bottom:1px solid #f5f5f5;">看板拖拽 + 状态流转动画 + 候选人头像卡片，视觉表现力在5个系统里最强，且不依赖复杂的图表数据。</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 12px; font-size:13px; font-weight:600; vertical-align:top; color:#555;">后端设计感</td>
+                <td style="padding: 8px 12px; font-size:13px; color:#555;">候选人状态流转是天然的状态机，展示出对业务领域建模的能力，而非简单 CRUD。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 培训学习系统备选 -->
+    <div class="system-detail" style="margin-top: 28px;">
+      <div class="system-title-row">
+        <h3>备选：培训学习系统（LMS）</h3>
+        <span class="pill pill-info">候选</span>
+      </div>
+      <p style="font-size:13px; color:#555; line-height:1.7;">
+        白板已标 ✓，说明公司可能已讨论过此方向。<strong>若考核题就是此系统，则优先选它练手。</strong><br/>
+        核心亮点：课程卡片 UI（类 Coursera）、学习进度追踪、章节测评、证书生成。<br/>
+        技术覆盖：文件/视频存储、进度计算、问卷设计、多角色（管理员/讲师/学员）。
+      </p>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- 2周路径 -->
+  <div class="section">
+    <h2>2周学习路径建议</h2>
+    <div class="table-wrap">
+      <table class="timeline">
+        <thead>
+          <tr><th>阶段</th><th>时间</th><th>目标</th><th>产出</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>环境 &amp; 选型</td>
+            <td>Day 1–3</td>
+            <td>Java + PostgreSQL + Golang 基础扫盲，选定一种后端栈</td>
+            <td>环境搭建完成，跑通 Hello World API</td>
+          </tr>
+          <tr>
+            <td>读懂领域</td>
+            <td>Day 4–7</td>
+            <td>参考开源 ATS/LMS 项目，读懂数据模型和 API 设计</td>
+            <td>ERD 图 + API 文档草稿</td>
+          </tr>
+          <tr>
+            <td>核心开发</td>
+            <td>Day 8–11</td>
+            <td>借助 AI 从 0 写核心模块：认证、岗位/课程 CRUD、看板/进度</td>
+            <td>可运行的后端服务 + 前端主页面</td>
+          </tr>
+          <tr>
+            <td>打磨交付</td>
+            <td>Day 12–14</td>
+            <td>UI 打磨、联调接口、部署演示环境</td>
+            <td>可展示的 MVP + 演示视频</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout info" style="margin-top: 24px;">
+    <div class="callout-title">关于后端技术栈选择</div>
+    <p>建议以你已会的 <strong>Java（Spring Boot）快速起步</strong>，跑通全链路后再分支学 Golang。PostgreSQL 推荐直接上手，语法与 MySQL 差异不大，通过 AI 辅助可快速迁移经验。这样第一周不会卡在语言学习上，而是聚焦在架构和产品设计。</p>
+  </div>
+
+</div>
+</body>
+</html>
