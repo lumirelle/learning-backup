@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "extends": ["./node_modules/@lumirelle/oxlint-config/.oxlintrc.vue.json"],
+  "options": {
+    "typeAware": true
+  },
+  "env": {
+    "builtin": true,
+    "es2026": true,
+    "browser": true,
+    "node": true
+  }
+}

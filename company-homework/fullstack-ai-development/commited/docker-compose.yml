@@ -1,0 +1,56 @@
+# OrgHR 一键部署编排（内网单机）。
+# 单一对外入口：nginx（默认 8080，可用 WEB_PORT 覆盖）→ / 给前端、/api 给后端。
+# db/redis/server/web 仅在内网互联，不直接对外暴露。
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: orghr
+      POSTGRES_PASSWORD: orghr
+      POSTGRES_DB: orghr
+    ports:
+      - "5433:5432" # 便于本地用 psql 调试，可删
+    volumes:
+      - orghr_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orghr"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7
+
+  server:
+    build: ./server
+    environment:
+      APP_ENV: prod
+      APP_PORT: "8080"
+      DATABASE_URL: postgres://orghr:orghr@db:5432/orghr?sslmode=disable
+      JWT_SECRET: change-me-in-prod
+      REDIS_URL: redis://redis:6379
+    expose:
+      - "8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build: ./web
+    expose:
+      - "3000"
+    depends_on:
+      - server
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "${WEB_PORT:-5555}:80"
+    depends_on:
+      - web
+      - server
+
+volumes:
+  orghr_pgdata:

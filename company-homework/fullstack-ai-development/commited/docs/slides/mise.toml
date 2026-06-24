@@ -1,0 +1,19 @@
+[deps.auto-aube]
+sources = [
+  "package.json",
+  "bun.lock"
+]
+outputs = [ "node_modules/" ]
+# Because aube's output lockfile has bugs,
+# we use `bun install --lockfile-only` to generate a lockfile
+run = "bun install --lockfile-only && aube install"
+auto = true
+
+[tasks.dev]
+run = "slidev --open"
+
+[tasks.build]
+run = "slidev build"
+
+[tasks.export]
+run = "slidev export --format pdf"

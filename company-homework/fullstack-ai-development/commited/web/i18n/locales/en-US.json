@@ -1,0 +1,38 @@
+{
+  "seo": {
+    "home": {
+      "title": "Home"
+    }
+  },
+  "status": {
+    "offline": "You're offline",
+    "loading": "Loading..."
+  },
+  "error_page": {
+    "back-home": "Back to Homepage?",
+    "customize": "Customize this page"
+  },
+  "page": {
+    "views_since": "page views since"
+  },
+  "time": {
+    "ago": "{time} ago",
+    "just_now": "Just now",
+    "in": "in {time}",
+    "seconds": "{count} second | {count} seconds",
+    "minutes": "{count} minute | {count} minutes",
+    "hours": "{count} hour | {count} hours",
+    "yesterday": "yesterday",
+    "tomorrow": "tomorrow",
+    "days": "{count} day | {count} days",
+    "last_week": "last week",
+    "next_week": "next week",
+    "weeks": "{count} week | {count} weeks",
+    "last_month": "last month",
+    "next_month": "next month",
+    "months": "{count} month | {count} months",
+    "last_year": "last year",
+    "next_year": "next year",
+    "years": "{count} year | {count} years"
+  }
+}

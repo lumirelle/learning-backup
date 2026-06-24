@@ -1,0 +1,13 @@
+{
+  // cspell:disable
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "oven.bun-vscode",
+    "vue.volar",
+    "lokalise.i18n-ally",
+    "humao.rest-client",
+    "oxc.oxc-vscode",
+    "dbaeumer.vscode-eslint",
+    "antfu.pnpm-catalog-lens"
+  ]
+}

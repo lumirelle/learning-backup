@@ -1,0 +1,11 @@
+[tools]
+bun = "1.3.14"
+aube = "1.22.0"
+
+[deps.bun-aube]
+sources = ["package.json", "bun.lock"]
+outputs = ["node_modules/"]
+# Because aube's output lockfile has bugs,
+# we use `bun install --lockfile-only` to generate a lockfile
+run = "bun install --lockfile-only && aube install"
+auto = true

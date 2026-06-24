@@ -1,0 +1,49 @@
+/* Base reset and defaults */
+* {
+  margin: 0;
+  padding: 0;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+html {
+  box-sizing: border-box;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+::picker(select) {
+  border: none;
+}
+
+/* ---- 组织人事视觉细节 ---- */
+
+/* 数字等宽对齐（统计卡 / 表格中的数值列） */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 文本选区跟随主色 */
+::selection {
+  background: rgba(47, 84, 235, 0.16);
+}
+
+/* 细滚动条（内容区） */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: rgba(100, 108, 130, 0.28);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 108, 130, 0.45);
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}

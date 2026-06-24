@@ -1,0 +1,63 @@
+amends "package://github.com/jdx/hk/releases/download/v1.46.0/hk@1.46.0#/Config.pkl"
+import "package://github.com/jdx/hk/releases/download/v1.46.0/hk@1.46.0#/Builtins.pkl"
+
+local web = new Group {
+    steps {
+        ["oxlint"] = (Builtins.ox_lint) {
+            dir = "web"
+            glob = List("**/*")
+            check = "oxlint --no-error-on-unmatched-pattern --deny-warnings {{ files }}"
+            fix = "oxlint --no-error-on-unmatched-pattern --deny-warnings --fix {{ files }}"
+        }
+        ["eslint"] = (Builtins.eslint) {
+            dir = "web"
+            batch = false
+            glob = List("**/*")
+            check = "eslint --no-warn-ignored {{ files }}"
+            fix = "eslint --no-warn-ignored --fix {{ files }}"
+            depends = List("oxlint")
+        }
+
+        ["tsc"] {
+            dir = "web"
+            check = "nuxt typecheck"
+        }
+    }
+}
+
+local server = new Group {
+    steps {
+        ["gofmt"] = (Builtins.go_fmt) {
+            dir = "server"
+        }
+        ["go-vet"] = (Builtins.go_vet) {
+            dir = "server"
+            depends = List("gofmt")
+            check = "go vet ./..."
+        }
+    }
+}
+
+hooks {
+    ["pre-commit"] {
+        fix = true
+        stash = "git"
+        steps {
+            ["web"] = web
+            ["server"] = server
+        }
+    }
+    ["fix"] {
+        fix = true
+        steps {
+            ["web"] = web
+            ["server"] = server
+        }
+    }
+    ["check"] {
+        steps {
+            ["web"] = web
+            ["server"] = server
+        }
+    }
+}

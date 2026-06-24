@@ -1,0 +1,52 @@
+# OrgHR 后端（Go）—— mise 子项目：托管 Go 版本并提供任务。
+# 从仓库根运行：mise run //server:dev   或   进入 server/ 后 mise run dev
+[tools]
+go = "1.26"
+
+[tasks.build]
+description = "编译后端"
+run = "go build ./..."
+
+[tasks.test]
+description = "运行后端测试（DB 集成测试在测试库不可达时自动跳过）"
+run = "go test ./..."
+
+[tasks.test-db]
+description = "创建并迁移独立测试库 orghr_test（集成测试用，与开发库隔离）"
+env = { PGPASSWORD = "orghr" }
+run = [
+  "psql -h localhost -p 5433 -U orghr -d postgres -c 'CREATE DATABASE orghr_test' || true",
+  "DATABASE_URL=postgres://orghr:orghr@localhost:5433/orghr_test?sslmode=disable go run ./cmd/migrate",
+]
+
+[tasks.migrate]
+description = "执行数据库迁移（顺序 SQL，已执行则跳过）"
+run = "go run ./cmd/migrate"
+
+[tasks.seed]
+description = "写入种子数据（已存在则跳过）"
+run = "go run ./cmd/seed"
+
+[tasks.ldap-preview]
+description = "只读预览 LDAP 组织/人员（需公司内网，不写库）"
+run = "go run ./cmd/ldapsync preview"
+
+[tasks.ldap-sync]
+description = "同步 LDAP 组织/人员进库（幂等；加 --dry-run 只算不写）"
+run = "go run ./cmd/ldapsync sync"
+
+[tasks.ldap-purge-demo]
+description = "清理演示/假数据（保留登录账号；默认预演，加 --confirm 才落库）"
+run = "go run ./cmd/ldapsync purge-demo"
+
+[tasks.api]
+description = "运行 API 服务"
+run = "go run ./cmd/api"
+
+[tasks.dev]
+description = "本地全流程：迁移 + 种子 + 启动 API"
+run = [
+  "go run ./cmd/migrate",
+  "go run ./cmd/seed",
+  "go run ./cmd/api",
+]

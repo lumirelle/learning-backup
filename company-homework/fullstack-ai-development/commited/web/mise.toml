@@ -1,0 +1,50 @@
+[deps.auto-aube]
+sources = [
+  "package.json",
+  "bun.lock"
+]
+outputs = [ "node_modules/" ]
+# Because aube's output lockfile has bugs,
+# we use `bun install --lockfile-only` to generate a lockfile
+run = "bun install --lockfile-only && aube install && nuxt prepare"
+auto = true
+
+[tasks.dev]
+run = "nuxt dev --open --public"
+
+[tasks."dev:pwa"]
+run = "VITE_PLUGIN_PWA=true nuxt dev -o"
+
+[tasks.build]
+run = "nuxt build"
+
+[tasks.generate]
+run = "nuxt generate"
+
+[tasks.start]
+run = "bun run .output/server/index.mjs"
+
+[tasks."start:generate"]
+run = "aubx serve .output/public"
+
+[tasks."test:unit"]
+# It seems like run vitest.cmd directly will cause
+# tsnapi missing it's snapshot state...
+run = "aubr vitest run --project unit"
+
+[tasks."pretest:e2e"]
+run = "aubx playwright-core install --with-deps"
+
+[tasks."test:e2e"]
+depends = "pretest:e2e"
+run = "aubr vitest run --project e2e"
+
+[tasks."test:nuxt"]
+run = "aubr vitest run --project nuxt"
+
+[tasks.test]
+depends = "pretest:e2e"
+run = "aubr vitest run"
+
+[tasks."test:watch"]
+run = "aubr vitest"

@@ -1,0 +1,46 @@
+experimental_monorepo_root = true
+
+[env]
+_.path = ["./web/node_modules/.bin", "./docs/slides/node_modules/.bin"]
+
+[tools]
+bun = "latest"
+'github:jdx/aube' = "latest"
+pkl = "latest"
+hk = "latest"
+
+[monorepo]
+config_roots = [
+  "docs/slides/",
+  "server/",
+  "web/"
+]
+
+# [hooks]
+# enter = "hk install"
+
+[tasks.pre-commit]
+run = "hk run pre-commit"
+
+# ---- OrgHR 部署编排（docker compose）----
+[tasks.up]
+description = "一键拉起 db + redis + server（构建镜像）"
+run = "podman compose up -d --build"
+
+[tasks.down]
+description = "停止并移除容器"
+run = "podman compose down"
+
+[tasks.infra]
+description = "仅拉起依赖（Postgres:5433 + Redis:6380）"
+run = "podman compose up -d db redis"
+
+[tasks.logs]
+description = "跟随查看 server 日志"
+run = "podman compose logs -f server"
+
+[tasks.check]
+run = "hk check --all"
+
+[tasks.fix]
+run = "hk fix --all"

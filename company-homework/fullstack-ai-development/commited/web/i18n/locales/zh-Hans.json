@@ -1,0 +1,38 @@
+{
+  "seo": {
+    "home": {
+      "title": "Home"
+    }
+  },
+  "status": {
+    "offline": "你已离线",
+    "loading": "加载中..."
+  },
+  "error_page": {
+    "back-home": "返回主页？",
+    "customize": "自定义此页面"
+  },
+  "page": {
+    "views_since": "次浏览，始于"
+  },
+  "time": {
+    "ago": "{time}前",
+    "just_now": "刚刚",
+    "in": "{time}后",
+    "seconds": "{count}秒",
+    "minutes": "{count}分钟",
+    "hours": "{count}小时",
+    "yesterday": "昨天",
+    "tomorrow": "明天",
+    "days": "{count}天",
+    "last_week": "上周",
+    "next_week": "下周",
+    "weeks": "{count}周",
+    "last_month": "上个月",
+    "next_month": "下个月",
+    "months": "{count}个月",
+    "last_year": "去年",
+    "next_year": "明年",
+    "years": "{count}年"
+  }
+}
