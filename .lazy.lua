@@ -1,80 +1,59 @@
--- ESLint as formatter
+-- Quality
 local eslint_support_filetypes = {
-  -- JS & TS
+  -- Code
   "javascript",
   "javascriptreact",
   "typescript",
   "typescriptreact",
-  -- Markdown
-  "markdown",
-  -- JSON
+  "vue",
+  -- Configurations
   "json",
   "jsonc",
-  -- YAML
   "yaml",
-  -- TOML
   "toml",
-  -- Vue
-  "vue",
+  -- Documentations
+  "markdown",
 }
-local eslint_support_file_patterns = {
-  -- JS & TS
-  "*.js",
-  "*.mjs",
-  "*.cjs",
-  "*.jsx",
-  "*.ts",
-  "*.mts",
-  "*.cts",
-  "*.tsx",
-  -- Markdown
-  "*.md",
-  "*.mdc",
-  "*.mdx",
-  -- JSON
-  "*.json",
-  "*.jsonc",
-  -- YAML
-  "*.yaml",
-  "*.yml",
-  -- TOML
-  "*.toml",
-  -- Vue
-  "*.vue",
-}
--- Disable other formatter conflict with ESLint
-require("snacks").util.lsp.on(function(_, client)
-  if vim.tbl_contains(eslint_support_filetypes, vim.bo.filetype) then
-    client.server_capabilities.documentFormattingProvider = false
-    client.server_capabilities.documentRangeFormattingProvider = false
-  end
-end)
--- yamlls cannot be disabled via previous method.
--- This is quite wired...
-require("lspconfig").yamlls.setup({
-  settings = {
-    yaml = {
-      format = { enable = false },
-    },
-  },
-})
 return {
   {
-    "neovim/nvim-lspconfig",
+    "AstroNvim/astrolsp",
+    ---@type AstroLSPOpts
     opts = {
-      servers = {
+      config = {
         eslint = {
           filetypes = eslint_support_filetypes,
         },
       },
-      setup = {
-        eslint = function()
-          -- Auto-fix on save for specific filetypes
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            pattern = eslint_support_file_patterns,
-            command = "LspEslintFixAll",
-          })
+      formatting = {
+        format_on_save = false,
+        filter = function(_)
+          if vim.tbl_contains(eslint_support_filetypes, vim.bo.filetype) then
+            return false
+          end
+          return true
         end,
+      },
+      autocmds = {
+        eslint_fix_all = {
+          cond = function(client, _)
+            return client.name == "eslint"
+          end,
+          {
+            event = "BufWritePre",
+            desc = "Fix all ESLint problems on save",
+            command = "LspEslintFixAll",
+          },
+        },
+        oxlint_fix_all = {
+          cond = function(client, _)
+            return client.name == "oxlint"
+          end,
+          {
+            event = "BufWritePre",
+            desc = "Fix all Oxlint problems on save",
+            command = "LspOxlintFixAll",
+          },
+        },
       },
     },
   },
